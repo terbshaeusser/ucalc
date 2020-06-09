@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Folder Include="Controls"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Page Update="BillingWindow.xaml">
+            <Generator></Generator>
+        </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="BillingWindow.xaml.cs">
+            <DependentUpon>BillingWindow.xaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,112 @@
+﻿<Window x:Class="UCalc.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UCalc"
+        mc:Ignorable="d"
+        Title="MietRechner"
+        Height="400"
+        Width="500"
+        ResizeMode="CanMinimize">
+
+    <Grid>
+        <Viewbox Grid.Row="0" Grid.Column="0" Stretch="Fill">
+            <Canvas Width="100" Height="100">
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="0" Y="0" />
+                </Canvas.RenderTransform>
+                <Canvas>
+                    <Path Fill="{x:Static local:Constants.SubMainColor}"
+                          StrokeThickness="0.799393">
+                        <Path.Data>
+                            <PathGeometry
+                                Figures="M 82.566406 153.03906 A 165.91754 70.963213 0 0 0 0 162.45312 L 0 285.55078 L 0 377.85742 L 377.95312 377.85742 L 377.95312 193.28125 A 165.91754 70.963214 0 0 1 323.16016 197.26367 A 165.91754 70.963214 0 0 1 200.41016 174.04297 A 165.91754 70.963213 0 0 0 82.580078 153.03906 A 165.91754 70.963213 0 0 0 82.566406 153.03906 z "
+                                FillRule="NonZero" />
+                        </Path.Data>
+                        <Path.RenderTransform>
+                            <ScaleTransform ScaleX="0.26458333" ScaleY="0.26458333" />
+                        </Path.RenderTransform>
+                    </Path>
+                </Canvas>
+            </Canvas>
+        </Viewbox>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="100, 180, 100, 0">
+
+            <Button MinHeight="40"
+                    Margin="0, 0, 0, 12"
+                    Click="OnNewClick">
+
+                <DockPanel>
+                    <Viewbox DockPanel.Dock="Left" Width="16" Height="16" Stretch="Uniform">
+                        <Canvas Width="384" Height="512">
+                            <Canvas.RenderTransform>
+                                <TranslateTransform X="0" Y="0" />
+                            </Canvas.RenderTransform>
+                            <Path Fill="{x:Static local:Constants.SubMainColor}">
+                                <Path.Data>
+                                    <PathGeometry
+                                        Figures="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+                                        FillRule="NonZero" />
+                                </Path.Data>
+                            </Path>
+                        </Canvas>
+                    </Viewbox>
+
+                    <Label Content="Neue Abrechnung anlegen"
+                           Foreground="{x:Static local:Constants.SubMainColor}"/>
+                </DockPanel>
+
+            </Button>
+
+            <Button MinHeight="40"
+                    PreviewMouseUp="OnOpenClick">
+
+                <DockPanel>
+                    <Viewbox DockPanel.Dock="Left" Width="16" Height="16" Stretch="Uniform">
+                        <Canvas Width="576" Height="512">
+                            <Canvas.RenderTransform>
+                                <TranslateTransform X="0" Y="0" />
+                            </Canvas.RenderTransform>
+                            <Path Fill="{x:Static local:Constants.SubMainColor}">
+                                <Path.Data>
+                                    <PathGeometry
+                                        Figures="M572.694 292.093L500.27 416.248A63.997 63.997 0 0 1 444.989 448H45.025c-18.523 0-30.064-20.093-20.731-36.093l72.424-124.155A64 64 0 0 1 152 256h399.964c18.523 0 30.064 20.093 20.73 36.093zM152 224h328v-48c0-26.51-21.49-48-48-48H272l-64-64H48C21.49 64 0 85.49 0 112v278.046l69.077-118.418C86.214 242.25 117.989 224 152 224z"
+                                        FillRule="NonZero" />
+                                </Path.Data>
+                            </Path>
+                        </Canvas>
+                    </Viewbox>
+
+                    <Label Content="Abrechnung öffnen"
+                           Foreground="{x:Static local:Constants.SubMainColor}"/>
+                </DockPanel>
+
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <ContextMenu.ItemsSource>
+                            <CompositeCollection>
+                                <MenuItem Header="Computer durchsuchen"
+                                          Click="OnOpenFromDiskClick" />
+                                <MenuItem Header="- Zuletzt geöffnet -" IsEnabled="False" />
+
+                                <CollectionContainer
+                                    Collection="{Binding Source={x:Static local:App.RecentlyOpenedList}}" />
+                            </CompositeCollection>
+                        </ContextMenu.ItemsSource>
+                        <ContextMenu.ItemContainerStyle>
+                            <Style TargetType="MenuItem">
+                                <EventSetter Event="Click" Handler="OnOpenRecentClick" />
+                            </Style>
+                        </ContextMenu.ItemContainerStyle>
+                    </ContextMenu>
+                </Button.ContextMenu>
+
+            </Button>
+
+        </StackPanel>
+
+    </Grid>
+
+</Window>
