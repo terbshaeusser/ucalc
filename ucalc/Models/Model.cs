@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -6,14 +8,107 @@ using ucalc.Annotations;
 
 namespace UCalc.Models
 {
-    public class ModelProperty : INotifyPropertyChanged
+    public abstract class ModelBaseProperty : INotifyPropertyChanged
     {
-        private readonly Model _model;
-        private object _value;
-        private string _error;
-        private readonly Func<object, string> _validate;
+        protected static readonly List<string> EmptyList = new List<string>();
+        public abstract IReadOnlyCollection<string> Errors { get; }
+        public abstract bool Modified { get; }
 
-        public object Value
+        protected void OnChildPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == "Errors" || args.PropertyName == "Modified")
+            {
+                OnPropertyChanged(args.PropertyName);
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public class NestedModelProperty<T> : ModelBaseProperty where T : Model
+    {
+        public T Model { get; }
+
+        public NestedModelProperty(T model)
+        {
+            Model = model;
+
+            Model.PropertyChanged += OnChildPropertyChanged;
+        }
+
+        public override IReadOnlyCollection<string> Errors => Model.Errors;
+
+        public override bool Modified => Model.Modified;
+    }
+
+    public class MultiModelProperty<T> : ModelBaseProperty where T : Model
+    {
+        private readonly ObservableCollection<T> _models;
+
+        public MultiModelProperty()
+        {
+            _models = new ObservableCollection<T>();
+        }
+
+        public void Add(T model)
+        {
+            _models.Add(model);
+
+            model.PropertyChanged += OnChildPropertyChanged;
+
+            if (model.Errors.Count > 0)
+            {
+                OnPropertyChanged("Errors");
+            }
+        }
+
+        public void Remove(T model)
+        {
+            model.PropertyChanged -= OnChildPropertyChanged;
+
+            _models.Remove(model);
+
+            if (model.Errors.Count > 0)
+            {
+                OnPropertyChanged("Errors");
+            }
+        }
+
+        public IReadOnlyList<T> Models => _models;
+
+        public override IReadOnlyCollection<string> Errors
+        {
+            get
+            {
+                var errors = new List<string>();
+
+                foreach (var model in _models)
+                {
+                    errors.AddRange(model.Errors);
+                }
+
+                return errors;
+            }
+        }
+
+        public override bool Modified => _models.Select(model => model.Modified).Any();
+    }
+
+    public class ModelProperty<T> : ModelBaseProperty
+    {
+        public string Name { get; }
+        private T _value;
+        private readonly List<string> _errors;
+        private readonly Func<string, T, string> _validate;
+        private bool _modified;
+
+        public T Value
         {
             get => _value;
             set
@@ -23,94 +118,115 @@ namespace UCalc.Models
                     return;
                 }
 
-                var oldError = Error;
-                Error = _validate?.Invoke(value);
-                if (oldError == null && Error != null || oldError != null && Error == null)
+                var oldError = _errors[0];
+                _errors[0] = _validate?.Invoke(Name, value) ?? "";
+
+                if (oldError != _errors[0])
                 {
-                    _model.OnPropertyChanged("ErrorCount");
+                    OnPropertyChanged("Errors");
                 }
 
-                Modified = true;
+                if (!_modified)
+                {
+                    OnPropertyChanged("Modified");
+                }
+
+                _modified = true;
                 _value = value;
             }
         }
 
-        public string Error
+        public ModelProperty(string name, T value, Func<string, T, string> validate)
         {
-            get => _error;
-            private set
-            {
-                if (_error == value)
-                {
-                    return;
-                }
-
-                _error = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool Modified { get; set; }
-
-        public ModelProperty(Model model, object value, Func<object, string> validate)
-        {
-            _model = model;
+            Name = name;
             _value = value;
-            _error = validate?.Invoke(value);
+            _errors = new List<string> {validate?.Invoke(Name, _value) ?? ""};
             _validate = validate;
+            _modified = false;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public override IReadOnlyCollection<string> Errors => _errors[0] != "" ? _errors : EmptyList;
 
-        [NotifyPropertyChangedInvocator]
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
+        public override bool Modified => _modified;
 
-    public class ModelProperty<T> : ModelProperty
-    {
-        public new T Value
+        public void ResetModified()
         {
-            get => (T) base.Value;
-            set => base.Value = value;
-        }
-
-        public ModelProperty(Model model, T value, Func<T, string> validate) : base(model, value,
-            validate == null ? (Func<object, string>) null : o => validate((T) o))
-        {
+            _modified = false;
         }
     }
 
     public static class ModelPropertyValidators
     {
-        public static string IsNotEmpty(string data)
+        public static string IsNotEmpty(string name, string data)
         {
-            return string.IsNullOrEmpty(data) ? "Geben Sie einen Wert ein" : null;
+            return string.IsNullOrEmpty(data) ? $"{name}: Geben Sie einen Wert ein." : "";
+        }
+
+        public static string IsNaturalInt(string name, string data)
+        {
+            return !int.TryParse(data, out var n) || n <= 0
+                ? $"{name}: Der eingegebene Wert ist keine gültige positive Zahl > 0."
+                : "";
         }
     }
 
     public abstract class Model : INotifyPropertyChanged
     {
-        public ModelProperty[] Properties { get; protected set; }
+        private readonly List<ModelBaseProperty> _properties;
 
-        public bool Modified => Properties.Select(property => property.Modified).Any();
-
-        public int ErrorCount => Properties.Select(property => string.IsNullOrEmpty(property.Error) ? 0 : 1).Sum();
-
-        public virtual void Apply()
+        protected Model()
         {
-            if (ErrorCount > 0)
+            _properties = new List<ModelBaseProperty>();
+
+            PropertyChanged += (sender, args) =>
             {
-                throw new InvalidOperationException();
+                if (args.PropertyName == "Errors")
+                {
+                    OnPropertyChanged("ErrorCount");
+                }
+            };
+        }
+
+        protected T Add<T>(T property) where T : ModelBaseProperty
+        {
+            _properties.Add(property);
+
+            property.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == "Errors" || args.PropertyName == "Modified")
+                {
+                    OnPropertyChanged(args.PropertyName);
+                }
+            };
+
+            return property;
+        }
+
+        public bool Modified => _properties.Select(property => property.Modified).Any();
+
+        public IReadOnlyCollection<string> Errors
+        {
+            get
+            {
+                var errors = new List<string>();
+
+                foreach (var property in _properties)
+                {
+                    errors.AddRange(property.Errors);
+                }
+
+                return errors;
             }
         }
+
+        public int ErrorCount => Errors.Count;
+
+        public abstract void Apply();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

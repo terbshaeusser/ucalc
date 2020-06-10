@@ -9,12 +9,13 @@
              Height="16">
 
     <UserControl.Resources>
-        <local:ErrorToVisibilityConverter x:Key="ErrorToVisibilityConverter" />
-        <local:ErrorToInVisibilityConverter x:Key="ErrorToInVisibilityConverter" />
+        <local:ErrorsToVisibilityConverter x:Key="ErrorsToVisibilityConverter" />
+        <local:ErrorsToInVisibilityConverter x:Key="ErrorsToInVisibilityConverter" />
     </UserControl.Resources>
-    <StackPanel ToolTip="{Binding Path=Error, RelativeSource={RelativeSource AncestorType=local:ErrorIcon}}">
+    
+    <StackPanel ToolTip="{Binding Path=ErrorsToolTip, RelativeSource={RelativeSource AncestorType=local:ErrorIcon}}">
         <Viewbox
-            Visibility="{Binding Path=Error, RelativeSource={RelativeSource AncestorType=local:ErrorIcon}, Converter={StaticResource ErrorToInVisibilityConverter}}"
+            Visibility="{Binding Path=Errors, RelativeSource={RelativeSource AncestorType=local:ErrorIcon}, Converter={StaticResource ErrorsToInVisibilityConverter}}"
             Stretch="Uniform">
             <Canvas Width="512" Height="512">
                 <Canvas.RenderTransform>
@@ -31,7 +32,7 @@
         </Viewbox>
 
         <Viewbox
-            Visibility="{Binding Path=Error, RelativeSource={RelativeSource AncestorType=local:ErrorIcon}, Converter={StaticResource ErrorToVisibilityConverter}}"
+            Visibility="{Binding Path=Errors, RelativeSource={RelativeSource AncestorType=local:ErrorIcon}, Converter={StaticResource ErrorsToVisibilityConverter}}"
             Stretch="Uniform">
             <Canvas Width="512" Height="512">
                 <Canvas.RenderTransform>

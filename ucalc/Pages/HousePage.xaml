@@ -3,7 +3,157 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:UCalc.Pages"
+      xmlns:local="clr-namespace:UCalc"
+      xmlns:pages="clr-namespace:UCalc.Pages"
+      xmlns:controls="clr-namespace:UCalc.Controls"
       mc:Ignorable="d">
-    <Grid />
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <controls:SectionHeader Header="Adresse des Hauses" />
+
+            <DockPanel Margin="12, 8, 12, 0">
+                <Label DockPanel.Dock="Left"
+                       Content="Straße:"
+                       Width="200"
+                       Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                <controls:ErrorIcon Margin="12, 0, 0, 0"
+                                    DockPanel.Dock="Right"
+                                    VerticalAlignment="Center"
+                                    Errors="{Binding Path=Model.Address.Model.Street.Errors, RelativeSource={RelativeSource AncestorType=pages:HousePage}}" />
+
+                <TextBox
+                    VerticalAlignment="Center"
+                    MinHeight="22"
+                    Text="{Binding Path=Model.Address.Model.Street.Value, RelativeSource={RelativeSource AncestorType=pages:HousePage}, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+            <DockPanel Margin="12, 8, 12, 0">
+                <Label DockPanel.Dock="Left"
+                       Content="Hausnummer:"
+                       Width="200"
+                       Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                <controls:ErrorIcon Margin="12, 0, 0, 0"
+                                    DockPanel.Dock="Right"
+                                    VerticalAlignment="Center"
+                                    Errors="{Binding Path=Model.Address.Model.HouseNumber.Errors, RelativeSource={RelativeSource AncestorType=pages:HousePage}}" />
+
+                <TextBox
+                    VerticalAlignment="Center"
+                    MinHeight="22"
+                    Text="{Binding Path=Model.Address.Model.HouseNumber.Value, RelativeSource={RelativeSource AncestorType=pages:HousePage}, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+            <DockPanel Margin="12, 8, 12, 0">
+                <Label DockPanel.Dock="Left"
+                       Content="Stadt:"
+                       Width="200"
+                       Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                <controls:ErrorIcon Margin="12, 0, 0, 0"
+                                    DockPanel.Dock="Right"
+                                    VerticalAlignment="Center"
+                                    Errors="{Binding Path=Model.Address.Model.City.Errors, RelativeSource={RelativeSource AncestorType=pages:HousePage}}" />
+
+                <TextBox
+                    VerticalAlignment="Center"
+                    MinHeight="22"
+                    Text="{Binding Path=Model.Address.Model.City.Value, RelativeSource={RelativeSource AncestorType=pages:HousePage}, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+            <DockPanel Margin="12, 8, 12, 0">
+                <Label DockPanel.Dock="Left"
+                       Content="PLZ:"
+                       Width="200"
+                       Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                <controls:ErrorIcon Margin="12, 0, 0, 0"
+                                    DockPanel.Dock="Right"
+                                    VerticalAlignment="Center"
+                                    Errors="{Binding Path=Model.Address.Model.Postcode.Errors, RelativeSource={RelativeSource AncestorType=pages:HousePage}}" />
+
+                <TextBox
+                    VerticalAlignment="Center"
+                    MinHeight="22"
+                    Text="{Binding Path=Model.Address.Model.Postcode.Value, RelativeSource={RelativeSource AncestorType=pages:HousePage}, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+            <controls:SectionHeader Header="Wohnungen"
+                                    Margin="0, 12, 0, 0" />
+
+            <controls:HighlightButton Margin="12, 0, 12, 8"
+                                      HighlightForeground="{x:Static local:Constants.SubMainColor}"
+                                      HighlightBackground="{x:Static local:Constants.MainColor}"
+                                      Click="OnAddFlatClick">
+                <Viewbox Width="24"
+                         Height="24"
+                         Margin="12, 12, 6, 12"
+                         Stretch="Uniform">
+                    <Canvas Width="512" Height="512">
+                        <Canvas.RenderTransform>
+                            <TranslateTransform X="0" Y="0" />
+                        </Canvas.RenderTransform>
+                        <Path>
+                            <Path.Data>
+                                <PathGeometry
+                                    Figures="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"
+                                    FillRule="NonZero" />
+                            </Path.Data>
+                        </Path>
+                    </Canvas>
+                </Viewbox>
+
+                <Label Content="Wohnung hinzufügen"
+                       Margin="0, 12, 12, 12" />
+            </controls:HighlightButton>
+
+            <ItemsControl
+                ItemsSource="{Binding Path=Model.Flats.Models, RelativeSource={RelativeSource AncestorType=pages:HousePage}}"
+                Margin="12, 0, 12, 12">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <controls:HighlightButton DockPanel.Dock="Right"
+                                                      HighlightForeground="Red"
+                                                      HighlightBackground="White"
+                                                      Click="OnFlatDeleteClick">
+                                <Viewbox Width="24"
+                                         Height="24"
+                                         Margin="8, 12, 8, 12"
+                                         Stretch="Uniform">
+                                    <Canvas Width="448" Height="512">
+                                        <Canvas.RenderTransform>
+                                            <TranslateTransform X="0" Y="0" />
+                                        </Canvas.RenderTransform>
+                                        <Path>
+                                            <Path.Data>
+                                                <PathGeometry
+                                                    Figures="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                                                    FillRule="NonZero" />
+                                            </Path.Data>
+                                        </Path>
+                                    </Canvas>
+                                </Viewbox>
+                            </controls:HighlightButton>
+
+                            <controls:HighlightButton HighlightForeground="{x:Static local:Constants.SubMainColor}"
+                                                      HighlightBackground="{x:Static local:Constants.MainColor}">
+
+                                <controls:ErrorIcon Errors="{Binding Errors}"
+                                                    DockPanel.Dock="Left"
+                                                    Margin="12, 12, 8, 12" />
+
+                                <Label Content="{Binding Name.Value}"
+                                       VerticalAlignment="Center" />
+                            </controls:HighlightButton>
+                        </DockPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+
 </Page>

@@ -6,7 +6,6 @@
       xmlns:local="clr-namespace:UCalc"
       xmlns:pages="clr-namespace:UCalc.Pages"
       xmlns:controls="clr-namespace:UCalc.Controls"
-      xmlns:data="clr-namespace:UCalc.Data"
       mc:Ignorable="d">
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
@@ -19,7 +18,7 @@
                        Content="Anrede:"
                        Width="200"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
-                
+
                 <ComboBox Margin="0, 0, 28, 0" /> <!-- TODO -->
             </DockPanel>
 
@@ -32,7 +31,7 @@
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
                                     DockPanel.Dock="Right"
                                     VerticalAlignment="Center"
-                                    Error="{Binding Path=Model.Name.Error, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
+                                    Errors="{Binding Path=Model.Name.Errors, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
 
                 <TextBox
                     VerticalAlignment="Center"
@@ -49,7 +48,7 @@
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
                                     DockPanel.Dock="Right"
                                     VerticalAlignment="Center"
-                                    Error="{Binding Path=Model.Phone.Error, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
+                                    Errors="{Binding Path=Model.Phone.Errors, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
 
                 <TextBox
                     VerticalAlignment="Center"
@@ -66,16 +65,16 @@
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
                                     DockPanel.Dock="Right"
                                     VerticalAlignment="Center"
-                                    Error="{Binding Path=Model.MailAddress.Error, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
+                                    Errors="{Binding Path=Model.MailAddress.Errors, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
 
                 <TextBox
                     VerticalAlignment="Center"
                     MinHeight="22"
                     Text="{Binding Path=Model.MailAddress.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
-            
+
             <controls:SectionHeader Header="Adresse des Eigentümers"
-                                    Margin="0, 12, 0, 0"/>
+                                    Margin="0, 12, 0, 0" />
 
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
@@ -86,12 +85,12 @@
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
                                     DockPanel.Dock="Right"
                                     VerticalAlignment="Center"
-                                    Error="{Binding Path=Model.Street.Error, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
+                                    Errors="{Binding Path=Model.Address.Model.Street.Errors, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
 
                 <TextBox
                     VerticalAlignment="Center"
                     MinHeight="22"
-                    Text="{Binding Path=Model.Street.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=Model.Address.Model.Street.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
 
             <DockPanel Margin="12, 8, 12, 0">
@@ -103,12 +102,12 @@
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
                                     DockPanel.Dock="Right"
                                     VerticalAlignment="Center"
-                                    Error="{Binding Path=Model.HouseNumber.Error, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
+                                    Errors="{Binding Path=Model.Address.Model.HouseNumber.Errors, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
 
                 <TextBox
                     VerticalAlignment="Center"
                     MinHeight="22"
-                    Text="{Binding Path=Model.HouseNumber.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=Model.Address.Model.HouseNumber.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
 
             <DockPanel Margin="12, 8, 12, 0">
@@ -120,12 +119,12 @@
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
                                     DockPanel.Dock="Right"
                                     VerticalAlignment="Center"
-                                    Error="{Binding Path=Model.City.Error, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
+                                    Errors="{Binding Path=Model.Address.Model.City.Errors, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
 
                 <TextBox
                     VerticalAlignment="Center"
                     MinHeight="22"
-                    Text="{Binding Path=Model.City.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=Model.Address.Model.City.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
 
             <DockPanel Margin="12, 8, 12, 0">
@@ -137,16 +136,16 @@
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
                                     DockPanel.Dock="Right"
                                     VerticalAlignment="Center"
-                                    Error="{Binding Path=Model.Postcode.Error, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
+                                    Errors="{Binding Path=Model.Address.Model.Postcode.Errors, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
 
                 <TextBox
                     VerticalAlignment="Center"
                     MinHeight="22"
-                    Text="{Binding Path=Model.Postcode.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=Model.Address.Model.Postcode.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
-            
+
             <controls:SectionHeader Header="Bankdaten des Eigentümers"
-                                    Margin="0, 12, 0, 0"/>
+                                    Margin="0, 12, 0, 0" />
 
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
@@ -157,12 +156,12 @@
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
                                     DockPanel.Dock="Right"
                                     VerticalAlignment="Center"
-                                    Error="{Binding Path=Model.Iban.Error, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
+                                    Errors="{Binding Path=Model.BankAccount.Model.Iban.Errors, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
 
                 <TextBox
                     VerticalAlignment="Center"
                     MinHeight="22"
-                    Text="{Binding Path=Model.Iban.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=Model.BankAccount.Model.Iban.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
 
             <DockPanel Margin="12, 8, 12, 0">
@@ -174,12 +173,12 @@
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
                                     DockPanel.Dock="Right"
                                     VerticalAlignment="Center"
-                                    Error="{Binding Path=Model.Bic.Error, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
+                                    Errors="{Binding Path=Model.BankAccount.Model.Bic.Errors, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
 
                 <TextBox
                     VerticalAlignment="Center"
                     MinHeight="22"
-                    Text="{Binding Path=Model.Bic.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=Model.BankAccount.Model.Bic.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
 
             <DockPanel Margin="12, 8, 12, 12">
@@ -191,12 +190,12 @@
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
                                     DockPanel.Dock="Right"
                                     VerticalAlignment="Center"
-                                    Error="{Binding Path=Model.BankName.Error, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
+                                    Errors="{Binding Path=Model.BankAccount.Model.BankName.Errors, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}" />
 
                 <TextBox
                     VerticalAlignment="Center"
                     MinHeight="22"
-                    Text="{Binding Path=Model.BankName.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=Model.BankAccount.Model.BankName.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
 
         </StackPanel>

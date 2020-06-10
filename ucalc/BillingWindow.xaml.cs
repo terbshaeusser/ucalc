@@ -43,5 +43,11 @@ namespace UCalc
             var page = (LandlordPage) ((Frame) sender).Content;
             page.Model = Model.LandlordModel;
         }
+
+        private void OnHouseFrameLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            var page = (HousePage) ((Frame) sender).Content;
+            page.Model = Model.HouseModel;
+        }
     }
 }

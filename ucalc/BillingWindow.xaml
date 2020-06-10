@@ -26,7 +26,8 @@
                        LoadCompleted="OnLandlordFrameLoadCompleted"/>
             </TabItem>
             <TabItem Visibility="Collapsed">
-                <Frame Source="Pages/HousePage.xaml"/>
+                <Frame Source="Pages/HousePage.xaml"
+                       LoadCompleted="OnHouseFrameLoadCompleted"/>
             </TabItem>
             <TabItem Visibility="Collapsed">
                 <Frame Source="Pages/TenantsPage.xaml"/>

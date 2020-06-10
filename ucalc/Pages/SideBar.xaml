@@ -116,8 +116,7 @@
                 </Canvas>
             </Viewbox>
 
-            <controls:ErrorCounter x:Name="LandlordErrorCounter"
-                                   DockPanel.Dock="Right"
+            <controls:ErrorCounter DockPanel.Dock="Right"
                                    Margin="0, 12, 12, 12"
                                    VerticalAlignment="Center"
                                    Model="{Binding Path=Model.LandlordModel, RelativeSource={RelativeSource AncestorType=pages:SideBar}}"/>
@@ -153,6 +152,11 @@
                     </Path>
                 </Canvas>
             </Viewbox>
+
+            <controls:ErrorCounter DockPanel.Dock="Right"
+                                   Margin="0, 12, 12, 12"
+                                   VerticalAlignment="Center"
+                                   Model="{Binding Path=Model.HouseModel, RelativeSource={RelativeSource AncestorType=pages:SideBar}}"/>
 
             <Label Content="Haus"
                    Margin="0, 12, 12, 12"
