@@ -4,6 +4,23 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:UCalc.Pages"
+      xmlns:controls="clr-namespace:UCalc.Controls"
       mc:Ignorable="d">
-    <Grid />
+
+    <ScrollViewer>
+        <StackPanel>
+
+            <DockPanel>
+                <Label DockPanel.Dock="Left" Content="Name:" />
+
+                <controls:ErrorIcon DockPanel.Dock="Right"
+                                    Error="{Binding Path=Model.Name.Error, RelativeSource={RelativeSource AncestorType=local:LandlordPage}}" />
+
+                <TextBox
+                    Text="{Binding Path=Model.Name.Value, RelativeSource={RelativeSource AncestorType=local:LandlordPage}, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+
 </Page>

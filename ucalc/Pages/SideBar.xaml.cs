@@ -2,12 +2,14 @@
 using System.Windows;
 using System.Windows.Controls;
 using UCalc.Controls;
+using UCalc.Models;
 
 namespace UCalc.Pages
 {
     public partial class SideBar
     {
         public TabControl TabControl { get; set; }
+        public BillingModel Model { get; set; }
 
         public SideBar()
         {

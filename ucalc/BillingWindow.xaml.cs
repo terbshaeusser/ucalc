@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using UCalc.Data;
+using UCalc.Models;
 using UCalc.Pages;
 
 namespace UCalc
 {
     public partial class BillingWindow
     {
-        private readonly Billing _savedBilling;
         public Billing Billing { get; }
+        public BillingModel Model { get; }
 
         public BillingWindow(Billing savedBilling, Billing billing)
         {
-            _savedBilling = savedBilling;
             Billing = billing;
             InitializeComponent();
+
+            Model = new BillingModel(Billing);
 
             Title =
                 $"MietRechner - Abrechnung von {billing.StartDate.ToShortDateString()} - {billing.EndDate.Date.ToShortDateString()}";
@@ -28,9 +31,17 @@ namespace UCalc
 
         private void OnSideBarFrameLoadCompleted(object sender, NavigationEventArgs e)
         {
-            var sideBar = (SideBar) SideBarFrame.Content;
+            var sideBar = (SideBar) ((Frame) sender).Content;
             sideBar.TabControl = TabControl;
             sideBar.LandlordButton.Selected = true;
+
+            sideBar.Model = Model;
+        }
+
+        private void OnLandlordFrameLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            var page = (LandlordPage) ((Frame) sender).Content;
+            page.Model = Model.LandlordModel;
         }
     }
 }

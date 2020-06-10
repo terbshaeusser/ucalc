@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:UCalc"
+        xmlns:controls="clr-namespace:UCalc.Controls"
         mc:Ignorable="d"
         Title="MietRechner"
         Width="800"
@@ -21,7 +22,8 @@
         <TabControl Name="TabControl"
                     BorderBrush="White">
             <TabItem Visibility="Collapsed">
-                <Frame Source="Pages/LandlordPage.xaml"/>
+                <Frame Source="Pages/LandlordPage.xaml"
+                       LoadCompleted="OnLandlordFrameLoadCompleted"/>
             </TabItem>
             <TabItem Visibility="Collapsed">
                 <Frame Source="Pages/HousePage.xaml"/>

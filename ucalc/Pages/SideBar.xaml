@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:UCalc"
       xmlns:controls="clr-namespace:UCalc.Controls"
+      xmlns:pages="clr-namespace:UCalc.Pages"
       mc:Ignorable="d"
       Background="{x:Static local:Constants.SubMainColor}">
 
@@ -114,6 +115,12 @@
                     </Path>
                 </Canvas>
             </Viewbox>
+
+            <controls:ErrorCounter x:Name="LandlordErrorCounter"
+                                   DockPanel.Dock="Right"
+                                   Margin="0, 12, 12, 12"
+                                   VerticalAlignment="Center"
+                                   Model="{Binding Path=Model.LandlordModel, RelativeSource={RelativeSource AncestorType=pages:SideBar}}"/>
 
             <Label Content="Vermieter"
                    Margin="0, 12, 12, 12"

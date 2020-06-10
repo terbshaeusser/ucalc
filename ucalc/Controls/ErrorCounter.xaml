@@ -5,5 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:UCalc.Controls"
              mc:Ignorable="d">
-    <Grid />
+
+    <Border CornerRadius="3"
+            BorderBrush="Red"
+            Background="Red">
+
+        <Label
+            Content="{Binding Path=Model.ErrorCount, RelativeSource={RelativeSource AncestorType=local:ErrorCounter}}"
+            Foreground="White" />
+
+    </Border>
+
 </UserControl>
