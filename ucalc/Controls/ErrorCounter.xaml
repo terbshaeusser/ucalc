@@ -6,9 +6,14 @@
              xmlns:local="clr-namespace:UCalc.Controls"
              mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <local:ErrorCountToVisibilityConverter x:Key="ErrorCountToVisibilityConverter" />
+    </UserControl.Resources>
+
     <Border CornerRadius="3"
             BorderBrush="Red"
-            Background="Red">
+            Background="Red"
+            Visibility="{Binding Path=Model.ErrorCount, RelativeSource={RelativeSource AncestorType=local:ErrorCounter}, Converter={StaticResource ErrorCountToVisibilityConverter}}">
 
         <Label
             Content="{Binding Path=Model.ErrorCount, RelativeSource={RelativeSource AncestorType=local:ErrorCounter}}"

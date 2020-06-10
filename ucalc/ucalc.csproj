@@ -34,6 +34,9 @@
         <Page Update="Controls\ErrorIcon.xaml">
             <Generator></Generator>
         </Page>
+        <Page Update="Controls\SectionHeader.xaml">
+            <Generator></Generator>
+        </Page>
     </ItemGroup>
 
     <ItemGroup>
@@ -63,6 +66,9 @@
         </Compile>
         <Compile Update="Controls\ErrorIcon.xaml.cs">
             <DependentUpon>ErrorIcon.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Controls\SectionHeader.xaml.cs">
+            <DependentUpon>SectionHeader.xaml</DependentUpon>
         </Compile>
     </ItemGroup>
 

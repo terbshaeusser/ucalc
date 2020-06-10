@@ -122,7 +122,7 @@
                                    VerticalAlignment="Center"
                                    Model="{Binding Path=Model.LandlordModel, RelativeSource={RelativeSource AncestorType=pages:SideBar}}"/>
 
-            <Label Content="Vermieter"
+            <Label Content="Eigentümer"
                    Margin="0, 12, 12, 12"
                    VerticalAlignment="Center"
                    FontSize="14" />
