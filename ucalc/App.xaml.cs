@@ -9,7 +9,7 @@ namespace UCalc
 
         public App()
         {
-            _recentlyOpenedList = new RecentlyOpenedList();
+            _recentlyOpenedList = new RecentlyOpenedList("recently.txt");
         }
     }
 }

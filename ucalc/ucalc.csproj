@@ -7,11 +7,28 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Controls"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <Page Update="BillingWindow.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\SideBar.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\LandlordPage.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\HousePage.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\CostsPage.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\TenantsPage.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\DetailsPage.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Controls\ErrorCounter.xaml">
             <Generator></Generator>
         </Page>
     </ItemGroup>
@@ -19,6 +36,27 @@
     <ItemGroup>
         <Compile Update="BillingWindow.xaml.cs">
             <DependentUpon>BillingWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\SideBar.xaml.cs">
+            <DependentUpon>SideBar.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\LandlordPage.xaml.cs">
+            <DependentUpon>LandlordPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\HousePage.xaml.cs">
+            <DependentUpon>HousePage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\CostsPage.xaml.cs">
+            <DependentUpon>CostsPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\TenantsPage.xaml.cs">
+            <DependentUpon>TenantsPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\DetailsPage.xaml.cs">
+            <DependentUpon>DetailsPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Controls\ErrorCounter.xaml.cs">
+            <DependentUpon>ErrorCounter.xaml</DependentUpon>
         </Compile>
     </ItemGroup>
 

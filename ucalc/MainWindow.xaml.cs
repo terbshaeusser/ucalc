@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using Microsoft.Win32;
+using UCalc.Data;
 
 namespace UCalc
 {
@@ -50,7 +52,7 @@ namespace UCalc
 
             if (dialog.ShowDialog() == true)
             {
-                throw new NotImplementedException();
+                OpenBilling(dialog.FileName);
             }
 
             if (e != null)
@@ -61,7 +63,25 @@ namespace UCalc
 
         private void OnOpenRecentClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var recentlyOpenedItem = (RecentlyOpenedItem) ((MenuItem) sender).DataContext;
+
+            OpenBilling(recentlyOpenedItem.Path);
+        }
+
+        private void OpenBilling(string path)
+        {
+            try
+            {
+                var billing = new BillingLoader().Load(path);
+                App.RecentlyOpenedList.Add(new RecentlyOpenedItem(path));
+
+                new BillingWindow(billing, billing.Clone()).Show();
+                Hide();
+            }
+            catch (IOException)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace UCalc.Data
 {
@@ -40,11 +42,43 @@ namespace UCalc.Data
 
     public class RecentlyOpenedList : ICollection<RecentlyOpenedItem>
     {
+        private const int MaxCount = 10;
+        private readonly string _path;
         private readonly List<RecentlyOpenedItem> _list;
 
-        public RecentlyOpenedList()
+        public RecentlyOpenedList(string path)
         {
+            _path = path;
             _list = new List<RecentlyOpenedItem>();
+
+            Load(path);
+        }
+
+        private void Load(string path)
+        {
+            try
+            {
+                var lines = File.ReadAllLines(path);
+
+                _list.AddRange(lines.Where(itemPath => itemPath != "").Take(MaxCount)
+                    .Select(itemPath => new RecentlyOpenedItem(itemPath)));
+            }
+            catch (IOException)
+            {
+                // Do nothing
+            }
+        }
+
+        private void Store(string path)
+        {
+            try
+            {
+                File.WriteAllLines(path, _list.Select(item => item.Path));
+            }
+            catch (IOException)
+            {
+                // Do nothing
+            }
         }
 
         public IEnumerator<RecentlyOpenedItem> GetEnumerator()
@@ -67,15 +101,19 @@ namespace UCalc.Data
 
             _list.Insert(0, item);
 
-            if (_list.Count > 10)
+            if (_list.Count > MaxCount)
             {
-                _list.RemoveAt(10);
+                _list.RemoveAt(MaxCount);
             }
+
+            Store(_path);
         }
 
         public void Clear()
         {
             _list.Clear();
+
+            Store(_path);
         }
 
         public bool Contains(RecentlyOpenedItem item)
@@ -90,7 +128,10 @@ namespace UCalc.Data
 
         public bool Remove(RecentlyOpenedItem item)
         {
-            return _list.Remove(item);
+            var result = _list.Remove(item);
+
+            Store(_path);
+            return result;
         }
 
         public int Count => _list.Count;
