@@ -19,7 +19,9 @@
                        Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
-                <ComboBox Margin="0, 0, 28, 0" /> <!-- TODO -->
+                <ComboBox Margin="0, 0, 28, 0"
+                          ItemsSource="{x:Static local:Constants.SalutationStrs}" 
+                          SelectedIndex="{Binding Path=Model.Salutation.Value, RelativeSource={RelativeSource AncestorType=pages:LandlordPage}}"/> 
             </DockPanel>
 
             <DockPanel Margin="12, 12, 12, 0">

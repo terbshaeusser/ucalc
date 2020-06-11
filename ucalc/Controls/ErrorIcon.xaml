@@ -3,19 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:UCalc.Controls"
+             xmlns:controls="clr-namespace:UCalc.Controls"
              mc:Ignorable="d"
              Width="16"
              Height="16">
 
     <UserControl.Resources>
-        <local:ErrorsToVisibilityConverter x:Key="ErrorsToVisibilityConverter" />
-        <local:ErrorsToInVisibilityConverter x:Key="ErrorsToInVisibilityConverter" />
+        <controls:ErrorsToVisibilityConverter x:Key="ErrorsToVisibilityConverter" />
+        <controls:ErrorsToInVisibilityConverter x:Key="ErrorsToInVisibilityConverter" />
     </UserControl.Resources>
     
-    <StackPanel ToolTip="{Binding Path=ErrorsToolTip, RelativeSource={RelativeSource AncestorType=local:ErrorIcon}}">
+    <StackPanel ToolTip="{Binding Path=ErrorsToolTip, RelativeSource={RelativeSource AncestorType=controls:ErrorIcon}}">
         <Viewbox
-            Visibility="{Binding Path=Errors, RelativeSource={RelativeSource AncestorType=local:ErrorIcon}, Converter={StaticResource ErrorsToInVisibilityConverter}}"
+            Visibility="{Binding Path=Errors, RelativeSource={RelativeSource AncestorType=controls:ErrorIcon}, Converter={StaticResource ErrorsToInVisibilityConverter}}"
             Stretch="Uniform">
             <Canvas Width="512" Height="512">
                 <Canvas.RenderTransform>
@@ -32,7 +32,7 @@
         </Viewbox>
 
         <Viewbox
-            Visibility="{Binding Path=Errors, RelativeSource={RelativeSource AncestorType=local:ErrorIcon}, Converter={StaticResource ErrorsToVisibilityConverter}}"
+            Visibility="{Binding Path=Errors, RelativeSource={RelativeSource AncestorType=controls:ErrorIcon}, Converter={StaticResource ErrorsToVisibilityConverter}}"
             Stretch="Uniform">
             <Canvas Width="512" Height="512">
                 <Canvas.RenderTransform>
