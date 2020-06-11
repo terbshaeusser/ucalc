@@ -37,6 +37,9 @@
         <Page Update="Controls\SectionHeader.xaml">
             <Generator></Generator>
         </Page>
+        <Page Update="FlatWindow.xaml">
+            <Generator></Generator>
+        </Page>
     </ItemGroup>
 
     <ItemGroup>
@@ -69,6 +72,9 @@
         </Compile>
         <Compile Update="Controls\SectionHeader.xaml.cs">
             <DependentUpon>SectionHeader.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="FlatWindow.xaml.cs">
+            <DependentUpon>FlatWindow.xaml</DependentUpon>
         </Compile>
     </ItemGroup>
 

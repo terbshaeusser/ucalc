@@ -16,7 +16,7 @@
             <DockPanel Margin="12, 12, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="Anrede:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <ComboBox Margin="0, 0, 28, 0" /> <!-- TODO -->
@@ -25,7 +25,7 @@
             <DockPanel Margin="12, 12, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="Name:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -42,7 +42,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="Telefonnummer:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -59,7 +59,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="Email Adresse:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -79,7 +79,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="Straße:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -96,7 +96,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="Hausnummer:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -113,7 +113,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="Stadt:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -130,7 +130,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="PLZ:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -150,7 +150,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="IBAN:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -167,7 +167,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="BIC:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -184,7 +184,7 @@
             <DockPanel Margin="12, 8, 12, 12">
                 <Label DockPanel.Dock="Left"
                        Content="Name der Bank:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"

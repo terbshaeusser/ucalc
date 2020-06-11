@@ -12,6 +12,8 @@
         WindowStartupLocation="CenterOwner"
         PreviewMouseUp="OnPreviewMouseUp">
 
+    <!-- TODO: Wrap in scroll to handle small screens! -->
+    
     <StackPanel Margin="12">
 
         <Label Content="Geben Sie den Zeitraum ein, für den die neue Abrechnung gelten soll."
@@ -53,8 +55,8 @@
                     Content="..."
                     Margin="6, 0, 0, 0"
                     Width="30"
-                    IsEnabled="{Binding IsChecked, ElementName=ReuseDataCheckBox}" 
-                    Click="OnBrowseClick"/>
+                    IsEnabled="{Binding IsChecked, ElementName=ReuseDataCheckBox}"
+                    Click="OnBrowseClick" />
 
             <ComboBox Name="ReuseDataComboBox"
                       IsEnabled="{Binding IsChecked, ElementName=ReuseDataCheckBox}"
@@ -67,14 +69,15 @@
             </ComboBox>
         </DockPanel>
 
-        <Separator Margin="0, 0, 0, 12" />
+        <Separator Margin="0, 0, 0, 12"
+                   Background="{x:Static local:Constants.SubMainColor}" />
 
         <DockPanel LastChildFill="False">
             <Button DockPanel.Dock="Right"
                     MinWidth="100"
                     MinHeight="24"
                     Content="Erstellen"
-                    Click="OnCreateClick"/>
+                    Click="OnCreateClick" />
         </DockPanel>
     </StackPanel>
 

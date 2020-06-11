@@ -16,7 +16,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="Straße:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -33,7 +33,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="Hausnummer:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -50,7 +50,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="Stadt:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -67,7 +67,7 @@
             <DockPanel Margin="12, 8, 12, 0">
                 <Label DockPanel.Dock="Left"
                        Content="PLZ:"
-                       Width="200"
+                       Width="180"
                        Foreground="{x:Static local:Constants.SubMainColor}" />
 
                 <controls:ErrorIcon Margin="12, 0, 0, 0"
@@ -140,7 +140,8 @@
                             </controls:HighlightButton>
 
                             <controls:HighlightButton HighlightForeground="{x:Static local:Constants.SubMainColor}"
-                                                      HighlightBackground="{x:Static local:Constants.MainColor}">
+                                                      HighlightBackground="{x:Static local:Constants.MainColor}"
+                                                      Click="OnFlatEditClick">
 
                                 <controls:ErrorIcon Errors="{Binding Errors}"
                                                     DockPanel.Dock="Left"

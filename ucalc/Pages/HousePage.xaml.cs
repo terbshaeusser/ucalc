@@ -6,6 +6,7 @@ namespace UCalc.Pages
 {
     public partial class HousePage
     {
+        public Window ParentWindow { get; set; }
         public HouseModel Model { get; set; }
 
         public HousePage()
@@ -27,6 +28,13 @@ namespace UCalc.Pages
             {
                 Model.RemoveFlat(flatModel);
             }
+        }
+
+        private void OnFlatEditClick(object sender, RoutedEventArgs e)
+        {
+            var flatModel = (FlatModel) ((HighlightButton) sender).DataContext;
+
+            new FlatWindow(flatModel) {Owner = ParentWindow}.ShowDialog();
         }
     }
 }

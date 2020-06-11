@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using ucalc.Annotations;
+using UCalc.Annotations;
 
 namespace UCalc.Models
 {
@@ -133,6 +133,8 @@ namespace UCalc.Models
 
                 _modified = true;
                 _value = value;
+
+                OnPropertyChanged("Value");
             }
         }
 

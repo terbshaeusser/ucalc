@@ -48,6 +48,7 @@ namespace UCalc
         {
             var page = (HousePage) ((Frame) sender).Content;
             page.Model = Model.HouseModel;
+            page.ParentWindow = this;
         }
     }
 }

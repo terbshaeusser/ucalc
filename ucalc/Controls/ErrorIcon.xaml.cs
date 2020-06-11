@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Data;
-using ucalc.Annotations;
+using UCalc.Annotations;
 
 namespace UCalc.Controls
 {
