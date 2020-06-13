@@ -1,234 +1,152 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using UCalc.Annotations;
+using UCalc.Data;
 
 namespace UCalc.Models
 {
-    public abstract class ModelBaseProperty : INotifyPropertyChanged
+    public class Model : INotifyPropertyChanged
     {
-        protected static readonly List<string> EmptyList = new List<string>();
-        public abstract IReadOnlyCollection<string> Errors { get; }
-        public abstract bool Modified { get; }
-
-        protected void OnChildPropertyChanged(object sender, PropertyChangedEventArgs args)
+        public class Validator : IDisposable
         {
-            if (args.PropertyName == "Errors" || args.PropertyName == "Modified")
+            private readonly Model _model;
+            private int _counter;
+            private readonly HashSet<Property> _validated;
+            private readonly HashSet<Tuple<Property, string>> _notifications;
+
+            public Validator(Model model)
             {
-                OnPropertyChanged(args.PropertyName);
+                _model = model;
+                _validated = new HashSet<Property>();
+                _notifications = new HashSet<Tuple<Property, string>>();
             }
-        }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public class NestedModelProperty<T> : ModelBaseProperty where T : Model
-    {
-        public T Model { get; }
-
-        public NestedModelProperty(T model)
-        {
-            Model = model;
-
-            Model.PropertyChanged += OnChildPropertyChanged;
-        }
-
-        public override IReadOnlyCollection<string> Errors => Model.Errors;
-
-        public override bool Modified => Model.Modified;
-    }
-
-    public class MultiModelProperty<T> : ModelBaseProperty where T : Model
-    {
-        private readonly ObservableCollection<T> _models;
-
-        public MultiModelProperty()
-        {
-            _models = new ObservableCollection<T>();
-        }
-
-        public void Add(T model)
-        {
-            _models.Add(model);
-
-            model.PropertyChanged += OnChildPropertyChanged;
-
-            if (model.Errors.Count > 0)
+            public void Notify(Property property, string propertyName)
             {
-                OnPropertyChanged("Errors");
-            }
-        }
+                _notifications.Add(new Tuple<Property, string>(property, propertyName));
 
-        public void Remove(T model)
-        {
-            model.PropertyChanged -= OnChildPropertyChanged;
-
-            _models.Remove(model);
-
-            if (model.Errors.Count > 0)
-            {
-                OnPropertyChanged("Errors");
-            }
-        }
-
-        public IReadOnlyList<T> Models => _models;
-
-        public override IReadOnlyCollection<string> Errors
-        {
-            get
-            {
-                var errors = new List<string>();
-
-                foreach (var model in _models)
+                if (property != null)
                 {
-                    errors.AddRange(model.Errors);
+                    property = property.Parent;
+
+                    while (property != null)
+                    {
+                        _notifications.Add(new Tuple<Property, string>(property, propertyName));
+                        property = property.Parent;
+                    }
+
+                    _notifications.Add(new Tuple<Property, string>(null, propertyName));
                 }
-
-                return errors;
             }
-        }
 
-        public override bool Modified => _models.Select(model => model.Modified).Any();
-    }
-
-    public class ModelProperty<T> : ModelBaseProperty
-    {
-        public string Name { get; }
-        private T _value;
-        private readonly List<string> _errors;
-        private readonly Func<string, T, string> _validate;
-        private bool _modified;
-
-        public T Value
-        {
-            get => _value;
-            set
+            public void Validate(Property property)
             {
-                if (_value.Equals(value))
+                if (property == null)
                 {
                     return;
                 }
 
-                var oldError = _errors[0];
-                _errors[0] = _validate?.Invoke(Name, value) ?? "";
-
-                if (oldError != _errors[0])
+                if (_validated.Add(property))
                 {
-                    OnPropertyChanged("Errors");
+                    property.Validate();
                 }
+            }
 
-                if (!_modified)
+            public void ValidateRange(IEnumerable<Property> properties)
+            {
+                foreach (var property in properties)
                 {
-                    OnPropertyChanged("Modified");
+                    Validate(property);
                 }
+            }
 
-                _modified = true;
-                _value = value;
+            public void IncValidationCounter()
+            {
+                ++_counter;
+            }
 
-                OnPropertyChanged("Value");
+            public void Dispose()
+            {
+                --_counter;
+
+                if (_counter == 0)
+                {
+                    _validated.Clear();
+
+                    var sortedNotifications = new List<Tuple<Property, string>>(_notifications);
+                    sortedNotifications.Sort((x, y) =>
+                    {
+                        var (prop1, propName1) = x;
+                        var (prop2, propName2) = y;
+
+                        if (prop1 == null)
+                        {
+                            return prop2 == null ? string.CompareOrdinal(propName1, propName2) : 1;
+                        }
+
+                        if (prop2 == null)
+                        {
+                            return -1;
+                        }
+
+                        if (ReferenceEquals(prop1, prop2))
+                        {
+                            return string.CompareOrdinal(propName1, propName2);
+                        }
+
+                        if (prop1.IsParentOf(prop2))
+                        {
+                            return 1;
+                        }
+
+                        if (prop2.IsParentOf(prop1))
+                        {
+                            return -1;
+                        }
+
+                        return 0;
+                    });
+
+                    foreach (var (property, propertyName) in sortedNotifications)
+                    {
+                        if (property == null)
+                        {
+                            _model.OnPropertyChanged(propertyName);
+                        }
+                        else
+                        {
+                            property.OnPropertyChanged(propertyName);
+                        }
+                    }
+
+                    _notifications.Clear();
+                }
             }
         }
 
-        public ModelProperty(string name, T value, Func<string, T, string> validate)
+        private readonly Validator _validator;
+        public BillingProperty Root { get; }
+
+        public Model(Billing billing)
         {
-            Name = name;
-            _value = value;
-            _errors = new List<string> {validate?.Invoke(Name, _value) ?? ""};
-            _validate = validate;
-            _modified = false;
+            _validator = new Validator(this);
+
+            using var validator = BeginValidation();
+            Root = new BillingProperty(this, null, billing);
         }
 
-        public override IReadOnlyCollection<string> Errors => _errors[0] != "" ? _errors : EmptyList;
-
-        public override bool Modified => _modified;
-
-        public void ResetModified()
+        public Validator BeginValidation()
         {
-            _modified = false;
+            _validator.IncValidationCounter();
+            return _validator;
         }
-    }
-
-    public static class ModelPropertyValidators
-    {
-        public static string IsNotEmpty(string name, string data)
-        {
-            return string.IsNullOrEmpty(data) ? $"{name}: Geben Sie einen Wert ein." : "";
-        }
-
-        public static string IsNaturalInt(string name, string data)
-        {
-            return !int.TryParse(data, out var n) || n <= 0
-                ? $"{name}: Der eingegebene Wert ist keine gültige positive Zahl > 0."
-                : "";
-        }
-    }
-
-    public abstract class Model : INotifyPropertyChanged
-    {
-        private readonly List<ModelBaseProperty> _properties;
-
-        protected Model()
-        {
-            _properties = new List<ModelBaseProperty>();
-
-            PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == "Errors")
-                {
-                    OnPropertyChanged("ErrorCount");
-                }
-            };
-        }
-
-        protected T Add<T>(T property) where T : ModelBaseProperty
-        {
-            _properties.Add(property);
-
-            property.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == "Errors" || args.PropertyName == "Modified")
-                {
-                    OnPropertyChanged(args.PropertyName);
-                }
-            };
-
-            return property;
-        }
-
-        public bool Modified => _properties.Select(property => property.Modified).Any();
-
-        public IReadOnlyCollection<string> Errors
-        {
-            get
-            {
-                var errors = new List<string>();
-
-                foreach (var property in _properties)
-                {
-                    errors.AddRange(property.Errors);
-                }
-
-                return errors;
-            }
-        }
-
-        public int ErrorCount => Errors.Count;
-
-        public abstract void Apply();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

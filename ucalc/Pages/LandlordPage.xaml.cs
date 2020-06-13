@@ -4,7 +4,7 @@ namespace UCalc.Pages
 {
     public partial class LandlordPage
     {
-        public LandlordModel Model { get; set; }
+        public LandlordProperty Landlord { get; set; }
 
         public LandlordPage()
         {

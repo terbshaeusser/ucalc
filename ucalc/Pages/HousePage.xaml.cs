@@ -7,7 +7,7 @@ namespace UCalc.Pages
     public partial class HousePage
     {
         public Window ParentWindow { get; set; }
-        public HouseModel Model { get; set; }
+        public HouseProperty House { get; set; }
 
         public HousePage()
         {
@@ -16,25 +16,25 @@ namespace UCalc.Pages
 
         private void OnAddFlatClick(object sender, RoutedEventArgs e)
         {
-            Model.AddFlat();
+            House.Flats.Add();
         }
 
         private void OnFlatDeleteClick(object sender, RoutedEventArgs e)
         {
-            var flatModel = (FlatModel) ((HighlightButton) sender).DataContext;
+            var flat = (FlatProperty) ((HighlightButton) sender).DataContext;
 
-            if (MessageBox.Show($"Möchten Sie die Wohnung \"{flatModel.Data.Name}\" wirlick löschen?", "Löschen?",
+            if (MessageBox.Show($"Möchten Sie die Wohnung \"{flat.Name.Value}\" wirlick löschen?", "Löschen?",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                Model.RemoveFlat(flatModel);
+                House.Flats.Remove(flat);
             }
         }
 
         private void OnFlatEditClick(object sender, RoutedEventArgs e)
         {
-            var flatModel = (FlatModel) ((HighlightButton) sender).DataContext;
+            var flat = (FlatProperty) ((HighlightButton) sender).DataContext;
 
-            new FlatWindow(flatModel) {Owner = ParentWindow}.ShowDialog();
+            new FlatWindow(flat) {Owner = ParentWindow}.ShowDialog();
         }
     }
 }

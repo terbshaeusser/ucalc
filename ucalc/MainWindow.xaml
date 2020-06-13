@@ -8,6 +8,7 @@
         Title="MietRechner"
         Height="400"
         Width="500"
+        WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize">
 
     <Grid>

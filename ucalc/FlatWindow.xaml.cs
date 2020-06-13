@@ -5,11 +5,11 @@ namespace UCalc
 {
     public partial class FlatWindow
     {
-        public FlatModel Model { get; }
+        public FlatProperty Flat { get; }
 
-        public FlatWindow(FlatModel model)
+        public FlatWindow(FlatProperty flat)
         {
-            Model = model;
+            Flat = flat;
             InitializeComponent();
         }
 

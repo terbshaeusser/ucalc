@@ -40,6 +40,9 @@
         <Page Update="FlatWindow.xaml">
             <Generator></Generator>
         </Page>
+        <Page Update="TenantWindow.xaml">
+            <Generator></Generator>
+        </Page>
     </ItemGroup>
 
     <ItemGroup>
@@ -75,6 +78,9 @@
         </Compile>
         <Compile Update="FlatWindow.xaml.cs">
             <DependentUpon>FlatWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="TenantWindow.xaml.cs">
+            <DependentUpon>TenantWindow.xaml</DependentUpon>
         </Compile>
     </ItemGroup>
 

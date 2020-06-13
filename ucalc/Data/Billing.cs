@@ -167,7 +167,7 @@ namespace UCalc.Data
         public int PersonCount { get; set; }
         public BankAccount BankAccount { get; private set; }
         public DateTime? EntryDate { get; set; }
-        public DateTime? DepatureDate { get; set; }
+        public DateTime? DepartureDate { get; set; }
         public HashSet<Flat> RentedFlats { get; private set; }
         public decimal PaidRent { get; set; }
         public string CustomMessage1 { get; set; }
@@ -185,7 +185,7 @@ namespace UCalc.Data
         {
             return Id.Equals(other.Id) && Salutation == other.Salutation && Name == other.Name &&
                    PersonCount == other.PersonCount && Equals(BankAccount, other.BankAccount) &&
-                   Nullable.Equals(EntryDate, other.EntryDate) && Nullable.Equals(DepatureDate, other.DepatureDate) &&
+                   Nullable.Equals(EntryDate, other.EntryDate) && Nullable.Equals(DepartureDate, other.DepartureDate) &&
                    RentedFlats.SequenceEqual(other.RentedFlats) && PaidRent == other.PaidRent &&
                    CustomMessage1 == other.CustomMessage1 && CustomMessage2 == other.CustomMessage2;
         }
@@ -207,7 +207,7 @@ namespace UCalc.Data
                 PersonCount = PersonCount,
                 BankAccount = BankAccount.Clone(),
                 EntryDate = EntryDate,
-                DepatureDate = DepatureDate,
+                DepartureDate = DepartureDate,
                 RentedFlats = new HashSet<Flat>(RentedFlats.Select(flat => flatMapper[flat])),
                 PaidRent = PaidRent,
                 CustomMessage1 = CustomMessage1,

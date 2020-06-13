@@ -43,12 +43,12 @@
                     <controls:ErrorIcon Margin="12, 0, 0, 0"
                                         DockPanel.Dock="Right"
                                         VerticalAlignment="Center"
-                                        Errors="{Binding Path=Model.Name.Errors, RelativeSource={RelativeSource AncestorType=local:FlatWindow}}" />
+                                        Property="{Binding Path=Flat.Name, RelativeSource={RelativeSource AncestorType=local:FlatWindow}}" />
 
                     <TextBox
                         VerticalAlignment="Center"
                         MinHeight="22"
-                        Text="{Binding Path=Model.Name.Value, RelativeSource={RelativeSource AncestorType=local:FlatWindow}, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Path=Flat.Name.Value, RelativeSource={RelativeSource AncestorType=local:FlatWindow}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
 
                 <DockPanel Margin="12, 8, 12, 0">
@@ -60,12 +60,12 @@
                     <controls:ErrorIcon Margin="12, 0, 0, 0"
                                         DockPanel.Dock="Right"
                                         VerticalAlignment="Center"
-                                        Errors="{Binding Path=Model.Size.Errors, RelativeSource={RelativeSource AncestorType=local:FlatWindow}}" />
+                                        Property="{Binding Path=Flat.Size, RelativeSource={RelativeSource AncestorType=local:FlatWindow}}" />
 
                     <TextBox
                         VerticalAlignment="Center"
                         MinHeight="22"
-                        Text="{Binding Path=Model.Size.Value, RelativeSource={RelativeSource AncestorType=local:FlatWindow}, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Path=Flat.Size.Value, RelativeSource={RelativeSource AncestorType=local:FlatWindow}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
             </StackPanel>
         </ScrollViewer>

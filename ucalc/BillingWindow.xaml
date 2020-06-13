@@ -17,26 +17,33 @@
         <Frame Name="SideBarFrame"
                Source="Pages/SideBar.xaml"
                Width="240"
-               LoadCompleted="OnSideBarFrameLoadCompleted"/>
+               LoadCompleted="OnSideBarFrameLoadCompleted"
+               Focusable="False" />
 
         <TabControl Name="TabControl"
                     BorderBrush="White">
             <TabItem Visibility="Collapsed">
                 <Frame Source="Pages/LandlordPage.xaml"
-                       LoadCompleted="OnLandlordFrameLoadCompleted"/>
+                       LoadCompleted="OnLandlordFrameLoadCompleted"
+                       Focusable="False" />
             </TabItem>
             <TabItem Visibility="Collapsed">
                 <Frame Source="Pages/HousePage.xaml"
-                       LoadCompleted="OnHouseFrameLoadCompleted"/>
+                       LoadCompleted="OnHouseFrameLoadCompleted"
+                       Focusable="False" />
             </TabItem>
             <TabItem Visibility="Collapsed">
-                <Frame Source="Pages/TenantsPage.xaml"/>
+                <Frame Source="Pages/TenantsPage.xaml"
+                       LoadCompleted="OnTenantsFrameLoadCompleted"
+                       Focusable="False" />
             </TabItem>
             <TabItem Visibility="Collapsed">
-                <Frame Source="Pages/CostsPage.xaml"/>
+                <Frame Source="Pages/CostsPage.xaml"
+                       Focusable="False" />
             </TabItem>
             <TabItem Visibility="Collapsed">
-                <Frame Source="Pages/DetailsPage.xaml"/>
+                <Frame Source="Pages/DetailsPage.xaml"
+                       Focusable="False" />
             </TabItem>
         </TabControl>
     </DockPanel>

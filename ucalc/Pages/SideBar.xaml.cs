@@ -9,7 +9,7 @@ namespace UCalc.Pages
     public partial class SideBar
     {
         public TabControl TabControl { get; set; }
-        public BillingModel Model { get; set; }
+        public Model Model { get; set; }
 
         public SideBar()
         {

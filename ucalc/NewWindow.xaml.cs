@@ -71,7 +71,7 @@ namespace UCalc
                     return;
                 }
 
-                // Remove depatured renters and costs that were only paid once
+                // Remove departured renters and costs that were only paid once
                 string summary = "";
                 billing.StartDate = (DateTime) StartCalendar.SelectedDate;
                 billing.EndDate = (DateTime) EndCalendar.SelectedDate;

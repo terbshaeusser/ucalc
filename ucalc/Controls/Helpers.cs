@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -25,6 +26,16 @@ namespace UCalc.Controls
             {
                 path.Fill = brush;
             }
+        }
+
+        private static bool IsBetween(this DateTime dt, DateTime start, DateTime end)
+        {
+            return dt >= start && dt <= end;
+        }
+
+        public static bool Intersects(this DateTime start1, DateTime end1, DateTime start2, DateTime end2)
+        {
+            return start1.IsBetween(start2, end2) || start2.IsBetween(start1, end1);
         }
     }
 }

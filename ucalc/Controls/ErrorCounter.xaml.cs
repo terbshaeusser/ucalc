@@ -5,10 +5,10 @@ namespace UCalc.Controls
 {
     public partial class ErrorCounter
     {
-        public Model Model { get; set; }
+        public Property Property { get; set; }
 
-        public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
-            "Model", typeof(Model), typeof(ErrorCounter), new PropertyMetadata((Model) null));
+        public static readonly DependencyProperty PropertyProperty = DependencyProperty.Register(
+            "Property", typeof(Property), typeof(ErrorCounter), new PropertyMetadata((Property) null));
 
         public ErrorCounter()
         {

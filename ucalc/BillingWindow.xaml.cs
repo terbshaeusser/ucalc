@@ -10,18 +10,16 @@ namespace UCalc
 {
     public partial class BillingWindow
     {
-        public Billing Billing { get; }
-        public BillingModel Model { get; }
+        public Model Model { get; }
 
-        public BillingWindow(Billing savedBilling, Billing billing)
+        public BillingWindow(Billing billing)
         {
-            Billing = billing;
+            Model = new Model(billing);
+
             InitializeComponent();
 
-            Model = new BillingModel(Billing);
-
             Title =
-                $"MietRechner - Abrechnung von {billing.StartDate.ToShortDateString()} - {billing.EndDate.Date.ToShortDateString()}";
+                $"MietRechner - Abrechnung von {billing.StartDate.ToString(Constants.DateFormat)} - {billing.EndDate.Date.ToString(Constants.DateFormat)}";
         }
 
         private void OnClosed(object sender, EventArgs e)
@@ -41,13 +39,21 @@ namespace UCalc
         private void OnLandlordFrameLoadCompleted(object sender, NavigationEventArgs e)
         {
             var page = (LandlordPage) ((Frame) sender).Content;
-            page.Model = Model.LandlordModel;
+            page.Landlord = Model.Root.Landlord;
         }
 
         private void OnHouseFrameLoadCompleted(object sender, NavigationEventArgs e)
         {
             var page = (HousePage) ((Frame) sender).Content;
-            page.Model = Model.HouseModel;
+            page.House = Model.Root.House;
+            page.ParentWindow = this;
+        }
+
+        private void OnTenantsFrameLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            var page = (TenantsPage) ((Frame) sender).Content;
+            page.Tenants = Model.Root.Tenants;
+            page.House = Model.Root.House;
             page.ParentWindow = this;
         }
     }

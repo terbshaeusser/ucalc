@@ -7,16 +7,17 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <local:ErrorCountToVisibilityConverter x:Key="ErrorCountToVisibilityConverter" />
+        <local:ErrorsToVisibilityConverter x:Key="ErrorsToVisibilityConverter" />
+        <local:ErrorsToCountConverter x:Key="ErrorsToCountConverter" />
     </UserControl.Resources>
 
     <Border CornerRadius="3"
             BorderBrush="Red"
             Background="Red"
-            Visibility="{Binding Path=Model.ErrorCount, RelativeSource={RelativeSource AncestorType=local:ErrorCounter}, Converter={StaticResource ErrorCountToVisibilityConverter}}">
+            Visibility="{Binding Path=Property.Errors, RelativeSource={RelativeSource AncestorType=local:ErrorCounter}, Converter={StaticResource ErrorsToVisibilityConverter}}">
 
         <Label
-            Content="{Binding Path=Model.ErrorCount, RelativeSource={RelativeSource AncestorType=local:ErrorCounter}}"
+            Content="{Binding Path=Property.Errors, RelativeSource={RelativeSource AncestorType=local:ErrorCounter}, Converter={StaticResource ErrorsToCountConverter}}"
             Foreground="White" />
 
     </Border>

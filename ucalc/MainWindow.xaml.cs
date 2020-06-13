@@ -22,7 +22,7 @@ namespace UCalc
 
             if (newWindow.ShowDialog() == true)
             {
-                new BillingWindow(newWindow.SavedBilling, newWindow.Billing).Show();
+                new BillingWindow(newWindow.Billing).Show();
                 Hide();
             }
         }
@@ -75,7 +75,7 @@ namespace UCalc
                 var billing = new BillingLoader().Load(path);
                 App.RecentlyOpenedList.Add(new RecentlyOpenedItem(path));
 
-                new BillingWindow(billing, billing.Clone()).Show();
+                new BillingWindow(billing).Show();
                 Hide();
             }
             catch (IOException)
