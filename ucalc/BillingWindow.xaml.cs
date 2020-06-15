@@ -52,6 +52,7 @@ namespace UCalc
         private void OnTenantsFrameLoadCompleted(object sender, NavigationEventArgs e)
         {
             var page = (TenantsPage) ((Frame) sender).Content;
+            page.Model = Model;
             page.Tenants = Model.Root.Tenants;
             page.House = Model.Root.House;
             page.ParentWindow = this;

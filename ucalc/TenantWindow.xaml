@@ -151,9 +151,11 @@
                                         DockPanel.Dock="Right"
                                         VerticalAlignment="Center"
                                         Property="{Binding Path=Tenant.EntryDate, RelativeSource={RelativeSource AncestorType=local:TenantWindow}}" />
-<!-- TODO                                 DisplayDateStart="{}" -->
+
                     <DatePicker VerticalAlignment="Center"
                                 MinHeight="22"
+                                DisplayDateStart="{Binding Path=Model.StartDate, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, Mode=OneWay}"
+                                DisplayDateEnd="{Binding Path=Model.EndDate, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, Mode=OneWay}"
                                 Text="{Binding Path=Tenant.EntryDate.Value, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DatePickerTextToDateTimeConverter}}" />
                 </DockPanel>
 
@@ -170,6 +172,8 @@
 
                     <DatePicker VerticalAlignment="Center"
                                 MinHeight="22"
+                                DisplayDateStart="{Binding Path=Model.StartDate, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, Mode=OneWay}"
+                                DisplayDateEnd="{Binding Path=Model.EndDate, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, Mode=OneWay}"
                                 Text="{Binding Path=Tenant.DepartureDate.Value, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DatePickerTextToDateTimeConverter}}" />
                 </DockPanel>
 

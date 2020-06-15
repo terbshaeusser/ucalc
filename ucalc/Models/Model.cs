@@ -127,11 +127,15 @@ namespace UCalc.Models
         }
 
         private readonly Validator _validator;
+        public DateTime StartDate { get; }
+        public DateTime EndDate { get; }
         public BillingProperty Root { get; }
 
         public Model(Billing billing)
         {
             _validator = new Validator(this);
+            StartDate = billing.StartDate;
+            EndDate = billing.EndDate;
 
             using var validator = BeginValidation();
             Root = new BillingProperty(this, null, billing);

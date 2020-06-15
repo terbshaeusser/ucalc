@@ -7,11 +7,13 @@ namespace UCalc
 {
     public partial class TenantWindow
     {
+        public Model Model { get; }
         public TenantProperty Tenant { get; }
         public HouseProperty House { get; }
 
-        public TenantWindow(TenantProperty tenant, HouseProperty house)
+        public TenantWindow(Model model, TenantProperty tenant, HouseProperty house)
         {
+            Model = model;
             Tenant = tenant;
             House = house;
             InitializeComponent();

@@ -7,6 +7,7 @@ namespace UCalc.Pages
     public partial class TenantsPage
     {
         public Window ParentWindow { get; set; }
+        public Model Model { get; set; }
         public TenantsProperty Tenants { get; set; }
         public HouseProperty House { get; set; }
 
@@ -35,7 +36,7 @@ namespace UCalc.Pages
         {
             var tenant = (TenantProperty) ((HighlightButton) sender).DataContext;
 
-            new TenantWindow(tenant, House) {Owner = ParentWindow}.ShowDialog();
+            new TenantWindow(Model, tenant, House) {Owner = ParentWindow}.ShowDialog();
         }
     }
 }

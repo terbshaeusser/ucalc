@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -171,9 +172,17 @@ namespace UCalc.Models
 
         protected override string ValidateValue()
         {
-            return !decimal.TryParse(Value, out var n) || n < 0
-                ? $"{Name}: Der eingegebene Wert ist kein gültiger Betrag."
-                : "";
+            if (!decimal.TryParse(Value, out var n) || n < 0)
+            {
+                return $"{Name}: Der eingegebene Wert ist kein gültiger Betrag.";
+            }
+
+            if (Math.Round(n, 2) != n)
+            {
+                return $"{Name}: Der eingegebene Wert besitzt mehr als 2 Nachkommastellen.";
+            }
+
+            return "";
         }
     }
 
