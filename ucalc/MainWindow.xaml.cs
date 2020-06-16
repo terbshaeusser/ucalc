@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -78,9 +77,10 @@ namespace UCalc
                 new BillingWindow(path, billing).Show();
                 Hide();
             }
-            catch (IOException)
+            catch (IOException e)
             {
-                throw new NotImplementedException();
+                MessageBox.Show($"Beim Laden der Datei \"{path}\" ist ein Fehler aufgetreten!\n\nDetails: {e.Message}",
+                    "Fehler!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

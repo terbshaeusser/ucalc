@@ -67,11 +67,25 @@ namespace UCalc.Models
 
             return false;
         }
+
+        public int DepthInTree()
+        {
+            var i = 0;
+            var property = Parent;
+
+            while (property != null)
+            {
+                ++i;
+                property = property.Parent;
+            }
+
+            return i;
+        }
     }
 
     public abstract class ValueProperty<T> : Property
     {
-        protected string Name;
+        protected readonly string Name;
         private T _value;
         private readonly List<string> _errors;
 

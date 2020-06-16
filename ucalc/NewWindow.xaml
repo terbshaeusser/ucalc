@@ -13,8 +13,6 @@
         PreviewMouseUp="OnPreviewMouseUp"
         Icon="logo.ico">
 
-    <!-- TODO: Wrap in scroll to handle small screens! -->
-    
     <StackPanel Margin="12">
 
         <Label Content="Geben Sie den Zeitraum ein, für den die neue Abrechnung gelten soll."

@@ -51,7 +51,10 @@ namespace UCalc.Models
                 tenant.RentedFlats.Remove(flat);
             }
 
-            // TODO: Revalidate all flats + revalidate tenant rent lists + costs flat lists
+            foreach (var cost in Model.Root.Costs)
+            {
+                cost.AffectedFlats.Remove(flat);
+            }
         }
     }
 }

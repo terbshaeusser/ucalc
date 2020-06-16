@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 #pragma warning disable 659
 
@@ -43,9 +45,17 @@ namespace UCalc.Data
 
     public class Address
     {
+        [JsonProperty(PropertyName = "street"), JsonRequired, JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string Street { get; set; }
+
+        [JsonProperty(PropertyName = "houseNumber"), JsonRequired,
+         JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string HouseNumber { get; set; }
+
+        [JsonProperty(PropertyName = "city"), JsonRequired, JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string City { get; set; }
+
+        [JsonProperty(PropertyName = "postCode"), JsonRequired, JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string Postcode { get; set; }
 
         public Address()
@@ -83,8 +93,13 @@ namespace UCalc.Data
 
     public class BankAccount
     {
+        [JsonProperty(PropertyName = "iban"), JsonRequired, JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string Iban { get; set; }
+
+        [JsonProperty(PropertyName = "bic"), JsonRequired, JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string Bic { get; set; }
+
+        [JsonProperty(PropertyName = "bankName"), JsonRequired, JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string BankName { get; set; }
 
         public BankAccount()
@@ -119,8 +134,13 @@ namespace UCalc.Data
 
     public class Flat
     {
-        public Guid Id { get; private set; }
+        [JsonProperty(PropertyName = "id"), JsonRequired]
+        public Guid Id { get; set; }
+
+        [JsonProperty(PropertyName = "name"), JsonRequired, JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string Name { get; set; }
+
+        [JsonProperty(PropertyName = "size"), JsonRequired]
         public int Size { get; set; }
 
         public Flat()
@@ -161,16 +181,37 @@ namespace UCalc.Data
 
     public class Tenant
     {
-        public Guid Id { get; private set; }
+        [JsonProperty(PropertyName = "id"), JsonRequired]
+        public Guid Id { get; set; }
+
+        [JsonProperty(PropertyName = "salutation"), JsonRequired, JsonConverter(typeof(StringEnumConverter))]
         public Salutation Salutation { get; set; }
+
+        [JsonProperty(PropertyName = "name"), JsonRequired, JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string Name { get; set; }
+
+        [JsonProperty(PropertyName = "personCount"), JsonRequired]
         public int PersonCount { get; set; }
-        public BankAccount BankAccount { get; private set; }
+
+        [JsonProperty(PropertyName = "bankAccount"), JsonRequired]
+        public BankAccount BankAccount { get; set; }
+
+        [JsonProperty(PropertyName = "entryDate")]
         public DateTime? EntryDate { get; set; }
+
+        [JsonProperty(PropertyName = "departureDate")]
         public DateTime? DepartureDate { get; set; }
-        public HashSet<Flat> RentedFlats { get; private set; }
+
+        [JsonProperty(PropertyName = "rentedFlats"), JsonRequired, JsonConverter(typeof(FlatSerializationConverter))]
+        public HashSet<Flat> RentedFlats { get; set; }
+
+        [JsonProperty(PropertyName = "paidRent"), JsonRequired]
         public decimal PaidRent { get; set; }
+
+        [JsonProperty(PropertyName = "customMessage1"), JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string CustomMessage1 { get; set; }
+
+        [JsonProperty(PropertyName = "customMessage2"), JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string CustomMessage2 { get; set; }
 
         public Tenant()
@@ -179,6 +220,8 @@ namespace UCalc.Data
             Name = "";
             BankAccount = new BankAccount();
             RentedFlats = new HashSet<Flat>();
+            CustomMessage1 = "";
+            CustomMessage2 = "";
         }
 
         private bool Equals(Tenant other)
@@ -218,12 +261,24 @@ namespace UCalc.Data
 
     public class Landlord
     {
+        [JsonProperty(PropertyName = "salutation"), JsonRequired, JsonConverter(typeof(StringEnumConverter))]
         public Salutation Salutation { get; set; }
+
+        [JsonProperty(PropertyName = "name"), JsonRequired, JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string Name { get; set; }
+
+        [JsonProperty(PropertyName = "mailAddress"), JsonRequired,
+         JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string MailAddress { get; set; }
+
+        [JsonProperty(PropertyName = "phone"), JsonRequired, JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string Phone { get; set; }
-        public Address Address { get; private set; }
-        public BankAccount BankAccount { get; private set; }
+
+        [JsonProperty(PropertyName = "address"), JsonRequired]
+        public Address Address { get; set; }
+
+        [JsonProperty(PropertyName = "bankAccount"), JsonRequired]
+        public BankAccount BankAccount { get; set; }
 
         public Landlord()
         {
@@ -263,8 +318,11 @@ namespace UCalc.Data
 
     public class House
     {
-        public Address Address { get; private set; }
-        public List<Flat> Flats { get; private set; }
+        [JsonProperty(PropertyName = "address"), JsonRequired]
+        public Address Address { get; set; }
+
+        [JsonProperty(PropertyName = "flats"), JsonRequired]
+        public List<Flat> Flats { get; set; }
 
         public House()
         {
@@ -296,9 +354,14 @@ namespace UCalc.Data
 
     public class CostEntryDetails
     {
+        [JsonProperty(PropertyName = "totalAmount"), JsonRequired]
         public decimal TotalAmount { get; set; }
+
+        [JsonProperty(PropertyName = "unitCount"), JsonRequired]
         public decimal UnitCount { get; set; }
-        public List<decimal> DiscountsInUnits { get; private set; }
+
+        [JsonProperty(PropertyName = "discountsInUnits"), JsonRequired]
+        public List<decimal> DiscountsInUnits { get; set; }
 
         public CostEntryDetails()
         {
@@ -331,9 +394,16 @@ namespace UCalc.Data
 
     public class CostEntry
     {
+        [JsonProperty(PropertyName = "startDate"), JsonRequired]
         public DateTime StartDate { get; set; }
+
+        [JsonProperty(PropertyName = "endDate"), JsonRequired]
         public DateTime EndDate { get; set; }
+
+        [JsonProperty(PropertyName = "amount"), JsonRequired]
         public decimal Amount { get; set; }
+
+        [JsonProperty(PropertyName = "details"), JsonRequired]
         public CostEntryDetails Details { get; set; }
 
         public CostEntry()
@@ -393,12 +463,25 @@ namespace UCalc.Data
 
     public class Cost
     {
+        [JsonProperty(PropertyName = "name"), JsonRequired, JsonConverter(typeof(JsonNullToEmptyStringConverter))]
         public string Name { get; set; }
+
+        [JsonProperty(PropertyName = "division"), JsonRequired, JsonConverter(typeof(StringEnumConverter))]
         public CostDivision Division { get; set; }
+
+        [JsonProperty(PropertyName = "affectsAll"), JsonRequired]
         public bool AffectsAll { get; set; }
+
+        [JsonProperty(PropertyName = "includeUnrented"), JsonRequired]
         public bool IncludeUnrented { get; set; }
-        public HashSet<Flat> AffectedFlats { get; private set; }
-        public List<CostEntry> Entries { get; private set; }
+
+        [JsonProperty(PropertyName = "affectedFlats"), JsonRequired, JsonConverter(typeof(FlatSerializationConverter))]
+        public HashSet<Flat> AffectedFlats { get; set; }
+
+        [JsonProperty(PropertyName = "entries"), JsonRequired]
+        public List<CostEntry> Entries { get; set; }
+
+        [JsonProperty(PropertyName = "displayInBill"), JsonRequired]
         public bool DisplayInBill { get; set; }
 
         public Cost()
@@ -439,12 +522,23 @@ namespace UCalc.Data
 
     public class Billing
     {
+        [JsonProperty(PropertyName = "startDate"), JsonRequired]
         public DateTime StartDate { get; set; }
+
+        [JsonProperty(PropertyName = "endDate"), JsonRequired]
         public DateTime EndDate { get; set; }
-        public Landlord Landlord { get; private set; }
-        public House House { get; private set; }
-        public List<Tenant> Tenants { get; private set; }
-        public List<Cost> Costs { get; private set; }
+
+        [JsonProperty(PropertyName = "landlord"), JsonRequired]
+        public Landlord Landlord { get; set; }
+
+        [JsonProperty(PropertyName = "house"), JsonRequired]
+        public House House { get; set; }
+
+        [JsonProperty(PropertyName = "tenants"), JsonRequired]
+        public List<Tenant> Tenants { get; set; }
+
+        [JsonProperty(PropertyName = "costs"), JsonRequired]
+        public List<Cost> Costs { get; set; }
 
         public Billing()
         {

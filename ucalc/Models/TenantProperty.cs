@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UCalc.Controls;
 using UCalc.Data;
@@ -48,7 +49,7 @@ namespace UCalc.Models
         }
     }
 
-    public class RentedFlatsProperty : Property
+    public class RentedFlatsProperty : Property, IReadOnlyCollection<FlatProperty>
     {
         private const string NoFlatsError = "Gemietete Wohnungen: Es wurde keine Wohnung zugewiesen.";
         private readonly HashSet<FlatProperty> _flatProperties;
@@ -65,7 +66,8 @@ namespace UCalc.Models
                 _flatProperties.Add(flatToProperty?[flat] ?? throw new InvalidOperationException());
             }
 
-            Validate();
+            using var validator = Model.BeginValidation();
+            validator.Validate(this);
         }
 
         public override IReadOnlyList<string> Errors => _errors;
@@ -175,6 +177,18 @@ namespace UCalc.Models
 
             return thisStart.Intersects(thisEnd, otherStart, otherEnd);
         }
+
+        public IEnumerator<FlatProperty> GetEnumerator()
+        {
+            return _flatProperties.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public int Count => _flatProperties.Count;
     }
 
     public class TenantProperty : NestedProperty

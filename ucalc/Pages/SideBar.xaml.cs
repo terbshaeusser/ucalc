@@ -38,17 +38,17 @@ namespace UCalc.Pages
             }
         }
 
-        public void OnSaveClick(object sender, RoutedEventArgs e)
+        private void OnSaveClick(object sender, RoutedEventArgs e)
         {
             ParentWindow.Save();
         }
 
-        public void OnPrintClick(object sender, RoutedEventArgs e)
+        private void OnPrintClick(object sender, RoutedEventArgs e)
         {
             ParentWindow.Print();
         }
 
-        public void OnAboutClick(object sender, RoutedEventArgs e)
+        private void OnAboutClick(object sender, RoutedEventArgs e)
         {
             throw new System.NotImplementedException();
         }
