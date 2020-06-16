@@ -79,6 +79,21 @@ namespace UCalc.Controls
         }
     }
 
+    public class FlatToAffectedConverter : IValueConverter
+    {
+        public CostProperty Cost { get; set; }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Cost.AffectedFlats.Contains((FlatProperty) value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new InvalidOperationException();
+        }
+    }
+
     public class EmptyMultiPropertyToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -131,6 +146,19 @@ namespace UCalc.Controls
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new InvalidOperationException();
+        }
+    }
+
+    public class NegateConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return !(bool?) value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return !(bool?) value;
         }
     }
 }

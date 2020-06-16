@@ -16,5 +16,8 @@ namespace UCalc
 
         public static readonly ImmutableList<string> SalutationStrs =
             ((Salutation[]) Enum.GetValues(typeof(Salutation))).Select(value => value.AsString()).ToImmutableList();
+
+        public static readonly ImmutableList<string> CostDivisionStrs =
+            ((CostDivision[]) Enum.GetValues(typeof(CostDivision))).Select(value => value.AsString()).ToImmutableList();
     }
 }

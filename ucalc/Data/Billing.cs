@@ -296,7 +296,7 @@ namespace UCalc.Data
 
     public class CostEntryDetails
     {
-        public decimal TotalPrice { get; set; }
+        public decimal TotalAmount { get; set; }
         public decimal UnitCount { get; set; }
         public List<decimal> DiscountsInUnits { get; private set; }
 
@@ -307,7 +307,7 @@ namespace UCalc.Data
 
         private bool Equals(CostEntryDetails other)
         {
-            return TotalPrice == other.TotalPrice && UnitCount == other.UnitCount &&
+            return TotalAmount == other.TotalAmount && UnitCount == other.UnitCount &&
                    DiscountsInUnits.SequenceEqual(other.DiscountsInUnits);
         }
 
@@ -322,7 +322,7 @@ namespace UCalc.Data
         {
             return new CostEntryDetails
             {
-                TotalPrice = TotalPrice,
+                TotalAmount = TotalAmount,
                 UnitCount = UnitCount,
                 DiscountsInUnits = new List<decimal>(DiscountsInUnits)
             };
@@ -333,7 +333,7 @@ namespace UCalc.Data
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public decimal Price { get; set; }
+        public decimal Amount { get; set; }
         public CostEntryDetails Details { get; set; }
 
         public CostEntry()
@@ -343,7 +343,7 @@ namespace UCalc.Data
 
         private bool Equals(CostEntry other)
         {
-            return StartDate.Equals(other.StartDate) && EndDate.Equals(other.EndDate) && Price == other.Price &&
+            return StartDate.Equals(other.StartDate) && EndDate.Equals(other.EndDate) && Amount == other.Amount &&
                    Details.Equals(other.Details);
         }
 
@@ -360,7 +360,7 @@ namespace UCalc.Data
             {
                 StartDate = StartDate,
                 EndDate = EndDate,
-                Price = Price,
+                Amount = Amount,
                 Details = Details?.Clone()
             };
         }
@@ -371,6 +371,24 @@ namespace UCalc.Data
         Person,
         Flat,
         Size
+    }
+
+    public static class CostDivisions
+    {
+        public static string AsString(this CostDivision division)
+        {
+            switch (division)
+            {
+                case CostDivision.Person:
+                    return "Pro Person";
+                case CostDivision.Flat:
+                    return "Pro Wohnung";
+                case CostDivision.Size:
+                    return "Pro m²";
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
     }
 
     public class Cost

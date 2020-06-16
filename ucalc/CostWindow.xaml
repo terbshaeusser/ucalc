@@ -14,7 +14,14 @@
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
         Icon="logo.ico">
-    
+
+    <Window.Resources>
+        <controls:NegateConverter x:Key="NegateConverter" />
+        <controls:FlatToAffectedConverter x:Key="FlatToAffectedConverter" />
+        <controls:DatePickerTextToDateTimeConverter x:Key="DatePickerTextToDateTimeConverter" />
+        <controls:EmptyMultiPropertyToVisibilityConverter x:Key="EmptyMultiPropertyToVisibilityConverter" />
+    </Window.Resources>
+
     <DockPanel>
         <StackPanel DockPanel.Dock="Bottom">
             <Separator Margin="0, 12, 0, 0"
@@ -52,9 +59,206 @@
                         Text="{Binding Path=Cost.Name.Value, RelativeSource={RelativeSource AncestorType=local:CostWindow}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
 
+                <DockPanel Margin="12, 8, 12, 0">
+                    <TextBlock DockPanel.Dock="Left"
+                               Margin="4, 0, 4, 0"
+                               Text="Detailiert in Ausdruck berechnen:"
+                               Width="172"
+                               TextWrapping="Wrap"
+                               Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                    <CheckBox
+                        IsChecked="{Binding Path=Cost.DisplayInBill.Value, RelativeSource={RelativeSource AncestorType=local:CostWindow}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                </DockPanel>
+
+                <controls:SectionHeader Header="Verteilung" />
+
+                <DockPanel Margin="12, 0, 12, 0">
+                    <Label DockPanel.Dock="Left"
+                           Content="Betrifft alle Wohnungen:"
+                           Width="180"
+                           Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                    <CheckBox
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding Path=Cost.AffectsAll.Value, RelativeSource={RelativeSource AncestorType=local:CostWindow}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                </DockPanel>
+
+                <DockPanel Margin="12, 8, 12, 0">
+                    <Label DockPanel.Dock="Left"
+                           Content="Betroffene Wohnungen:"
+                           Width="180"
+                           Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                    <controls:ErrorIcon Margin="12, 0, 0, 0"
+                                        DockPanel.Dock="Right"
+                                        VerticalAlignment="Center"
+                                        Property="{Binding Path=Cost.AffectedFlats, RelativeSource={RelativeSource AncestorType=local:CostWindow}}" />
+
+                    <ListBox Height="120"
+                             ItemsSource="{Binding Path=House.Flats, RelativeSource={RelativeSource AncestorType=local:CostWindow}}"
+                             IsEnabled="{Binding Path=Cost.AffectsAll.Value, RelativeSource={RelativeSource AncestorType=local:CostWindow}, Converter={StaticResource NegateConverter}}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding Name.Value}"
+                                          IsChecked="{Binding Path=., Converter={StaticResource FlatToAffectedConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Checked="OnFlatChecked"
+                                          Unchecked="OnFlatUnchecked" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+
+                <DockPanel Margin="12, 12, 12, 0">
+                    <TextBlock DockPanel.Dock="Left"
+                               Margin="4, 0, 4, 0"
+                               Text="Lege Kosten für unvermietete Wohnungen auf vermietete Wohnungen um:"
+                               Width="172"
+                               TextWrapping="Wrap"
+                               Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                    <CheckBox
+                        IsChecked="{Binding Path=Cost.IncludeUnrented.Value, RelativeSource={RelativeSource AncestorType=local:CostWindow}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                </DockPanel>
+
+                <DockPanel Margin="12, 8, 12, 8">
+                    <Label DockPanel.Dock="Left"
+                           Content="Art der Aufteilung:"
+                           Width="180"
+                           Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                    <ComboBox Margin="0, 0, 28, 0"
+                              ItemsSource="{x:Static local:Constants.CostDivisionStrs}"
+                              SelectedIndex="{Binding Path=Cost.Division.Value, RelativeSource={RelativeSource AncestorType=local:CostWindow}}" />
+                </DockPanel>
+
+                <controls:SectionHeader Header="Zeiträume" />
+
+                <DockPanel>
+                    <controls:ErrorIcon Margin="0, 0, 12, 0"
+                                        DockPanel.Dock="Right"
+                                        VerticalAlignment="Center"
+                                        Property="{Binding Path=Cost.Entries, RelativeSource={RelativeSource AncestorType=local:CostWindow}}"
+                                        Visibility="{Binding Path=Cost.Entries.Count, RelativeSource={RelativeSource AncestorType=local:CostWindow}, Converter={StaticResource EmptyMultiPropertyToVisibilityConverter}}" />
+
+                    <controls:HighlightButton Margin="12, 0, 12, 0"
+                                              HighlightForeground="{x:Static local:Constants.SubMainColor}"
+                                              HighlightBackground="{x:Static local:Constants.MainColor}"
+                                              Click="OnAddCostEntryClick">
+                        <Viewbox Width="24"
+                                 Height="24"
+                                 Margin="12, 12, 6, 12"
+                                 Stretch="Uniform">
+                            <Canvas Width="512" Height="512">
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform X="0" Y="0" />
+                                </Canvas.RenderTransform>
+                                <Path>
+                                    <Path.Data>
+                                        <PathGeometry
+                                            Figures="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"
+                                            FillRule="NonZero" />
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Viewbox>
+
+                        <Label Content="Zeitraum hinzufügen"
+                               Margin="0, 12, 12, 12" />
+                    </controls:HighlightButton>
+                </DockPanel>
+
+                <ItemsControl
+                    ItemsSource="{Binding Path=Cost.Entries, RelativeSource={RelativeSource AncestorType=local:CostWindow}}"
+                    Margin="12, 0, 12, 12">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <controls:HighlightButton DockPanel.Dock="Right"
+                                                          HighlightForeground="Red"
+                                                          HighlightBackground="White"
+                                                          Click="OnCostEntryDeleteClick">
+                                    <Viewbox Width="24"
+                                             Height="24"
+                                             Margin="8, 12, 8, 12"
+                                             Stretch="Uniform">
+                                        <Canvas Width="448" Height="512">
+                                            <Canvas.RenderTransform>
+                                                <TranslateTransform X="0" Y="0" />
+                                            </Canvas.RenderTransform>
+                                            <Path>
+                                                <Path.Data>
+                                                    <PathGeometry
+                                                        Figures="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                                                        FillRule="NonZero" />
+                                                </Path.Data>
+                                            </Path>
+                                        </Canvas>
+                                    </Viewbox>
+                                </controls:HighlightButton>
+
+                                <StackPanel Margin="0, 8, 8, 8">
+                                    <DockPanel Margin="0, 0, 0, 2">
+                                        <Label DockPanel.Dock="Left" Content="Startdatum:"
+                                               Width="180"
+                                               Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                                        <controls:ErrorIcon Margin="12, 0, 0, 0"
+                                                            DockPanel.Dock="Right"
+                                                            VerticalAlignment="Center"
+                                                            Property="{Binding StartDate}" />
+
+                                        <DatePicker VerticalAlignment="Center"
+                                                    MinHeight="22"
+                                                    DisplayDateStart="{Binding Path=Model.StartDate, RelativeSource={RelativeSource AncestorType=local:CostWindow}, Mode=OneWay}"
+                                                    DisplayDateEnd="{Binding Path=Model.EndDate, RelativeSource={RelativeSource AncestorType=local:CostWindow}, Mode=OneWay}"
+                                                    Text="{Binding Path=StartDate.Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DatePickerTextToDateTimeConverter}}" />
+
+                                    </DockPanel>
+
+                                    <DockPanel Margin="0, 2, 0, 2">
+                                        <Label DockPanel.Dock="Left" Content="Enddatum:"
+                                               Width="180"
+                                               Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                                        <controls:ErrorIcon Margin="12, 0, 0, 0"
+                                                            DockPanel.Dock="Right"
+                                                            VerticalAlignment="Center"
+                                                            Property="{Binding EndDate}" />
+
+                                        <DatePicker VerticalAlignment="Center"
+                                                    MinHeight="22"
+                                                    DisplayDateStart="{Binding Path=Model.StartDate, RelativeSource={RelativeSource AncestorType=local:CostWindow}, Mode=OneWay}"
+                                                    DisplayDateEnd="{Binding Path=Model.EndDate, RelativeSource={RelativeSource AncestorType=local:CostWindow}, Mode=OneWay}"
+                                                    Text="{Binding Path=EndDate.Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DatePickerTextToDateTimeConverter}}" />
+
+                                    </DockPanel>
+
+                                    <DockPanel Margin="0, 2, 0, 0">
+                                        <Label DockPanel.Dock="Left" Content="Betrag:"
+                                               Width="180"
+                                               Foreground="{x:Static local:Constants.SubMainColor}" />
+
+                                        <controls:ErrorIcon Margin="12, 0, 0, 0"
+                                                            DockPanel.Dock="Right"
+                                                            VerticalAlignment="Center"
+                                                            Property="{Binding Amount}" />
+
+                                        <TextBox VerticalAlignment="Center"
+                                                 MinHeight="22"
+                                                 Text="{Binding Path=Amount.Value, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DockPanel>
+                                </StackPanel>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
             </StackPanel>
         </ScrollViewer>
     </DockPanel>
-        
+
 </Window>

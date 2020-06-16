@@ -103,56 +103,61 @@ namespace UCalc.Models
         {
             _errors.Clear();
 
-            if (_flatProperties.Count == 0)
+            try
             {
-                _errors.Add(NoFlatsError);
-                return;
-            }
-
-            var entryDate = ((TenantProperty) Parent).EntryDate.Value;
-            var departureDate = ((TenantProperty) Parent).DepartureDate.Value;
-
-            foreach (var flatProperty in _flatProperties)
-            {
-                foreach (var tenant in Model.Root.Tenants)
+                if (_flatProperties.Count == 0)
                 {
-                    if (ReferenceEquals(this, tenant.RentedFlats))
-                    {
-                        continue;
-                    }
+                    _errors.Add(NoFlatsError);
+                    return;
+                }
 
-                    if (tenant.RentedFlats.IsRented(flatProperty, entryDate, departureDate))
-                    {
-                        var error = $"Gemietete Wohnungen: Die Wohnung \"{flatProperty.Name.Value}\" ist bereits ";
+                var entryDate = ((TenantProperty) Parent).EntryDate.Value;
+                var departureDate = ((TenantProperty) Parent).DepartureDate.Value;
 
-                        if (entryDate != null)
+                foreach (var flatProperty in _flatProperties)
+                {
+                    foreach (var tenant in Model.Root.Tenants)
+                    {
+                        if (ReferenceEquals(this, tenant.RentedFlats))
                         {
-                            if (departureDate != null)
-                            {
-                                _errors.Add(
-                                    $"von {entryDate.Value.ToString(Constants.DateFormat)} - {departureDate.Value.ToString(Constants.DateFormat)} ");
-                            }
-                            else
-                            {
-                                _errors.Add($"seit dem {entryDate.Value.ToString(Constants.DateFormat)} ");
-                            }
-                        }
-                        else if (departureDate != null)
-                        {
-                            _errors.Add($"bis zum {departureDate.Value.ToString(Constants.DateFormat)} ");
+                            continue;
                         }
 
-                        error += "an einen anderen Mieter vermietet.";
-                        _errors.Add(error);
-                        break;
+                        if (tenant.RentedFlats.IsRented(flatProperty, entryDate, departureDate))
+                        {
+                            var error = $"Gemietete Wohnungen: Die Wohnung \"{flatProperty.Name.Value}\" ist bereits ";
+
+                            if (entryDate != null)
+                            {
+                                if (departureDate != null)
+                                {
+                                    _errors.Add(
+                                        $"von {entryDate.Value.ToString(Constants.DateFormat)} - {departureDate.Value.ToString(Constants.DateFormat)} ");
+                                }
+                                else
+                                {
+                                    _errors.Add($"seit dem {entryDate.Value.ToString(Constants.DateFormat)} ");
+                                }
+                            }
+                            else if (departureDate != null)
+                            {
+                                _errors.Add($"bis zum {departureDate.Value.ToString(Constants.DateFormat)} ");
+                            }
+
+                            error += "an einen anderen Mieter vermietet.";
+                            _errors.Add(error);
+                            break;
+                        }
                     }
                 }
             }
+            finally
+            {
+                using var validator = Model.BeginValidation();
+                validator.Notify(this, "Errors");
 
-            using var validator = Model.BeginValidation();
-            validator.Notify(this, "Errors");
-
-            validator.ValidateRange(Model.Root.Tenants);
+                validator.ValidateRange(Model.Root.Tenants);
+            }
         }
 
         private bool IsRented(FlatProperty flat, DateTime? start, DateTime? end)
