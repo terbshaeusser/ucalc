@@ -8,9 +8,7 @@ namespace UCalc.Models
         public LandlordProperty Landlord { get; }
         public HouseProperty House { get; }
         public TenantsProperty Tenants { get; }
-
-
-        // TODO: Costs
+        public CostsProperty Costs { get; }
 
         public BillingProperty(Model model, Property parent, Billing data) : base(model, parent)
         {
@@ -24,6 +22,7 @@ namespace UCalc.Models
             }
 
             Tenants = Add(new TenantsProperty(model, this, data.Tenants, flatToProperty));
+            Costs = Add(new CostsProperty(model, this, data.Costs, flatToProperty));
         }
     }
 }

@@ -43,6 +43,9 @@
         <Page Update="TenantWindow.xaml">
             <Generator></Generator>
         </Page>
+        <Page Update="CostWindow.xaml">
+            <Generator></Generator>
+        </Page>
     </ItemGroup>
 
     <ItemGroup>
@@ -82,6 +85,14 @@
         <Compile Update="TenantWindow.xaml.cs">
             <DependentUpon>TenantWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Update="CostWindow.xaml.cs">
+            <DependentUpon>CostWindow.xaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="logo.ico"/>
+        <Resource Include="logo.ico"/>
     </ItemGroup>
 
 </Project>

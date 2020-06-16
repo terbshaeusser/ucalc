@@ -16,7 +16,9 @@ namespace UCalc.Pages
 
         private void OnAddFlatClick(object sender, RoutedEventArgs e)
         {
-            House.Flats.Add();
+            var flat = House.Flats.Add();
+
+            new FlatWindow(flat) {Owner = ParentWindow}.ShowDialog();
         }
 
         private void OnFlatDeleteClick(object sender, RoutedEventArgs e)

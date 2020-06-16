@@ -12,7 +12,8 @@
         MinWidth="400"
         MinHeight="190"
         WindowStartupLocation="CenterOwner"
-        ShowInTaskbar="False">
+        ShowInTaskbar="False"
+        Icon="logo.ico">
 
     <Window.Resources>
         <controls:FlatToRentedConverter x:Key="FlatToRentedConverter" />

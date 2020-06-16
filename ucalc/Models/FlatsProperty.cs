@@ -19,7 +19,7 @@ namespace UCalc.Models
             Modified = false;
         }
 
-        public void Add()
+        public FlatProperty Add()
         {
             FlatProperty flat;
             {
@@ -33,6 +33,8 @@ namespace UCalc.Models
                 using var validator = Model.BeginValidation();
                 validator.Validate(flat);
             }
+
+            return flat;
         }
 
         public new void Remove(FlatProperty flat)

@@ -20,11 +20,13 @@ namespace UCalc.Models
             Modified = false;
         }
 
-        public void Add()
+        public TenantProperty Add()
         {
             using var validator = Model.BeginValidation();
 
-            base.Add(new TenantProperty(Model, this, new Tenant()));
+            var tenant = new TenantProperty(Model, this, new Tenant());
+            base.Add(tenant);
+            return tenant;
         }
 
         public new void Remove(TenantProperty tenant)

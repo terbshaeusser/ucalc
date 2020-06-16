@@ -227,6 +227,11 @@
                 </Canvas>
             </Viewbox>
 
+            <controls:ErrorCounter DockPanel.Dock="Right"
+                                   Margin="0, 12, 12, 12"
+                                   VerticalAlignment="Center"
+                                   Property="{Binding Path=Model.Root.Costs, RelativeSource={RelativeSource AncestorType=pages:SideBar}}"/>
+
             <Label Content="Kosten"
                    Margin="0, 12, 12, 12"
                    VerticalAlignment="Center"

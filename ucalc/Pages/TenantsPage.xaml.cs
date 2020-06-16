@@ -18,7 +18,9 @@ namespace UCalc.Pages
 
         private void OnAddTenantClick(object sender, RoutedEventArgs e)
         {
-            Tenants.Add();
+            var tenant = Tenants.Add();
+
+            new TenantWindow(Model, tenant, House) {Owner = ParentWindow}.ShowDialog();
         }
 
         private void OnTenantDeleteClick(object sender, RoutedEventArgs e)

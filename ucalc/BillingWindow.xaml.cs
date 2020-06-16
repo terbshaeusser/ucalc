@@ -57,5 +57,14 @@ namespace UCalc
             page.House = Model.Root.House;
             page.ParentWindow = this;
         }
+
+        private void OnCostsFrameLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            var page = (CostsPage) ((Frame) sender).Content;
+            page.Model = Model;
+            page.Costs = Model.Root.Costs;
+            page.House = Model.Root.House;
+            page.ParentWindow = this;
+        }
     }
 }

@@ -10,7 +10,8 @@
         ShowInTaskbar="False"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
-        PreviewMouseUp="OnPreviewMouseUp">
+        PreviewMouseUp="OnPreviewMouseUp"
+        Icon="logo.ico">
 
     <!-- TODO: Wrap in scroll to handle small screens! -->
     

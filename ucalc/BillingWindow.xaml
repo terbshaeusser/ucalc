@@ -11,7 +11,8 @@
         Height="600"
         MinWidth="600"
         MinHeight="400"
-        Closed="OnClosed">
+        Closed="OnClosed"
+        Icon="logo.ico">
 
     <DockPanel>
         <Frame Name="SideBarFrame"
@@ -39,6 +40,7 @@
             </TabItem>
             <TabItem Visibility="Collapsed">
                 <Frame Source="Pages/CostsPage.xaml"
+                       LoadCompleted="OnCostsFrameLoadCompleted"
                        Focusable="False" />
             </TabItem>
             <TabItem Visibility="Collapsed">

@@ -113,4 +113,24 @@ namespace UCalc.Controls
             return null;
         }
     }
+
+    public class NameToTextConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var str = (string) value;
+
+            if (str == "")
+            {
+                return "(Unbenannt)";
+            }
+
+            return str;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new InvalidOperationException();
+        }
+    }
 }

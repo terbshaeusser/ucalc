@@ -10,6 +10,7 @@
 
     <Page.Resources>
         <controls:EmptyMultiPropertyToVisibilityConverter x:Key="EmptyMultiPropertyToVisibilityConverter" />
+        <controls:NameToTextConverter x:Key="NameToTextConverter" />
     </Page.Resources>
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
@@ -159,7 +160,7 @@
                                                     DockPanel.Dock="Left"
                                                     Margin="12, 12, 8, 12" />
 
-                                <Label Content="{Binding Name.Value}"
+                                <Label Content="{Binding Path=Name.Value, Converter={StaticResource NameToTextConverter}}"
                                        VerticalAlignment="Center" />
                             </controls:HighlightButton>
                         </DockPanel>

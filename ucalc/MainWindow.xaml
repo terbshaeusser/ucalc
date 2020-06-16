@@ -9,10 +9,13 @@
         Height="400"
         Width="500"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize">
+        ResizeMode="CanMinimize"
+        Icon="logo.ico">
 
     <Grid>
-        <Viewbox Grid.Row="0" Grid.Column="0" Stretch="Fill">
+        <Viewbox Grid.Row="0" 
+                 Grid.Column="0" 
+                 Stretch="Fill">
             <Canvas Width="100" Height="100">
                 <Canvas.RenderTransform>
                     <TranslateTransform X="0" Y="0" />
@@ -33,7 +36,54 @@
             </Canvas>
         </Viewbox>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Margin="100, 180, 100, 0">
+        <Viewbox Grid.Row="0" 
+                 Grid.Column="0" 
+                 Stretch="Uniform" 
+                 Width="100" 
+                 Height="100"
+                 Margin="0, 0, 0, 200">
+            <Canvas Width="55.562498" Height="78.581248">
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="0" Y="0" />
+                </Canvas.RenderTransform>
+                <Canvas.Resources>
+                    <LinearGradientBrush x:Key="LinearGradient1664" MappingMode="RelativeToBoundingBox"
+                                         StartPoint="0,0" EndPoint="1,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#FF1C71D8" Offset="0" />
+                                <GradientStop Color="#FFFFFFFF" Offset="1" />
+                            </GradientStopCollection>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                    <LinearGradientBrush x:Key="LinearGradient1668" MappingMode="Absolute" StartPoint="40,76"
+                                         EndPoint="40,-95">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#FF1C71D8" Offset="0" />
+                                <GradientStop Color="#FFFFFFFF" Offset="1" />
+                            </GradientStopCollection>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Canvas.Resources>
+                <Canvas>
+                    <Rectangle Canvas.Left="-9.9745846"
+                               Canvas.Top="1.53479" Width="75.511665" Height="75.511665" RadiusY="5.271265"
+                               RadiusX="5.271265" Fill="{StaticResource LinearGradient1668}"
+                               StrokeThickness="0.112041" StrokeMiterLimit="4" />
+                    <Path Fill="#FFFFFFFF"
+                          StrokeThickness="0.116596" StrokeMiterLimit="4">
+                        <Path.Data>
+                            <PathGeometry
+                                Figures="M 26.92595 26.232268 6.2781497 44.63259 v 19.859261 a 1.7918576 1.9387893 0 0 0 1.791858 1.938789 L 20.61973 66.3955 a 1.7918576 1.9387893 0 0 0 1.7829 -1.93879 V 52.859115 a 1.7918576 1.9387893 0 0 1 1.791857 -1.938789 h 7.167431 a 1.7918576 1.9387893 0 0 1 1.791857 1.938789 v 11.589114 a 1.7918576 1.9387893 0 0 0 1.791858 1.944848 l 12.545243 0.03757 a 1.7918576 1.9387893 0 0 0 1.791858 -1.938789 V 44.619261 L 28.639414 26.232268 a 1.3651715 1.4771151 0 0 0 -1.713464 0 z M 59.541118 38.73867 50.178662 30.388547 V 13.604692 A 1.3438932 1.454092 0 0 0 48.834769 12.1506 h -6.271501 a 1.3438932 1.454092 0 0 0 -1.343893 1.454092 v 8.798467 l -10.026564 -8.9257 a 5.3755728 5.8163679 0 0 0 -6.831457 0 L -3.9869543 38.73867 a 1.3438932 1.454092 0 0 0 -0.179186 2.047847 l 2.855773 3.756404 a 1.3438932 1.454092 0 0 0 1.89376899 0.197514 L 26.92595 21.264121 a 1.3651715 1.4771151 0 0 1 1.713464 0 l 26.343667 23.476314 a 1.3438932 1.454092 0 0 0 1.892649 -0.193878 l 2.855773 -3.756405 A 1.3438932 1.454092 0 0 0 59.541118 38.73867 Z"
+                                FillRule="NonZero" />
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+            </Canvas>
+        </Viewbox>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="100, 220, 100, 0">
 
             <Button MinHeight="40"
                     Margin="0, 0, 0, 12"
@@ -55,7 +105,7 @@
                         </Canvas>
                     </Viewbox>
 
-                    <Label Content="Neue Abrechnung anlegen"/>
+                    <Label Content="Neue Abrechnung anlegen" />
                 </DockPanel>
 
             </Button>
@@ -79,7 +129,7 @@
                         </Canvas>
                     </Viewbox>
 
-                    <Label Content="Abrechnung öffnen"/>
+                    <Label Content="Abrechnung öffnen" />
                 </DockPanel>
 
                 <Button.ContextMenu>
