@@ -64,6 +64,9 @@ namespace UCalc.Controls
                     case Label label:
                         label.Foreground = foreground;
                         break;
+                    case TextBlock block:
+                        block.Foreground = foreground;
+                        break;
                     case Path path:
                         path.Fill = foreground;
                         break;

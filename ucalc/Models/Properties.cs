@@ -285,6 +285,18 @@ namespace UCalc.Models
             validator.ValidateRange(_properties);
         }
 
+        public void NotifyChanged(T property)
+        {
+            var index = _properties.IndexOf(property);
+            if (index == -1)
+            {
+                return;
+            }
+
+            CollectionChanged?.Invoke(this,
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+
         public sealed override void OnPropertyChanged(string propertyName = null)
         {
             switch (propertyName)

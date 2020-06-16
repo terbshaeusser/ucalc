@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using UCalc.Models;
@@ -141,6 +142,36 @@ namespace UCalc.Controls
             }
 
             return str;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new InvalidOperationException();
+        }
+    }
+
+    public class CostToAffectedConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var cost = (CostProperty) value;
+
+            if (cost == null)
+            {
+                return "";
+            }
+
+            if (cost.AffectsAll.Value)
+            {
+                return "Betrifft: Alle Wohnungen";
+            }
+
+            if (cost.AffectedFlats.Count == 0)
+            {
+                return "Betrifft: Niemanden";
+            }
+
+            return $"Betrifft: {string.Join(", ", cost.AffectedFlats.Select(flat => flat.Name.Value))}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

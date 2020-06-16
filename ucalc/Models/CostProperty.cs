@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UCalc.Data;
 
@@ -13,13 +14,16 @@ namespace UCalc.Models
 
         protected override string ValidateValue()
         {
+            var affectedFlats = ((CostProperty) Parent).AffectedFlats;
+
             using var validator = Model.BeginValidation();
-            validator.Validate(((CostProperty) Parent).AffectedFlats);
+            validator.Validate(affectedFlats);
+
             return "";
         }
     }
 
-    public class AffectedFlatsProperty : Property
+    public class AffectedFlatsProperty : Property, IReadOnlyCollection<FlatProperty>
     {
         private const string NoFlatsError = "Betroffene Wohnungen: Es wurde keine Wohnung zugewiesen.";
         private readonly HashSet<FlatProperty> _flats;
@@ -81,7 +85,21 @@ namespace UCalc.Models
 
             using var validator = Model.BeginValidation();
             validator.Notify(this, "Errors");
+
+            Model.Root.Costs.NotifyChanged((CostProperty) Parent);
         }
+
+        public IEnumerator<FlatProperty> GetEnumerator()
+        {
+            return _flats.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public int Count => _flats.Count;
     }
 
     public class CostProperty : NestedProperty

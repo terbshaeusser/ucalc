@@ -7,10 +7,11 @@
       xmlns:local="clr-namespace:UCalc"
       xmlns:pages="clr-namespace:UCalc.Pages"
       mc:Ignorable="d">
-    
+
     <Page.Resources>
         <controls:EmptyMultiPropertyToVisibilityConverter x:Key="EmptyMultiPropertyToVisibilityConverter" />
         <controls:NameToTextConverter x:Key="NameToTextConverter" />
+        <controls:CostToAffectedConverter x:Key="CostToAffectedConverter" />
     </Page.Resources>
 
     <DockPanel>
@@ -88,8 +89,13 @@
                                                     DockPanel.Dock="Left"
                                                     Margin="12, 12, 8, 12" />
 
-                                <Label Content="{Binding Path=Name.Value, Converter={StaticResource NameToTextConverter}}"
-                                       VerticalAlignment="Center" />
+                                <TextBlock VerticalAlignment="Center">
+                                    <Run
+                                        Text="{Binding Path=Name.Value, Converter={StaticResource NameToTextConverter}}" />
+                                    <LineBreak />
+                                    <Run
+                                        Text="{Binding Path=., Converter={StaticResource CostToAffectedConverter}}" />
+                                </TextBlock>
                             </controls:HighlightButton>
                         </DockPanel>
                     </DataTemplate>
@@ -97,5 +103,5 @@
             </ItemsControl>
         </ScrollViewer>
     </DockPanel>
-      
+
 </Page>
