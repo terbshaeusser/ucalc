@@ -8,7 +8,7 @@ namespace UCalc.Pages
 {
     public partial class SideBar
     {
-        public TabControl TabControl { get; set; }
+        public BillingWindow ParentWindow { get; set; }
         public Model Model { get; set; }
 
         public SideBar()
@@ -32,10 +32,25 @@ namespace UCalc.Pages
             {
                 if (ReferenceEquals(sender, buttons[i]))
                 {
-                    TabControl.SelectedIndex = i;
+                    ParentWindow.TabControl.SelectedIndex = i;
                     break;
                 }
             }
+        }
+
+        public void OnSaveClick(object sender, RoutedEventArgs e)
+        {
+            ParentWindow.Save();
+        }
+
+        public void OnPrintClick(object sender, RoutedEventArgs e)
+        {
+            ParentWindow.Print();
+        }
+
+        public void OnAboutClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -11,8 +11,23 @@
         Height="600"
         MinWidth="600"
         MinHeight="400"
+        Closing="OnClosing"
         Closed="OnClosed"
         Icon="logo.ico">
+
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control"
+                    Key="S"
+                    Command="{Binding SaveCommand, RelativeSource={RelativeSource AncestorType=local:BillingWindow}}" />
+        
+        <KeyBinding Modifiers="Control + Alt"
+                    Key="S"
+                    Command="{Binding SaveAsCommand, RelativeSource={RelativeSource AncestorType=local:BillingWindow}}" />
+
+        <KeyBinding Modifiers="Control"
+                    Key="P"
+                    Command="{Binding PrintCommand, RelativeSource={RelativeSource AncestorType=local:BillingWindow}}" />
+    </Window.InputBindings>
 
     <DockPanel>
         <Frame Name="SideBarFrame"
@@ -22,7 +37,7 @@
                Focusable="False" />
 
         <TabControl Name="TabControl"
-                    BorderBrush="White">
+                    BorderBrush="{x:Static local:Constants.MainColor}">
             <TabItem Visibility="Collapsed">
                 <Frame Source="Pages/LandlordPage.xaml"
                        LoadCompleted="OnLandlordFrameLoadCompleted"

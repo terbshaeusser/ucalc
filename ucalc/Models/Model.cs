@@ -147,6 +147,16 @@ namespace UCalc.Models
             return _validator;
         }
 
+        public Billing Dump()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ResetModified()
+        {
+            throw new NotImplementedException();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

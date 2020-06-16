@@ -21,7 +21,15 @@
                                       HighlightBackground="{x:Static local:Constants.SubMainColor}"
                                       Grid.Row="0"
                                       Grid.Column="0"
-                                      ToolTip="Speichern">
+                                      Click="OnSaveClick">
+                <controls:HighlightButton.ToolTip>
+                    <TextBlock>
+                        <Run Text="Speichern (Strg + S)" />
+                        <LineBreak />
+                        <Run Text="Speichern Unter (Strg + Alt + S)" />
+                    </TextBlock>
+                </controls:HighlightButton.ToolTip>
+
                 <Viewbox Width="24"
                          Height="24"
                          Margin="8"
@@ -45,7 +53,8 @@
                                       HighlightBackground="{x:Static local:Constants.SubMainColor}"
                                       Grid.Row="0"
                                       Grid.Column="1"
-                                      ToolTip="Drucken">
+                                      ToolTip="Drucken (Strg + P)"
+                                      Click="OnPrintClick">
                 <Viewbox Width="24"
                          Height="24"
                          Margin="8"
@@ -69,7 +78,8 @@
                                       HighlightBackground="{x:Static local:Constants.SubMainColor}"
                                       Grid.Row="0"
                                       Grid.Column="2"
-                                      ToolTip="Über MietRechner">
+                                      ToolTip="Über MietRechner"
+                                      Click="OnAboutClick">
                 <Viewbox Width="24"
                          Height="24"
                          Margin="8"
@@ -119,7 +129,7 @@
             <controls:ErrorCounter DockPanel.Dock="Right"
                                    Margin="0, 12, 12, 12"
                                    VerticalAlignment="Center"
-                                   Property="{Binding Path=Model.Root.Landlord, RelativeSource={RelativeSource AncestorType=pages:SideBar}}"/>
+                                   Property="{Binding Path=Model.Root.Landlord, RelativeSource={RelativeSource AncestorType=pages:SideBar}}" />
 
             <Label Content="Eigentümer"
                    Margin="0, 12, 12, 12"
@@ -156,7 +166,7 @@
             <controls:ErrorCounter DockPanel.Dock="Right"
                                    Margin="0, 12, 12, 12"
                                    VerticalAlignment="Center"
-                                   Property="{Binding Path=Model.Root.House, RelativeSource={RelativeSource AncestorType=pages:SideBar}}"/>
+                                   Property="{Binding Path=Model.Root.House, RelativeSource={RelativeSource AncestorType=pages:SideBar}}" />
 
             <Label Content="Haus"
                    Margin="0, 12, 12, 12"
@@ -193,7 +203,7 @@
             <controls:ErrorCounter DockPanel.Dock="Right"
                                    Margin="0, 12, 12, 12"
                                    VerticalAlignment="Center"
-                                   Property="{Binding Path=Model.Root.Tenants, RelativeSource={RelativeSource AncestorType=pages:SideBar}}"/>
+                                   Property="{Binding Path=Model.Root.Tenants, RelativeSource={RelativeSource AncestorType=pages:SideBar}}" />
 
             <Label Content="Mieter"
                    Margin="0, 12, 12, 12"
@@ -230,7 +240,7 @@
             <controls:ErrorCounter DockPanel.Dock="Right"
                                    Margin="0, 12, 12, 12"
                                    VerticalAlignment="Center"
-                                   Property="{Binding Path=Model.Root.Costs, RelativeSource={RelativeSource AncestorType=pages:SideBar}}"/>
+                                   Property="{Binding Path=Model.Root.Costs, RelativeSource={RelativeSource AncestorType=pages:SideBar}}" />
 
             <Label Content="Kosten"
                    Margin="0, 12, 12, 12"
