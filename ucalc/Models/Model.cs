@@ -248,7 +248,9 @@ namespace UCalc.Models
 
         public void ResetModified()
         {
-            throw new NotImplementedException();
+            using var validator = BeginValidation();
+
+            Root.ResetModified();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

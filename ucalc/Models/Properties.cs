@@ -81,6 +81,11 @@ namespace UCalc.Models
 
             return i;
         }
+
+        public virtual void ResetModified()
+        {
+            Modified = false;
+        }
     }
 
     public abstract class ValueProperty<T> : Property
@@ -244,6 +249,14 @@ namespace UCalc.Models
 
             base.OnPropertyChanged(propertyName);
         }
+
+        public override void ResetModified()
+        {
+            foreach (var property in _properties)
+            {
+                property.ResetModified();
+            }
+        }
     }
 
     public abstract class MultiProperty<T> : Property, IReadOnlyList<T>, INotifyCollectionChanged where T : Property
@@ -340,6 +353,14 @@ namespace UCalc.Models
             }
 
             base.OnPropertyChanged(propertyName);
+        }
+
+        public override void ResetModified()
+        {
+            foreach (var property in _properties)
+            {
+                property.ResetModified();
+            }
         }
 
         public IEnumerator<T> GetEnumerator()
