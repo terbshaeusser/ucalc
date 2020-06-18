@@ -86,7 +86,7 @@ namespace UCalc.Models
             using var validator = Model.BeginValidation();
             validator.Notify(this, "Errors");
 
-            Model.Root.Costs.NotifyChanged((CostProperty) Parent);
+            ((CostsProperty) Parent.Parent).NotifyChanged((CostProperty) Parent);
         }
 
         public IEnumerator<FlatProperty> GetEnumerator()

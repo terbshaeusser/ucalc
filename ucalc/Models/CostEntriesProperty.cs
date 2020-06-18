@@ -9,10 +9,14 @@ namespace UCalc.Models
         public CostEntriesProperty(Model model, Property parent, IEnumerable<CostEntry> data) : base(model, parent,
             "Zeiträume: Geben Sie einen oder mehr Zeiträume an.")
         {
+            using var validator = Model.BeginValidation();
+
             foreach (var entry in data)
             {
                 Add(new CostEntryProperty(model, this, entry));
             }
+
+            Modified = false;
         }
 
         public void Add()

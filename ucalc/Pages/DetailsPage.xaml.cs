@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
+using UCalc.Models;
 
 namespace UCalc.Pages
 {
@@ -7,6 +9,11 @@ namespace UCalc.Pages
         public DetailsPage()
         {
             InitializeComponent();
+        }
+
+        public void Compute(Model model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

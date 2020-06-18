@@ -15,12 +15,14 @@ namespace UCalc.Models
             var error = "";
             using var validator = Model.BeginValidation();
 
-            if (Model.Root.House.Flats.Any(flat => !ReferenceEquals(this, flat.Name) && flat.Name.Value == Value))
+            var flats = (FlatsProperty) Parent.Parent;
+
+            if (flats.Any(flat => !ReferenceEquals(this, flat.Name) && flat.Name.Value == Value))
             {
                 error = $"{Name}: Der Name ist nicht eindeutig.";
             }
 
-            validator.ValidateRange(Model.Root.House.Flats.Select(flat => flat.Name));
+            validator.ValidateRange(flats.Select(flat => flat.Name));
             return error;
         }
     }

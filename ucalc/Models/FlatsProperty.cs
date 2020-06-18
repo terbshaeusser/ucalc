@@ -21,18 +21,12 @@ namespace UCalc.Models
 
         public FlatProperty Add()
         {
-            FlatProperty flat;
-            {
-                using var validator = Model.BeginValidation();
+            using var validator = Model.BeginValidation(true);
 
-                flat = new FlatProperty(Model, this, new Flat {Name = $"Wohnung {Properties.Count + 1}"});
-                base.Add(flat);
-            }
+            var flat = new FlatProperty(Model, this, new Flat {Name = $"Wohnung {Properties.Count + 1}"});
+            base.Add(flat);
 
-            {
-                using var validator = Model.BeginValidation();
-                validator.Validate(flat);
-            }
+            validator.Validate(flat);
 
             return flat;
         }

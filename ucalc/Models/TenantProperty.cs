@@ -105,6 +105,8 @@ namespace UCalc.Models
         {
             _errors.Clear();
 
+            var tenants = (TenantsProperty) Parent.Parent;
+
             try
             {
                 if (_flatProperties.Count == 0)
@@ -118,7 +120,7 @@ namespace UCalc.Models
 
                 foreach (var flatProperty in _flatProperties)
                 {
-                    foreach (var tenant in Model.Root.Tenants)
+                    foreach (var tenant in tenants)
                     {
                         if (ReferenceEquals(this, tenant.RentedFlats))
                         {
@@ -158,7 +160,7 @@ namespace UCalc.Models
                 using var validator = Model.BeginValidation();
                 validator.Notify(this, "Errors");
 
-                validator.ValidateRange(Model.Root.Tenants);
+                validator.ValidateRange(tenants);
             }
         }
 

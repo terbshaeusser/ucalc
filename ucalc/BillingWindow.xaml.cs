@@ -190,7 +190,12 @@ namespace UCalc
                 return false;
             }
 
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        private void OnDetailsTabSelected(object sender, RoutedEventArgs e)
+        {
+            ((DetailsPage) DetailsFrame.Content).Compute(Model);
         }
     }
 }

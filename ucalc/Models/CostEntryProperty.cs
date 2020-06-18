@@ -160,10 +160,14 @@ namespace UCalc.Models
     {
         public DiscountsProperty(Model model, Property parent, IEnumerable<decimal> data) : base(model, parent)
         {
+            using var validator = Model.BeginValidation();
+
             foreach (var discount in data)
             {
                 Add(new DiscountProperty(Model, this, "Abzug", discount));
             }
+
+            Modified = false;
         }
 
         public void Add()
