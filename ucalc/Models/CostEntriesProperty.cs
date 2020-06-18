@@ -17,6 +17,8 @@ namespace UCalc.Models
 
         public void Add()
         {
+            using var validator = Model.BeginValidation(true);
+
             var entry = new CostEntryProperty(Model, this, new CostEntry());
             entry.StartDate.Value = null;
             entry.EndDate.Value = null;

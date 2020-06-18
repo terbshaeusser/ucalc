@@ -51,5 +51,16 @@ namespace UCalc
         {
             Cost.Entries.Add();
         }
+
+        private void OnCostEntryDetailsClick(object sender, RoutedEventArgs e)
+        {
+            var entry = (CostEntryProperty) ((HighlightButton) sender).DataContext;
+
+            var detailsWindow = new CostEntryDetailsWindow(entry.Details) {Owner = this};
+            if (detailsWindow.ShowDialog() == true)
+            {
+                entry.Amount.Value = detailsWindow.Result!.Value.ToString(Constants.DisplayPrecisionFormat);
+            }
+        }
     }
 }

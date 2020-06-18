@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using UCalc.Annotations;
+using UCalc.Controls;
 
 namespace UCalc.Models
 {
@@ -181,27 +182,46 @@ namespace UCalc.Models
         }
     }
 
-    public class PositiveDecimalProperty : ValueProperty<string>
+    public class PositiveMoreExactDecimalProperty : ValueProperty<string>
     {
-        public PositiveDecimalProperty(Model model, Property parent, string name, decimal value) : base(model, parent,
-            name,
-            value.ToString(Constants.DecimalFormat))
+        private readonly int _decimals;
+        public decimal? ConvertedValue { get; private set; }
+
+        public PositiveMoreExactDecimalProperty(Model model, Property parent, string name, decimal value, int decimals)
+            : base(model, parent, name, value.ToString(Helpers.PrecisionToFormat(decimals, decimals - 2)))
         {
+            _decimals = decimals;
         }
 
         protected override string ValidateValue()
         {
-            if (!decimal.TryParse(Value, out var n) || n < 0)
+            ConvertedValue = null;
+
+            if (!decimal.TryParse(Value, out var n))
             {
-                return $"{Name}: Der eingegebene Wert ist kein gültiger Betrag.";
+                return $"{Name}: Der eingegebene Wert ist ungültig.";
             }
 
-            if (Math.Round(n, 2) != n)
+            if (n < 0)
             {
-                return $"{Name}: Der eingegebene Wert besitzt mehr als 2 Nachkommastellen.";
+                return $"{Name}: Der eingegebene Wert darf nicht negativ sein.";
             }
 
+            if (Math.Round(n, _decimals) != n)
+            {
+                return $"{Name}: Der eingegebene Wert besitzt mehr als {_decimals} Nachkommastellen.";
+            }
+
+            ConvertedValue = n;
             return "";
+        }
+    }
+
+    public class PositiveDecimalProperty : PositiveMoreExactDecimalProperty
+    {
+        public PositiveDecimalProperty(Model model, Property parent, string name, decimal value) : base(model, parent,
+            name, value, Constants.DisplayPrecision)
+        {
         }
     }
 

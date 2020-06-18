@@ -14,6 +14,7 @@ namespace UCalc.Models
         {
             private readonly Model _model;
             private int _counter;
+            private int _postPoneCounter;
             private readonly HashSet<Property> _validated;
             private readonly HashSet<Tuple<Property, string>> _notifications;
 
@@ -49,7 +50,7 @@ namespace UCalc.Models
                     return;
                 }
 
-                if (_validated.Add(property) && !_model._loading)
+                if (_validated.Add(property) && _postPoneCounter == 0)
                 {
                     property.Validate();
                 }
@@ -63,14 +64,32 @@ namespace UCalc.Models
                 }
             }
 
-            public void IncValidationCounter()
+            public void IncValidationCounter(bool postPone)
             {
                 ++_counter;
+
+                if (postPone || _postPoneCounter != 0)
+                {
+                    ++_postPoneCounter;
+                }
             }
 
             public void Dispose()
             {
                 --_counter;
+
+                if (_postPoneCounter > 0)
+                {
+                    --_postPoneCounter;
+
+                    if (_postPoneCounter == 0)
+                    {
+                        var queue = new List<Property>(_validated);
+                        _validated.Clear();
+
+                        ValidateRange(queue);
+                    }
+                }
 
                 if (_counter == 0)
                 {
@@ -140,7 +159,6 @@ namespace UCalc.Models
         }
 
         private readonly Validator _validator;
-        private readonly bool _loading;
         public DateTime StartDate { get; }
         public DateTime EndDate { get; }
         public BillingProperty Root { get; }
@@ -151,17 +169,13 @@ namespace UCalc.Models
             StartDate = billing.StartDate;
             EndDate = billing.EndDate;
 
-            _loading = true;
+            using var validator = BeginValidation(true);
             Root = new BillingProperty(this, null, billing);
-            _loading = false;
-
-            using var validator = BeginValidation();
-            validator.Validate(Root);
         }
 
-        public Validator BeginValidation()
+        public Validator BeginValidation(bool postPone = false)
         {
-            _validator.IncValidationCounter();
+            _validator.IncValidationCounter(postPone);
             return _validator;
         }
 

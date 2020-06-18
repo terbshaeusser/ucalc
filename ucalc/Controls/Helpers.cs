@@ -37,5 +37,10 @@ namespace UCalc.Controls
         {
             return start1.IsBetween(start2, end2) || start2.IsBetween(start1, end1);
         }
+
+        public static string PrecisionToFormat(int precision, int optional = 0)
+        {
+            return $"0.{new string('0', precision - optional)}{new string('#', optional)}";
+        }
     }
 }

@@ -46,6 +46,9 @@
         <Page Update="CostWindow.xaml">
             <Generator></Generator>
         </Page>
+        <Page Update="CostEntryDetailsWindow.xaml">
+            <Generator></Generator>
+        </Page>
     </ItemGroup>
 
     <ItemGroup>
@@ -87,6 +90,9 @@
         </Compile>
         <Compile Update="CostWindow.xaml.cs">
             <DependentUpon>CostWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="CostEntryDetailsWindow.xaml.cs">
+            <DependentUpon>CostEntryDetailsWindow.xaml</DependentUpon>
         </Compile>
     </ItemGroup>
 

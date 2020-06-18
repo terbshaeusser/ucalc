@@ -177,28 +177,61 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <DockPanel>
-                                <controls:HighlightButton DockPanel.Dock="Right"
-                                                          HighlightForeground="Red"
-                                                          HighlightBackground="White"
-                                                          Click="OnCostEntryDeleteClick">
-                                    <Viewbox Width="24"
-                                             Height="24"
-                                             Margin="8, 12, 8, 12"
-                                             Stretch="Uniform">
-                                        <Canvas Width="448" Height="512">
-                                            <Canvas.RenderTransform>
-                                                <TranslateTransform X="0" Y="0" />
-                                            </Canvas.RenderTransform>
-                                            <Path>
-                                                <Path.Data>
-                                                    <PathGeometry
-                                                        Figures="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
-                                                        FillRule="NonZero" />
-                                                </Path.Data>
-                                            </Path>
-                                        </Canvas>
-                                    </Viewbox>
-                                </controls:HighlightButton>
+                                <Grid DockPanel.Dock="Right">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <controls:HighlightButton
+                                        HighlightForeground="{x:Static local:Constants.SubMainColor}"
+                                        HighlightBackground="{x:Static local:Constants.MainColor}"
+                                        Grid.Row="0"
+                                        ToolTip="Details und Hilfswerkzeuge zur Berechnung"
+                                        Click="OnCostEntryDetailsClick">
+
+                                        <Viewbox Width="24"
+                                                 Height="24"
+                                                 Margin="8, 12, 8, 12"
+                                                 Stretch="Uniform">
+                                            <Canvas Width="512" Height="512">
+                                                <Canvas.RenderTransform>
+                                                    <TranslateTransform X="0" Y="0" />
+                                                </Canvas.RenderTransform>
+                                                <Path>
+                                                    <Path.Data>
+                                                        <PathGeometry
+                                                            Figures="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"
+                                                            FillRule="NonZero" />
+                                                    </Path.Data>
+                                                </Path>
+                                            </Canvas>
+                                        </Viewbox>
+                                    </controls:HighlightButton>
+
+                                    <controls:HighlightButton HighlightForeground="Red"
+                                                              HighlightBackground="White"
+                                                              Grid.Row="1"
+                                                              Click="OnCostEntryDeleteClick">
+                                        <Viewbox Width="24"
+                                                 Height="24"
+                                                 Margin="8, 12, 8, 12"
+                                                 Stretch="Uniform">
+                                            <Canvas Width="448" Height="512">
+                                                <Canvas.RenderTransform>
+                                                    <TranslateTransform X="0" Y="0" />
+                                                </Canvas.RenderTransform>
+                                                <Path>
+                                                    <Path.Data>
+                                                        <PathGeometry
+                                                            Figures="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                                                            FillRule="NonZero" />
+                                                    </Path.Data>
+                                                </Path>
+                                            </Canvas>
+                                        </Viewbox>
+                                    </controls:HighlightButton>
+                                </Grid>
 
                                 <StackPanel Margin="0, 8, 8, 8">
                                     <DockPanel Margin="0, 0, 0, 2">
