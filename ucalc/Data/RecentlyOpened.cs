@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 
@@ -40,7 +41,7 @@ namespace UCalc.Data
         }
     }
 
-    public class RecentlyOpenedList : ICollection<RecentlyOpenedItem>
+    public class RecentlyOpenedList : ICollection<RecentlyOpenedItem>, INotifyCollectionChanged
     {
         private const int MaxCount = 10;
         private readonly string _path;
@@ -79,6 +80,8 @@ namespace UCalc.Data
             {
                 // Do nothing
             }
+
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         public IEnumerator<RecentlyOpenedItem> GetEnumerator()
@@ -136,5 +139,6 @@ namespace UCalc.Data
 
         public int Count => _list.Count;
         public bool IsReadOnly => false;
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
     }
 }
