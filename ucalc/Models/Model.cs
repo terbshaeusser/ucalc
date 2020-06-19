@@ -240,7 +240,7 @@ namespace UCalc.Models
                 DepartureDate = tenant.DepartureDate.Value,
                 RentedFlats =
                     new HashSet<Flat>(tenant.RentedFlats.Select(rentedFlat => flatPropertyToFlat[rentedFlat])),
-                PaidRent = decimal.TryParse(tenant.PaidRent.Value, out var d) ? d : 0,
+                PaidRent = tenant.PaidRent.ConvertedValue ?? 0,
                 CustomMessage1 = tenant.CustomMessage1.Value,
                 CustomMessage2 = tenant.CustomMessage2.Value
             }).ToList();
@@ -253,7 +253,19 @@ namespace UCalc.Models
                 IncludeUnrented = cost.IncludeUnrented.Value,
                 AffectedFlats =
                     new HashSet<Flat>(cost.AffectedFlats.Select(rentedFlat => flatPropertyToFlat[rentedFlat])),
-                // TODO: Entries = {},
+                Entries = cost.Entries.Select(entry => new CostEntry
+                {
+                    StartDate = entry.StartDate.Value ?? StartDate,
+                    EndDate = entry.EndDate.Value ?? EndDate,
+                    Amount = entry.Amount.ConvertedValue ?? 0,
+                    Details = new CostEntryDetails
+                    {
+                        TotalAmount = entry.Details.TotalAmount.ConvertedValue ?? 0,
+                        UnitCount = entry.Details.UnitCount.ConvertedValue ?? 0,
+                        DiscountsInUnits = entry.Details.DiscountsInUnits
+                            .Select(discount => discount.ConvertedValue ?? 0).ToList()
+                    }
+                }).ToList(),
                 DisplayInBill = cost.DisplayInBill.Value
             }).ToList();
 

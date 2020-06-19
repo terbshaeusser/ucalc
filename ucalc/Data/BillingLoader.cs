@@ -69,7 +69,7 @@ namespace UCalc.Data
         }
     }
 
-    public class BillingLoader
+    public static class BillingLoader
     {
         private static string AsString(JObject parent, string name, bool optional = false)
         {
@@ -171,7 +171,7 @@ namespace UCalc.Data
             target.BankName = AsString(bankAccount, "bank_name");
         }
 
-        private Billing LoadFormat1(string path)
+        private static Billing LoadFormat1(string path)
         {
             var content = File.ReadAllText(path);
             try
@@ -289,7 +289,7 @@ namespace UCalc.Data
         }
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        private Billing LoadFormat2(string path)
+        private static Billing LoadFormat2(string path)
         {
             var content = File.ReadAllText(path);
             try
@@ -337,7 +337,7 @@ namespace UCalc.Data
             }
         }
 
-        public Billing Load(string path)
+        public static Billing Load(string path)
         {
             try
             {
@@ -349,7 +349,7 @@ namespace UCalc.Data
             }
         }
 
-        public void Store(string path, Billing billing)
+        public static void Store(string path, Billing billing)
         {
             File.WriteAllText(path, JsonConvert.SerializeObject(billing, Formatting.Indented));
         }

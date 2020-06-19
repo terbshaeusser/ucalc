@@ -71,7 +71,7 @@ namespace UCalc
         {
             try
             {
-                var billing = new BillingLoader().Load(path);
+                var billing = BillingLoader.Load(path);
                 App.RecentlyOpenedList.Add(new RecentlyOpenedItem(path));
 
                 new BillingWindow(path, billing).Show();

@@ -162,7 +162,7 @@ namespace UCalc
                 var billing = Model.Dump();
                 try
                 {
-                    new BillingLoader().Store(FilePath, billing);
+                    BillingLoader.Store(FilePath, billing);
                     Model.ResetModified();
                     return true;
                 }
