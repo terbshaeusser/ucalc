@@ -1,5 +1,6 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
@@ -9,7 +10,6 @@ namespace UCalc
 {
     public partial class NewWindow
     {
-        public Billing SavedBilling { get; private set; }
         public Billing Billing { get; private set; }
 
         public NewWindow()
@@ -28,7 +28,7 @@ namespace UCalc
             }
         }
 
-        private void OnCreateClick(object sender, RoutedEventArgs e)
+        private void OnCreateClick(object sender, RoutedEventArgs args)
         {
             if (StartCalendar.SelectedDate == null)
             {
@@ -60,52 +60,30 @@ namespace UCalc
                     return;
                 }
 
-                throw new NotImplementedException();
-                /*billing = new Billing();
-                string fileName = (string) ((ComboBoxItem) LoadCombobox.SelectedItem).Tag;
-                if (!billing.LoadFromFile(fileName))
+                var path = ((RecentlyOpenedItem) ReuseDataComboBox.SelectedItem).Path;
+                try
                 {
-                    MessageBox.Show("Die Datei \"" + fileName + "\" konnte nicht geladen werden!", "Fehler!",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                    billing = null;
+                    var details = new StringBuilder();
+                    Billing = BillingImporter.Import(path, StartCalendar.SelectedDate.Value,
+                        EndCalendar.SelectedDate.Value, details);
+
+                    if (details.Length > 0)
+                    {
+                        MessageBox.Show(
+                            $"Die folgenden Änderungen wurden beim Übernehmen vorgenommen:\n{details}",
+                            "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+                catch (IOException e)
+                {
+                    MessageBox.Show(
+                        $"Beim Laden der Datei \"{path}\" ist ein Fehler aufgetreten!\n\nDetails: {e.Message}",
+                        "Fehler!", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-
-                // Remove departured renters and costs that were only paid once
-                string summary = "";
-                billing.StartDate = (DateTime) StartCalendar.SelectedDate;
-                billing.EndDate = (DateTime) EndCalendar.SelectedDate;
-
-                for (int i = 0; i < billing.Renters.Count;)
-                {
-                    Renter renter = billing.Renters[i];
-                    if (renter.DepartureDate != null && renter.DepartureDate < billing.StartDate)
-                    {
-                        summary += "- Mieter \"" + renter.Name + "\" wurde entfernt, da er ausgezogen ist.\n";
-                        foreach (Cost cost in billing.Costs)
-                        {
-                            cost.AffectedRenters.Remove(renter);
-                        }
-
-                        billing.Renters.Remove(renter);
-                        continue;
-                    }
-                    else if (renter.EntryDate != null && renter.EntryDate <= billing.StartDate)
-                    {
-                        summary += "- Das Einzugsdatum von Mieter \"" + renter.Name + "\" wurde entfernt.\n";
-                        renter.EntryDate = null;
-                    }
-
-                    ++i;
-                }
-
-                if (summary != "")
-                    MessageBox.Show("Die folgenden Änderungen wurden beim Übernehmen vorgenommen:\n" + summary,
-                        "Information", MessageBoxButton.OK, MessageBoxImage.Information);*/
             }
             else
             {
-                SavedBilling = new Billing();
                 Billing = new Billing
                 {
                     StartDate = StartCalendar.SelectedDate.Value,

@@ -159,18 +159,14 @@ namespace UCalc.Models
         }
 
         private readonly Validator _validator;
-        public DateTime StartDate { get; }
-        public DateTime EndDate { get; }
         public BillingProperty Root { get; }
 
         public Model(Billing billing)
         {
             _validator = new Validator(this);
-            StartDate = billing.StartDate;
-            EndDate = billing.EndDate;
 
             using var validator = BeginValidation(true);
-            Root = new BillingProperty(this, null, billing);
+            Root = new BillingProperty(billing.StartDate, billing.EndDate, this, null, billing);
         }
 
         public Validator BeginValidation(bool postPone = false)
@@ -183,8 +179,8 @@ namespace UCalc.Models
         {
             var billing = new Billing
             {
-                StartDate = StartDate,
-                EndDate = EndDate,
+                StartDate = Root.StartDate,
+                EndDate = Root.EndDate,
                 Landlord =
                 {
                     Salutation = (Salutation) Root.Landlord.Salutation.Value,
@@ -255,8 +251,8 @@ namespace UCalc.Models
                     new HashSet<Flat>(cost.AffectedFlats.Select(rentedFlat => flatPropertyToFlat[rentedFlat])),
                 Entries = cost.Entries.Select(entry => new CostEntry
                 {
-                    StartDate = entry.StartDate.Value ?? StartDate,
-                    EndDate = entry.EndDate.Value ?? EndDate,
+                    StartDate = entry.StartDate.Value ?? Root.StartDate,
+                    EndDate = entry.EndDate.Value ?? Root.EndDate,
                     Amount = entry.Amount.ConvertedValue ?? 0,
                     Details = new CostEntryDetails
                     {

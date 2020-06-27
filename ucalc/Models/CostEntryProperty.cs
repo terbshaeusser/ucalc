@@ -58,6 +58,13 @@ namespace UCalc.Models
                             return $"{Name}: Dieser Zeitraum überschneidet sich mit einem anderen.";
                         }
                     }
+
+                    var billing = (BillingProperty) Parent.Parent.Parent.Parent.Parent;
+                    if (!Value.Value.IsBetween(billing.StartDate, billing.EndDate) &&
+                        !startDate.Value.IsBetween(billing.StartDate, billing.EndDate))
+                    {
+                        return $"{Name}: Dieser Zeitraum befindet sich außerhalb des Abrechnungszeitraums.";
+                    }
                 }
 
                 return "";

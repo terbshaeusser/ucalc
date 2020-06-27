@@ -1,17 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UCalc.Data;
 
 namespace UCalc.Models
 {
     public class BillingProperty : NestedProperty
     {
+        public DateTime StartDate { get; }
+        public DateTime EndDate { get; }
         public LandlordProperty Landlord { get; }
         public HouseProperty House { get; }
         public TenantsProperty Tenants { get; }
         public CostsProperty Costs { get; }
 
-        public BillingProperty(Model model, Property parent, Billing data) : base(model, parent)
+        public BillingProperty(DateTime startDate, DateTime endDate, Model model, Property parent, Billing data) : base(
+            model, parent)
         {
+            StartDate = startDate;
+            EndDate = endDate;
             Landlord = Add(new LandlordProperty(model, this, data.Landlord));
             House = Add(new HouseProperty(model, this, data.House));
 
