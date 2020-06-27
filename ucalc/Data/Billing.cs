@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -65,30 +63,6 @@ namespace UCalc.Data
             City = "";
             Postcode = "";
         }
-
-        private bool Equals(Address other)
-        {
-            return Street == other.Street && HouseNumber == other.HouseNumber && City == other.City &&
-                   Postcode == other.Postcode;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Address) obj);
-        }
-
-        public Address Clone()
-        {
-            return new Address
-            {
-                Street = Street,
-                HouseNumber = HouseNumber,
-                City = City,
-                Postcode = Postcode
-            };
-        }
     }
 
     public class BankAccount
@@ -107,28 +81,6 @@ namespace UCalc.Data
             Iban = "";
             Bic = "";
             BankName = "";
-        }
-
-        private bool Equals(BankAccount other)
-        {
-            return Iban == other.Iban && Bic == other.Bic && BankName == other.BankName;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((BankAccount) obj);
-        }
-
-        public BankAccount Clone()
-        {
-            return new BankAccount
-            {
-                Iban = Iban,
-                Bic = Bic,
-                BankName = BankName
-            };
         }
     }
 
@@ -167,23 +119,10 @@ namespace UCalc.Data
             return Id.GetHashCode();
             // ReSharper restore NonReadonlyMemberInGetHashCode
         }
-
-        public Flat Clone()
-        {
-            return new Flat
-            {
-                Id = Id,
-                Name = Name,
-                Size = Size
-            };
-        }
     }
 
     public class Tenant
     {
-        [JsonProperty(PropertyName = "id"), JsonRequired]
-        public Guid Id { get; set; }
-
         [JsonProperty(PropertyName = "salutation"), JsonRequired, JsonConverter(typeof(StringEnumConverter))]
         public Salutation Salutation { get; set; }
 
@@ -216,46 +155,11 @@ namespace UCalc.Data
 
         public Tenant()
         {
-            Id = Guid.NewGuid();
             Name = "";
             BankAccount = new BankAccount();
             RentedFlats = new HashSet<Flat>();
             CustomMessage1 = "";
             CustomMessage2 = "";
-        }
-
-        private bool Equals(Tenant other)
-        {
-            return Id.Equals(other.Id) && Salutation == other.Salutation && Name == other.Name &&
-                   PersonCount == other.PersonCount && Equals(BankAccount, other.BankAccount) &&
-                   Nullable.Equals(EntryDate, other.EntryDate) && Nullable.Equals(DepartureDate, other.DepartureDate) &&
-                   RentedFlats.SequenceEqual(other.RentedFlats) && PaidRent == other.PaidRent &&
-                   CustomMessage1 == other.CustomMessage1 && CustomMessage2 == other.CustomMessage2;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Tenant) obj);
-        }
-
-        public Tenant Clone(Dictionary<Flat, Flat> flatMapper)
-        {
-            return new Tenant
-            {
-                Id = Id,
-                Salutation = Salutation,
-                Name = Name,
-                PersonCount = PersonCount,
-                BankAccount = BankAccount.Clone(),
-                EntryDate = EntryDate,
-                DepartureDate = DepartureDate,
-                RentedFlats = new HashSet<Flat>(RentedFlats.Select(flat => flatMapper[flat])),
-                PaidRent = PaidRent,
-                CustomMessage1 = CustomMessage1,
-                CustomMessage2 = CustomMessage2
-            };
         }
     }
 
@@ -288,32 +192,6 @@ namespace UCalc.Data
             Address = new Address();
             BankAccount = new BankAccount();
         }
-
-        private bool Equals(Landlord other)
-        {
-            return Salutation == other.Salutation && Name == other.Name && MailAddress == other.MailAddress &&
-                   Phone == other.Phone && Equals(Address, other.Address) && Equals(BankAccount, other.BankAccount);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Landlord) obj);
-        }
-
-        public Landlord Clone()
-        {
-            return new Landlord
-            {
-                Salutation = Salutation,
-                Name = Name,
-                MailAddress = MailAddress,
-                Phone = Phone,
-                Address = Address.Clone(),
-                BankAccount = BankAccount.Clone()
-            };
-        }
     }
 
     public class House
@@ -328,27 +206,6 @@ namespace UCalc.Data
         {
             Address = new Address();
             Flats = new List<Flat>();
-        }
-
-        private bool Equals(House other)
-        {
-            return Equals(Address, other.Address) && Flats.SequenceEqual(other.Flats);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((House) obj);
-        }
-
-        public House Clone()
-        {
-            return new House
-            {
-                Address = Address.Clone(),
-                Flats = new List<Flat>(Flats.Select(flat => flat.Clone()))
-            };
         }
     }
 
@@ -366,29 +223,6 @@ namespace UCalc.Data
         public CostEntryDetails()
         {
             DiscountsInUnits = new List<decimal>();
-        }
-
-        private bool Equals(CostEntryDetails other)
-        {
-            return TotalAmount == other.TotalAmount && UnitCount == other.UnitCount &&
-                   DiscountsInUnits.SequenceEqual(other.DiscountsInUnits);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((CostEntryDetails) obj);
-        }
-
-        public CostEntryDetails Clone()
-        {
-            return new CostEntryDetails
-            {
-                TotalAmount = TotalAmount,
-                UnitCount = UnitCount,
-                DiscountsInUnits = new List<decimal>(DiscountsInUnits)
-            };
         }
     }
 
@@ -409,30 +243,6 @@ namespace UCalc.Data
         public CostEntry()
         {
             Details = new CostEntryDetails();
-        }
-
-        private bool Equals(CostEntry other)
-        {
-            return StartDate.Equals(other.StartDate) && EndDate.Equals(other.EndDate) && Amount == other.Amount &&
-                   Details.Equals(other.Details);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((CostEntry) obj);
-        }
-
-        public CostEntry Clone()
-        {
-            return new CostEntry
-            {
-                StartDate = StartDate,
-                EndDate = EndDate,
-                Amount = Amount,
-                Details = Details?.Clone()
-            };
         }
     }
 
@@ -490,34 +300,6 @@ namespace UCalc.Data
             AffectedFlats = new HashSet<Flat>();
             Entries = new List<CostEntry>();
         }
-
-        private bool Equals(Cost other)
-        {
-            return Name == other.Name && Division == other.Division && AffectsAll == other.AffectsAll &&
-                   ShiftUnrented == other.ShiftUnrented && AffectedFlats.SequenceEqual(other.AffectedFlats) &&
-                   Entries.SequenceEqual(other.Entries) && DisplayInBill == other.DisplayInBill;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Cost) obj);
-        }
-
-        public Cost Clone(Dictionary<Flat, Flat> flatMapper)
-        {
-            return new Cost
-            {
-                Name = Name,
-                Division = Division,
-                AffectsAll = AffectsAll,
-                ShiftUnrented = ShiftUnrented,
-                AffectedFlats = new HashSet<Flat>(AffectedFlats.Select(flat => flatMapper[flat])),
-                Entries = new List<CostEntry>(Entries.Select(entry => entry.Clone())),
-                DisplayInBill = DisplayInBill
-            };
-        }
     }
 
     public class Billing
@@ -546,55 +328,6 @@ namespace UCalc.Data
             House = new House();
             Tenants = new List<Tenant>();
             Costs = new List<Cost>();
-        }
-
-        private bool Equals(Billing other)
-        {
-            return StartDate.Equals(other.StartDate) && EndDate.Equals(other.EndDate) &&
-                   Landlord.Equals(other.Landlord) && House.Equals(other.House) &&
-                   Tenants.SequenceEqual(other.Tenants) && Costs.SequenceEqual(other.Costs);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Billing) obj);
-        }
-
-        public Billing Clone()
-        {
-            var house = House.Clone();
-            var flatMapper = new Dictionary<Flat, Flat>(new ObjectReferenceEqualityComparer<Flat>());
-
-            for (var i = 0; i < House.Flats.Count; ++i)
-            {
-                flatMapper.Add(House.Flats[i], house.Flats[i]);
-            }
-
-            return new Billing
-            {
-                StartDate = StartDate,
-                EndDate = EndDate,
-                Landlord = Landlord.Clone(),
-                House = House,
-                Tenants = new List<Tenant>(Tenants.Select(tenant => tenant.Clone(flatMapper))),
-                Costs = new List<Cost>(Costs.Select(cost => cost.Clone(flatMapper)))
-            };
-        }
-    }
-
-    public class ObjectReferenceEqualityComparer<T> : EqualityComparer<T>
-        where T : class
-    {
-        public override bool Equals(T x, T y)
-        {
-            return ReferenceEquals(x, y);
-        }
-
-        public override int GetHashCode(T obj)
-        {
-            return RuntimeHelpers.GetHashCode(obj);
         }
     }
 }
