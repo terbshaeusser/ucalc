@@ -381,6 +381,8 @@ namespace UCalc.Models
             {
                 property.ResetModified();
             }
+
+            base.ResetModified();
         }
 
         public IEnumerator<T> GetEnumerator()

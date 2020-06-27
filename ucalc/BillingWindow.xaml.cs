@@ -132,6 +132,12 @@ namespace UCalc
             page.ParentWindow = this;
         }
 
+        private void OnDetailsFrameLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            var page = (DetailsPage) ((Frame) sender).Content;
+            page.Model = Model;
+        }
+
         public bool Save(bool rename = false)
         {
             if (Model.Root.Errors.Count > 0)
@@ -195,7 +201,7 @@ namespace UCalc
 
         private void OnDetailsTabSelected(object sender, RoutedEventArgs e)
         {
-            ((DetailsPage) DetailsFrame.Content).Compute(Model);
+            ((DetailsPage) DetailsFrame.Content).Compute();
         }
     }
 }

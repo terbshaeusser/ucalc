@@ -28,7 +28,7 @@ namespace UCalc.Controls
             }
         }
 
-        private static bool IsBetween(this DateTime dt, DateTime start, DateTime end)
+        public static bool IsBetween(this DateTime dt, DateTime start, DateTime end)
         {
             return dt >= start && dt <= end;
         }
@@ -41,6 +41,26 @@ namespace UCalc.Controls
         public static string PrecisionToFormat(int precision, int optional = 0)
         {
             return $"0.{new string('0', precision - optional)}{new string('#', optional)}";
+        }
+
+        public static decimal Ceil2(this decimal d, int precision = Constants.DisplayPrecision)
+        {
+            return Math.Ceiling(d * (decimal) Math.Pow(10, precision)) / (decimal) Math.Pow(10, precision);
+        }
+
+        public static string CeilToString(this decimal d, int precision = Constants.DisplayPrecision, int optional = 0)
+        {
+            return Ceil2(d).ToString(PrecisionToFormat(precision, optional));
+        }
+
+        public static string CeilAmountToString(this decimal d, int precision = Constants.DisplayPrecision)
+        {
+            return d.CeilToString(precision, precision - 2);
+        }
+
+        public static string CeilUnitCountToString(this decimal d, int precision = Constants.DisplayPrecision)
+        {
+            return d.CeilToString(precision, precision - 3);
         }
     }
 }

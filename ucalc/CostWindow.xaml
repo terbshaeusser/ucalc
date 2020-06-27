@@ -18,7 +18,6 @@
     <Window.Resources>
         <controls:NegateConverter x:Key="NegateConverter" />
         <controls:FlatToAffectedConverter x:Key="FlatToAffectedConverter" />
-        <controls:DatePickerTextToDateTimeConverter x:Key="DatePickerTextToDateTimeConverter" />
         <controls:EmptyMultiPropertyToVisibilityConverter x:Key="EmptyMultiPropertyToVisibilityConverter" />
     </Window.Resources>
 
@@ -120,7 +119,7 @@
                                Foreground="{x:Static local:Constants.SubMainColor}" />
 
                     <CheckBox
-                        IsChecked="{Binding Path=Cost.IncludeUnrented.Value, RelativeSource={RelativeSource AncestorType=local:CostWindow}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        IsChecked="{Binding Path=Cost.ShiftUnrented.Value, RelativeSource={RelativeSource AncestorType=local:CostWindow}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                 </DockPanel>
 
@@ -246,9 +245,7 @@
 
                                         <DatePicker VerticalAlignment="Center"
                                                     MinHeight="22"
-                                                    DisplayDateStart="{Binding Path=Model.StartDate, RelativeSource={RelativeSource AncestorType=local:CostWindow}, Mode=OneWay}"
-                                                    DisplayDateEnd="{Binding Path=Model.EndDate, RelativeSource={RelativeSource AncestorType=local:CostWindow}, Mode=OneWay}"
-                                                    Text="{Binding Path=StartDate.Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DatePickerTextToDateTimeConverter}}" />
+                                                    SelectedDate="{Binding Path=StartDate.Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                                     </DockPanel>
 
@@ -264,9 +261,7 @@
 
                                         <DatePicker VerticalAlignment="Center"
                                                     MinHeight="22"
-                                                    DisplayDateStart="{Binding Path=Model.StartDate, RelativeSource={RelativeSource AncestorType=local:CostWindow}, Mode=OneWay}"
-                                                    DisplayDateEnd="{Binding Path=Model.EndDate, RelativeSource={RelativeSource AncestorType=local:CostWindow}, Mode=OneWay}"
-                                                    Text="{Binding Path=EndDate.Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DatePickerTextToDateTimeConverter}}" />
+                                                    SelectedDate="{Binding Path=EndDate.Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                                     </DockPanel>
 

@@ -108,28 +108,6 @@ namespace UCalc.Controls
         }
     }
 
-    public class DatePickerTextToDateTimeConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var dateTime = (DateTime?) value;
-
-            return dateTime == null ? "" : dateTime.Value.ToString(Constants.DateFormat);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var str = (string) value;
-
-            if (DateTime.TryParseExact(str, Constants.DateFormat, null, DateTimeStyles.None, out var d))
-            {
-                return d;
-            }
-
-            return null;
-        }
-    }
-
     public class NameToTextConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

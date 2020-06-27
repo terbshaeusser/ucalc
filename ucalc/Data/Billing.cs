@@ -472,8 +472,8 @@ namespace UCalc.Data
         [JsonProperty(PropertyName = "affectsAll"), JsonRequired]
         public bool AffectsAll { get; set; }
 
-        [JsonProperty(PropertyName = "includeUnrented"), JsonRequired]
-        public bool IncludeUnrented { get; set; }
+        [JsonProperty(PropertyName = "shiftUnrented"), JsonRequired]
+        public bool ShiftUnrented { get; set; }
 
         [JsonProperty(PropertyName = "affectedFlats"), JsonRequired, JsonConverter(typeof(FlatSerializationConverter))]
         public HashSet<Flat> AffectedFlats { get; set; }
@@ -494,7 +494,7 @@ namespace UCalc.Data
         private bool Equals(Cost other)
         {
             return Name == other.Name && Division == other.Division && AffectsAll == other.AffectsAll &&
-                   IncludeUnrented == other.IncludeUnrented && AffectedFlats.SequenceEqual(other.AffectedFlats) &&
+                   ShiftUnrented == other.ShiftUnrented && AffectedFlats.SequenceEqual(other.AffectedFlats) &&
                    Entries.SequenceEqual(other.Entries) && DisplayInBill == other.DisplayInBill;
         }
 
@@ -512,7 +512,7 @@ namespace UCalc.Data
                 Name = Name,
                 Division = Division,
                 AffectsAll = AffectsAll,
-                IncludeUnrented = IncludeUnrented,
+                ShiftUnrented = ShiftUnrented,
                 AffectedFlats = new HashSet<Flat>(AffectedFlats.Select(flat => flatMapper[flat])),
                 Entries = new List<CostEntry>(Entries.Select(entry => entry.Clone())),
                 DisplayInBill = DisplayInBill

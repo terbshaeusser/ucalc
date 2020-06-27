@@ -107,7 +107,7 @@ namespace UCalc.Models
         public NotEmptyStringProperty Name { get; }
         public AlwaysValidProperty<int> Division { get; }
         public AffectsAllProperty AffectsAll { get; }
-        public AlwaysValidProperty<bool> IncludeUnrented { get; }
+        public AlwaysValidProperty<bool> ShiftUnrented { get; }
         public AffectedFlatsProperty AffectedFlats { get; }
         public CostEntriesProperty Entries { get; }
         public AlwaysValidProperty<bool> DisplayInBill { get; }
@@ -119,8 +119,8 @@ namespace UCalc.Models
             Division = Add(new AlwaysValidProperty<int>(model, this, "Aufteilung", (int) cost.Division));
             AffectsAll = Add(new AffectsAllProperty(model, this, "Betrifft alle", cost.AffectsAll));
             AffectedFlats = Add(new AffectedFlatsProperty(model, this, cost.AffectedFlats, flatToProperty));
-            IncludeUnrented =
-                Add(new AlwaysValidProperty<bool>(model, this, "Unvermietete einbeziehen", cost.IncludeUnrented));
+            ShiftUnrented =
+                Add(new AlwaysValidProperty<bool>(model, this, "Unvermietete einbeziehen", cost.ShiftUnrented));
             Entries = Add(new CostEntriesProperty(model, this, cost.Entries));
             DisplayInBill = Add(new AlwaysValidProperty<bool>(model, this, "In Rechnung anzeigen", cost.DisplayInBill));
         }

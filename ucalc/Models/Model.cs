@@ -250,7 +250,7 @@ namespace UCalc.Models
                 Name = cost.Name.Value,
                 Division = (CostDivision) cost.Division.Value,
                 AffectsAll = cost.AffectsAll.Value,
-                IncludeUnrented = cost.IncludeUnrented.Value,
+                ShiftUnrented = cost.ShiftUnrented.Value,
                 AffectedFlats =
                     new HashSet<Flat>(cost.AffectedFlats.Select(rentedFlat => flatPropertyToFlat[rentedFlat])),
                 Entries = cost.Entries.Select(entry => new CostEntry

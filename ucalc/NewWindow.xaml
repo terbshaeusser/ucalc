@@ -62,7 +62,7 @@
                       ItemsSource="{x:Static local:App.RecentlyOpenedList}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <Label Content="{Binding DisplayText}" />
+                        <TextBlock Text="{Binding DisplayText}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>

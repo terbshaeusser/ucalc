@@ -61,6 +61,7 @@
             <TabItem Visibility="Collapsed"
                      Selector.Selected="OnDetailsTabSelected">
                 <Frame Source="Pages/DetailsPage.xaml"
+                       LoadCompleted="OnDetailsFrameLoadCompleted"
                        x:Name="DetailsFrame"
                        Focusable="False" />
             </TabItem>

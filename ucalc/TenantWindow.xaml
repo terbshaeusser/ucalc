@@ -17,7 +17,6 @@
 
     <Window.Resources>
         <controls:FlatToRentedConverter x:Key="FlatToRentedConverter" />
-        <controls:DatePickerTextToDateTimeConverter x:Key="DatePickerTextToDateTimeConverter" />
     </Window.Resources>
 
     <DockPanel>
@@ -155,9 +154,7 @@
 
                     <DatePicker VerticalAlignment="Center"
                                 MinHeight="22"
-                                DisplayDateStart="{Binding Path=Model.StartDate, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, Mode=OneWay}"
-                                DisplayDateEnd="{Binding Path=Model.EndDate, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, Mode=OneWay}"
-                                Text="{Binding Path=Tenant.EntryDate.Value, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DatePickerTextToDateTimeConverter}}" />
+                                SelectedDate="{Binding Path=Tenant.EntryDate.Value, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DockPanel>
 
                 <DockPanel Margin="12, 8, 12, 0">
@@ -173,9 +170,7 @@
 
                     <DatePicker VerticalAlignment="Center"
                                 MinHeight="22"
-                                DisplayDateStart="{Binding Path=Model.StartDate, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, Mode=OneWay}"
-                                DisplayDateEnd="{Binding Path=Model.EndDate, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, Mode=OneWay}"
-                                Text="{Binding Path=Tenant.DepartureDate.Value, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DatePickerTextToDateTimeConverter}}" />
+                                SelectedDate="{Binding Path=Tenant.DepartureDate.Value, RelativeSource={RelativeSource AncestorType=local:TenantWindow}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DockPanel>
 
                 <controls:SectionHeader Header="Gemietete Wohnungen"
