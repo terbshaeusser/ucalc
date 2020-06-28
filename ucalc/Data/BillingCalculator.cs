@@ -30,13 +30,18 @@ namespace UCalc.Data
     public class CostCalculationResult
     {
         public decimal TotalAmount { get; }
+        public decimal PastAmount { get; }
+        public decimal FutureAmount { get; }
         public string Details { get; }
         public string DetailsForLandlord { get; }
         public bool AffectsTenant { get; }
 
-        public CostCalculationResult(decimal totalAmount, string details, string detailsForLandlord, bool affectsTenant)
+        public CostCalculationResult(decimal totalAmount, decimal pastAmount, decimal futureAmount, string details,
+            string detailsForLandlord, bool affectsTenant)
         {
             TotalAmount = totalAmount;
+            PastAmount = pastAmount;
+            FutureAmount = futureAmount;
             Details = details;
             DetailsForLandlord = detailsForLandlord;
             AffectsTenant = affectsTenant;
@@ -121,7 +126,7 @@ namespace UCalc.Data
             {
                 if (tenant.EntryDate != null && tenant.EntryDate.Value.IsBetween(billing.StartDate, billing.EndDate))
                 {
-                    AddEvent(tenant.EntryDate.Value, tenant, true);
+                    AddEvent(tenant.EntryDate.Value.AddDays(-1), tenant, true);
                 }
 
                 if (tenant.DepartureDate != null &&
@@ -264,7 +269,7 @@ namespace UCalc.Data
             details.Append(costPerDay.CeilAmountToString(Constants.InternalPrecision));
             details.Append(" €\n\n");
 
-            return costPerDay;
+            return costPerDay.Ceil2(Constants.InternalPrecision);
         }
 
         private static IEnumerable<Flat> AffectedFlats(this Cost cost, Billing billing)
@@ -455,7 +460,7 @@ namespace UCalc.Data
             return totalAmount;
         }
 
-        private static void CalculateCostInPast(Billing billing, Tenant tenant, Cost cost, StringBuilder details,
+        private static decimal CalculateCostInPast(Billing billing, Tenant tenant, Cost cost, StringBuilder details,
             IEnumerable<CostEntry> pastCoveringEntries)
         {
             details.Append("In vergangener Abrechnung bereits gezahlt (geschätzt) = ");
@@ -500,9 +505,11 @@ namespace UCalc.Data
 
             details.Append(totalAmount.CeilToString());
             details.Append(" €\n");
+
+            return totalAmount;
         }
 
-        private static void CalculateCostInFuture(Billing billing, Tenant tenant, Cost cost, StringBuilder details,
+        private static decimal CalculateCostInFuture(Billing billing, Tenant tenant, Cost cost, StringBuilder details,
             IEnumerable<CostEntry> futureCoveringEntries)
         {
             details.Append("In nächster Abrechnung erwartet (geschätzt) = ");
@@ -547,13 +554,15 @@ namespace UCalc.Data
 
             details.Append(totalAmount.CeilToString());
             details.Append(" €\n");
+
+            return totalAmount;
         }
 
         private static CostCalculationResult CalculateCost(Billing billing, Tenant tenant, Cost cost)
         {
             if (!AffectsTenant(tenant, cost))
             {
-                return new CostCalculationResult(0, "", "", false);
+                return new CostCalculationResult(0, 0, 0, "", "", false);
             }
 
             var details = new StringBuilder("Kostenpunkt: ");
@@ -579,12 +588,13 @@ namespace UCalc.Data
             details.Append(" €\n");
 
             var detailsLandlord = new StringBuilder(details.ToString());
-            CalculateCostInPast(billing, tenant, cost, detailsLandlord, pastCoveringEntries);
-            CalculateCostInFuture(billing, tenant, cost, detailsLandlord, futureCoveringEntries);
+            var pastAmount = CalculateCostInPast(billing, tenant, cost, detailsLandlord, pastCoveringEntries);
+            var futureAmount = CalculateCostInFuture(billing, tenant, cost, detailsLandlord, futureCoveringEntries);
             details.Append("\n");
             detailsLandlord.Append("\n");
 
-            return new CostCalculationResult(totalAmount, details.ToString(), detailsLandlord.ToString(), true);
+            return new CostCalculationResult(totalAmount, pastAmount, futureAmount, details.ToString(),
+                detailsLandlord.ToString(), true);
         }
 
         public static TenantCalculationResult CalculateForTenant(Billing billing, Tenant tenant)
@@ -629,6 +639,63 @@ namespace UCalc.Data
 
             return new TenantCalculationResult(tenant, costResults, subTotalAmount, totalAmount, details.ToString(),
                 detailsLandlord.ToString());
+        }
+
+        public static string CalculateCostOverview(Billing billing)
+        {
+            var str = new StringBuilder();
+            var tenantResults = billing.Tenants.Select(tenant => CalculateForTenant(billing, tenant)).ToList();
+
+            decimal landlordAmount = 0;
+
+            foreach (var cost in billing.Costs)
+            {
+                str.Append("Kostenpunkt: ");
+                str.Append(cost.Name);
+                str.Append("\n\n");
+
+                var totalAmount = cost.Entries.Aggregate((decimal) 0, (sum, entry) => sum + entry.Amount);
+                str.Append("Insgesamter Betrag: ");
+                str.Append(totalAmount.CeilToString());
+                str.Append(" €\n");
+
+                var (tenantAmount, pastTenantAmount, futureTenantAmount) = tenantResults.Aggregate(
+                    new Tuple<decimal, decimal, decimal>(0, 0, 0),
+                    (sum, tenantResult) =>
+                    {
+                        var costResult = tenantResult.Costs[cost];
+                        return new Tuple<decimal, decimal, decimal>(sum.Item1 + costResult.TotalAmount,
+                            sum.Item2 + costResult.PastAmount, sum.Item3 + costResult.FutureAmount);
+                    });
+
+                str.Append("Auf Mieter umgelegt:\n");
+                str.Append("- Unvermietete Wohnungen werden umgelegt: ");
+                str.Append(cost.ShiftUnrented ? "Ja\n" : "Nein\n");
+                str.Append("- In dieser Abrechnung: ");
+                str.Append(tenantAmount.CeilToString());
+                str.Append(" €\n");
+                str.Append("- In vergangener Abrechnung (geschätzt): ");
+                str.Append(pastTenantAmount.CeilToString());
+                str.Append(" €\n");
+                str.Append("- In zukünftiger Abrechnung (geschätzt): ");
+                str.Append(futureTenantAmount.CeilToString());
+                str.Append(" €\n");
+
+                var t = totalAmount - (tenantAmount + pastTenantAmount + futureTenantAmount);
+                str.Append("Verbleibende Kosten: ");
+                str.Append(t.CeilToString());
+                str.Append(" €\n");
+
+                landlordAmount += t;
+
+                str.Append("\n---\n\n");
+            }
+
+            str.Append("Nicht umgelegte Kosten: ");
+            str.Append(landlordAmount.CeilToString());
+            str.Append(" €");
+
+            return str.ToString();
         }
     }
 }

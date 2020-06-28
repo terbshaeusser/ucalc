@@ -15,12 +15,12 @@
         <DockPanel Margin="12, 12, 12, 0"
                    DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left"
-                   Content="Mieter:"
+                   Content="Details zu:"
                    Width="180"
                    Foreground="{x:Static local:Constants.SubMainColor}" />
 
             <ComboBox
-                ItemsSource="{Binding Path=Tenants, RelativeSource={RelativeSource AncestorType=pages:DetailsPage}}"
+                ItemsSource="{Binding Path=Items, RelativeSource={RelativeSource AncestorType=pages:DetailsPage}}"
                 SelectionChanged="OnSelectedTenantChanged"
                 x:Name="TenantComboBox">
                 <ComboBox.ItemTemplate>

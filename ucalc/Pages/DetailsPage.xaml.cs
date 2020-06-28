@@ -5,15 +5,26 @@ using UCalc.Models;
 
 namespace UCalc.Pages
 {
+    public class DetailsItem
+    {
+        public Tenant Tenant { get; }
+        public string Name => Tenant != null ? Tenant.Name : "Kostenübersicht";
+
+        public DetailsItem(Tenant tenant)
+        {
+            Tenant = tenant;
+        }
+    }
+
     public partial class DetailsPage
     {
         public Model Model { get; set; }
         private Billing _billing;
-        public ObservableCollection<Tenant> Tenants { get; }
+        public ObservableCollection<DetailsItem> Items { get; }
 
         public DetailsPage()
         {
-            Tenants = new ObservableCollection<Tenant>();
+            Items = new ObservableCollection<DetailsItem>();
             InitializeComponent();
         }
 
@@ -28,10 +39,11 @@ namespace UCalc.Pages
             }
 
             _billing = Model.Dump();
-            Tenants.Clear();
+            Items.Clear();
+            Items.Add(new DetailsItem(null));
             foreach (var tenant in _billing.Tenants)
             {
-                Tenants.Add(tenant);
+                Items.Add(new DetailsItem(tenant));
             }
 
             TenantComboBox.IsEnabled = true;
@@ -41,15 +53,21 @@ namespace UCalc.Pages
 
         private void OnSelectedTenantChanged(object sender, SelectionChangedEventArgs e)
         {
-            var tenant = (Tenant) ((ComboBox) sender).SelectedItem;
+            var item = (DetailsItem) ((ComboBox) sender).SelectedItem;
 
-            if (tenant == null)
+            if (item == null)
             {
                 CalculationTextBox.Text = "Bitte wählen Sie einen Mieter aus, um die Berechnungen anzuzeigen.";
                 return;
             }
 
-            var result = BillingCalculator.CalculateForTenant(_billing, tenant);
+            if (item.Tenant == null)
+            {
+                CalculationTextBox.Text = BillingCalculator.CalculateCostOverview(_billing);
+                return;
+            }
+
+            var result = BillingCalculator.CalculateForTenant(_billing, item.Tenant);
 
             CalculationTextBox.Text = result.DetailsForLandlord;
         }
