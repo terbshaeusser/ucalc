@@ -10,15 +10,17 @@ namespace UCalc.Data
     {
         public Tenant Tenant { get; }
         public IReadOnlyDictionary<Cost, CostCalculationResult> Costs { get; }
+        public decimal SubTotalAmount { get; }
         public decimal TotalAmount { get; }
         public string Details { get; }
         public string DetailsForLandlord { get; }
 
         public TenantCalculationResult(Tenant tenant, IReadOnlyDictionary<Cost, CostCalculationResult> costs,
-            decimal totalAmount, string details, string detailsForLandlord)
+            decimal subTotalAmount, decimal totalAmount, string details, string detailsForLandlord)
         {
             Tenant = tenant;
             Costs = costs;
+            SubTotalAmount = subTotalAmount;
             TotalAmount = totalAmount;
             Details = details;
             DetailsForLandlord = detailsForLandlord;
@@ -616,6 +618,7 @@ namespace UCalc.Data
             var str = $"Zwischensumme: {totalAmount.CeilToString()} €\n";
             str += $"Bereits bezahlt: {tenant.PaidRent.CeilToString()} €\n\n";
 
+            var subTotalAmount = totalAmount;
             totalAmount -= tenant.PaidRent;
             totalAmount = totalAmount.Ceil2();
 
@@ -624,7 +627,7 @@ namespace UCalc.Data
             details.Append(str);
             detailsLandlord.Append(str);
 
-            return new TenantCalculationResult(tenant, costResults, totalAmount, details.ToString(),
+            return new TenantCalculationResult(tenant, costResults, subTotalAmount, totalAmount, details.ToString(),
                 detailsLandlord.ToString());
         }
     }

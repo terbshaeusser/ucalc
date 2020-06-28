@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 using UCalc.Controls;
 using UCalc.Data;
@@ -26,5 +27,33 @@ namespace UCalc
 
         public static readonly ImmutableList<string> CostDivisionStrs =
             ((CostDivision[]) Enum.GetValues(typeof(CostDivision))).Select(value => value.AsString()).ToImmutableList();
+
+        public static readonly double DinA4Width;
+        public static readonly double DinA4Height;
+        public static readonly Thickness DinA4Padding;
+
+        public static double DinA4ContentWidth => DinA4Width - DinA4Padding.Left - DinA4Padding.Right;
+
+        public static readonly double PrintDefaultFontSize;
+        public static readonly double PrintSubjectFontSize;
+        public static readonly double PrintNewlineFontSize;
+
+        static Constants()
+        {
+            var converter = new LengthConverter();
+            // ReSharper disable PossibleNullReferenceException
+            DinA4Width = (double) converter.ConvertFromInvariantString("29.7cm");
+            DinA4Height = (double) converter.ConvertFromInvariantString("42cm");
+            var dinA4MarginLeftRight = (double) converter.ConvertFromInvariantString("3.18cm");
+            var dinA4MarginTopBottom = (double) converter.ConvertFromInvariantString("2.54cm");
+
+            PrintDefaultFontSize = (double) converter.ConvertFromInvariantString("14pt");
+            PrintSubjectFontSize = (double) converter.ConvertFromInvariantString("16pt");
+            PrintNewlineFontSize = (double) converter.ConvertFromInvariantString("4pt");
+            // ReSharper restore PossibleNullReferenceException
+
+            DinA4Padding = new Thickness(dinA4MarginLeftRight, dinA4MarginTopBottom, dinA4MarginLeftRight,
+                dinA4MarginTopBottom);
+        }
     }
 }

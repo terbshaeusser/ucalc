@@ -50,7 +50,8 @@ namespace UCalc.Pages
 
         private void OnAboutClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            MessageBox.Show("MietRechner Version 2.0\n\nCopyright © 2020 by Tobias Erbshäußer", "Über MietRechner",
+                MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

@@ -186,17 +186,17 @@ namespace UCalc
             }
         }
 
-        public bool Print()
+        public void Print()
         {
             if (Model.Root.Errors.Count > 0)
             {
                 MessageBox.Show(
                     "Bitte beheben Sie zuerst die angezeigten Fehler, bevor Sie das Dokument drucken können.",
                     "Fehler!", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
+                return;
             }
 
-            throw new NotImplementedException();
+            new PrintWindow(Model) {Owner = this}.ShowDialog();
         }
 
         private void OnDetailsTabSelected(object sender, RoutedEventArgs e)
