@@ -19,7 +19,7 @@ Name: "de"; MessagesFile: "compiler:Languages\German.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 
 [Files]
-Source: "../ucalc/bin/Release/netcoreapp3.1/win-x64/publish/**"; DestDir: "{app}"; Flags: recursesubdirs
+Source: "setup/**"; DestDir: "{app}"; Flags: recursesubdirs
 
 [Icons]
 Name: "{group}\MietRechner"; Filename: "{app}\ucalc.exe"
