@@ -187,19 +187,33 @@ namespace UCalc
                 cell2.Blocks.Add(new Paragraph(new Run($"{amount.CeilToString()} €")) {Padding = new Thickness(6)});
             }
 
-            AddText(
-                $"{Billing.Landlord.Salutation.AsString()} {Billing.Landlord.Name}\n{DateTime.Now.ToString(Constants.DateFormat)}\n\n{Billing.Landlord.Address.Street} {Billing.Landlord.Address.HouseNumber}\n{Billing.Landlord.Address.Postcode} {Billing.Landlord.Address.City}\nTelefon: {Billing.Landlord.Phone}");
-
-            if (!string.IsNullOrEmpty(Billing.Landlord.MailAddress))
+            void AddTextLeftRight(string leftText, string rightText)
             {
-                AddText($"Email: {Billing.Landlord.MailAddress}");
+                var row2 = new TableRow();
+                rowGroup.Rows.Add(row2);
+
+                var cell2 = new TableCell();
+                row2.Cells.Add(cell2);
+
+                cell2.Blocks.Add(new Paragraph(new Run(leftText)));
+
+                cell2 = new TableCell
+                {
+                    TextAlignment = TextAlignment.Right
+                };
+                row2.Cells.Add(cell2);
+
+                cell2.Blocks.Add(new Paragraph(new Run(rightText)));
             }
+
+            AddTextLeftRight(
+                $"{Billing.Landlord.Name}\n{Billing.Landlord.Address.Street} {Billing.Landlord.Address.HouseNumber}\n{Billing.Landlord.Address.Postcode} {Billing.Landlord.Address.City}\nTelefon: {Billing.Landlord.Phone}{(string.IsNullOrEmpty(Billing.Landlord.MailAddress) ? "" : $"\nEmail: {Billing.Landlord.MailAddress}")}",
+                DateTime.Now.ToString(Constants.DateFormat));
 
             AddLineBreaks(2);
 
             AddText(
-                $"{tenant.Salutation.AsString()} {tenant.Name}\n{Billing.House.Address.Street} {Billing.House.Address.HouseNumber}\n{Billing.House.Address.Postcode} {Billing.House.Address.City}",
-                null, true);
+                $"{tenant.Salutation.AsString()} {tenant.Name}\n{Billing.House.Address.Street} {Billing.House.Address.HouseNumber}\n{Billing.House.Address.Postcode} {Billing.House.Address.City}");
 
             AddLineBreaks(4);
 
@@ -240,7 +254,7 @@ namespace UCalc
             else
             {
                 AddText(
-                    $"Der einmalige Betrag von {result.TotalAmount.CeilToString()} € wird in den nächsten Tagen auf Ihr Konto überwiesen.");
+                    $"Der einmalige Betrag von {(result.TotalAmount * -1).CeilToString()} € wird in den nächsten Tagen auf Ihr Konto überwiesen.");
             }
 
             AddLineBreaks(1);
