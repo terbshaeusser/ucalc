@@ -6,7 +6,7 @@ namespace UCalc.Models
     {
         public SalutationProperty Salutation { get; }
         public NotEmptyStringProperty Name { get; }
-        public NotEmptyStringProperty MailAddress { get; }
+        public AlwaysValidProperty<string> MailAddress { get; }
         public NotEmptyStringProperty Phone { get; }
         public AddressProperty Address { get; }
         public BankAccountProperty BankAccount { get; }
@@ -15,10 +15,10 @@ namespace UCalc.Models
         {
             Salutation = Add(new SalutationProperty(model, this, "Anrede", data.Salutation));
             Name = Add(new NotEmptyStringProperty(model, this, "Name", data.Name));
-            MailAddress = Add(new NotEmptyStringProperty(model, this, "Email Adresse", data.MailAddress));
+            MailAddress = Add(new AlwaysValidProperty<string>(model, this, "Email Adresse", data.MailAddress));
             Phone = Add(new NotEmptyStringProperty(model, this, "Telefonnummer", data.Phone));
             Address = Add(new AddressProperty(model, this, data.Address));
-            BankAccount = Add(new BankAccountProperty(model, this, data.BankAccount));
+            BankAccount = Add(new BankAccountProperty(model, this, data.BankAccount, false));
         }
     }
 }

@@ -188,7 +188,12 @@ namespace UCalc
             }
 
             AddText(
-                $"{Billing.Landlord.Salutation.AsString()} {Billing.Landlord.Name}\n{DateTime.Now.ToString(Constants.DateFormat)}\n\n{Billing.Landlord.Address.Street} {Billing.Landlord.Address.HouseNumber}\n{Billing.Landlord.Address.Postcode} {Billing.Landlord.Address.City}\nTelefon: {Billing.Landlord.Phone}\nEmail: {Billing.Landlord.MailAddress}");
+                $"{Billing.Landlord.Salutation.AsString()} {Billing.Landlord.Name}\n{DateTime.Now.ToString(Constants.DateFormat)}\n\n{Billing.Landlord.Address.Street} {Billing.Landlord.Address.HouseNumber}\n{Billing.Landlord.Address.Postcode} {Billing.Landlord.Address.City}\nTelefon: {Billing.Landlord.Phone}");
+
+            if (!string.IsNullOrEmpty(Billing.Landlord.MailAddress))
+            {
+                AddText($"Email: {Billing.Landlord.MailAddress}");
+            }
 
             AddLineBreaks(2);
 

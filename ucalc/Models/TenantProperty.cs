@@ -212,7 +212,7 @@ namespace UCalc.Models
             Salutation = Add(new SalutationProperty(model, this, "Anrede", data.Salutation));
             Name = Add(new NotEmptyStringProperty(model, this, "Name", data.Name));
             PersonCount = Add(new NaturalNumberProperty(model, this, "Personenanzahl", data.PersonCount));
-            BankAccount = Add(new BankAccountProperty(model, this, data.BankAccount));
+            BankAccount = Add(new BankAccountProperty(model, this, data.BankAccount, true));
             EntryDate = Add(new EntryDateProperty(model, this, "Einzugsdatum", data.EntryDate));
             DepartureDate = Add(new DepatureDateProperty(model, this, "Auszugsdatum", data.DepartureDate));
             RentedFlats = Add(new RentedFlatsProperty(model, this, data.RentedFlats, flatToProperty));

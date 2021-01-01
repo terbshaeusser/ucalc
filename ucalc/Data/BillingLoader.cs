@@ -71,11 +71,11 @@ namespace UCalc.Data
 
     public static class BillingLoader
     {
-        private static string AsString(JObject parent, string name, bool optional = false)
+        private static string AsString(JObject parent, string name, string defaultValue = null)
         {
-            if (optional && (parent[name]?.Type ?? JTokenType.Null) == JTokenType.Null)
+            if (defaultValue != null && (parent[name]?.Type ?? JTokenType.Null) == JTokenType.Null)
             {
-                return "";
+                return defaultValue;
             }
 
             return parent[name]?.Value<string>() ??
@@ -89,7 +89,7 @@ namespace UCalc.Data
 
         private static DateTime? AsDateOptional(JObject parent, string name)
         {
-            var str = AsString(parent, name, true);
+            var str = AsString(parent, name, "");
             if (string.IsNullOrEmpty(str))
             {
                 return null;
@@ -104,8 +104,13 @@ namespace UCalc.Data
                    throw new JsonException($"Cannot read {parent.Path}.{name} as integer");
         }
 
-        private static bool AsBool(JObject parent, string name)
+        private static bool AsBool(JObject parent, string name, bool? defaultValue = null)
         {
+            if (defaultValue != null && (parent[name]?.Type ?? JTokenType.Null) == JTokenType.Null)
+            {
+                return defaultValue.Value;
+            }
+
             return parent[name]?.Value<bool>() ??
                    throw new JsonException($"Cannot read {parent.Path}.{name} as bool");
         }
@@ -118,7 +123,7 @@ namespace UCalc.Data
 
         private static decimal? AsDecimalOptional(JObject parent, string name)
         {
-            var str = AsString(parent, name, true);
+            var str = AsString(parent, name, "");
             if (string.IsNullOrEmpty(str))
             {
                 return null;
@@ -187,7 +192,7 @@ namespace UCalc.Data
                 billing.Landlord.Salutation = (Salutation) AsInt(landlord, "salutation");
                 billing.Landlord.Name = AsString(landlord, "name");
                 billing.Landlord.Phone = AsString(landlord, "phone");
-                billing.Landlord.MailAddress = AsString(landlord, "mail");
+                billing.Landlord.MailAddress = AsString(landlord, "mail", "");
                 LoadAddress(landlord, "address", billing.Landlord.Address);
                 LoadBankAccount(landlord, "account", billing.Landlord.BankAccount);
 
@@ -207,8 +212,8 @@ namespace UCalc.Data
                         EntryDate = AsDateOptional(tenant, "entry_date"),
                         DepartureDate = AsDateOptional(tenant, "departure_date"),
                         PaidRent = AsDecimal(tenant, "paid_rent"),
-                        CustomMessage1 = AsString(tenant, "message1", true),
-                        CustomMessage2 = AsString(tenant, "message2", true)
+                        CustomMessage1 = AsString(tenant, "message1", ""),
+                        CustomMessage2 = AsString(tenant, "message2", "")
                     };
                     LoadBankAccount(tenant, "account", targetTenant.BankAccount);
 
@@ -266,7 +271,7 @@ namespace UCalc.Data
                                 Details = details
                             };
                         }).ToList(),
-                        DisplayInBill = AsBool(cost, "display")
+                        DisplayInBill = AsBool(cost, "display", false)
                     };
 
                     billing.Costs.Add(targetCost);
