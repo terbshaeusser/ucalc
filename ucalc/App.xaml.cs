@@ -1,4 +1,6 @@
-﻿using UCalc.Data;
+﻿using System;
+using System.IO;
+using UCalc.Data;
 
 namespace UCalc
 {
@@ -9,7 +11,10 @@ namespace UCalc
 
         public App()
         {
-            _recentlyOpenedList = new RecentlyOpenedList("recently.txt");
+            var appDataPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/UCalc";
+            Directory.CreateDirectory(appDataPath);
+
+            _recentlyOpenedList = new RecentlyOpenedList($"{appDataPath}/recently.txt");
         }
     }
 }
