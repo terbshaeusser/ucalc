@@ -49,7 +49,7 @@ namespace UCalc
 
             PrintDefaultFontSize = (double) converter.ConvertFromInvariantString("14pt");
             PrintSubjectFontSize = (double) converter.ConvertFromInvariantString("16pt");
-            PrintNewlineFontSize = (double) converter.ConvertFromInvariantString("4pt");
+            PrintNewlineFontSize = (double) converter.ConvertFromInvariantString("14pt");
             // ReSharper restore PossibleNullReferenceException
 
             DinA4Padding = new Thickness(dinA4MarginLeftRight, dinA4MarginTopBottom, dinA4MarginLeftRight,

@@ -111,7 +111,7 @@ namespace UCalc
 
             var cell = new TableCell {ColumnSpan = 2};
             row.Cells.Add(cell);
-            cell.Blocks.Add(new Paragraph(new Run(new string('\n', count))
+            cell.Blocks.Add(new Paragraph(new Run(new string('\n', count - 1))
                 {FontSize = Constants.PrintNewlineFontSize}));
         }
 
@@ -230,7 +230,7 @@ namespace UCalc
             AddCost(result.TotalAmount > 0 ? "Einmalige Nachzahlung" : "Einmalige Rückzahlung", result.TotalAmount,
                 true);
 
-            AddLineBreaks(2);
+            AddLineBreaks(1);
 
             if (result.TotalAmount > 0)
             {
