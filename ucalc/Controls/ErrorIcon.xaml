@@ -14,7 +14,7 @@
         <controls:ErrorsToToolTipConverter x:Key="ErrorsToToolTipConverter" />
     </UserControl.Resources>
     
-    <StackPanel ToolTip="{Binding Path=Property.Errors, RelativeSource={RelativeSource AncestorType=controls:ErrorIcon}, Converter={StaticResource ErrorsToToolTipConverter}}">
+    <StackPanel Background="Transparent" ToolTip="{Binding Path=Property.Errors, RelativeSource={RelativeSource AncestorType=controls:ErrorIcon}, Converter={StaticResource ErrorsToToolTipConverter}}">
         <Viewbox
             Visibility="{Binding Path=Property.Errors, RelativeSource={RelativeSource AncestorType=controls:ErrorIcon}, Converter={StaticResource ErrorsToInVisibilityConverter}}"
             Stretch="Uniform">
