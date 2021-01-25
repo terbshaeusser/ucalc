@@ -1,0 +1,149 @@
+﻿# Lines starting with # are ignored by the interpreter.
+#
+# Text formatting options are written in html.
+# Write the following special html tag <newpage> to print the following text on
+# a new page.
+#
+# Commands are written between {$ }. The following commands are possible:
+# {$account-bic} - BIC of the renter
+# {$account-iban} - IBAN of the renter
+# {$account-bank} - Bank name of the renter
+# {$address-city} - City of the house address
+# {$address-number} - House number of the house address
+# {$address-plz} - PLZ of the house address
+# {$address-street} - Street of the house address
+# {$costtable} - Table with costs
+# {$date} - Current date
+# {$details} - Details about the calculation
+# {$enddate} - End date of bill
+# {$message1} - First custom message for the renter
+# {$message2} - Second custom message for the renter
+# {$name} - Name of the renter
+# {$owner-account-bic} - BIC of the owner
+# {$owner-account-iban} - IBAN of the owner
+# {$owner-account-bank} - Bank name of the owner
+# {$owner-address-city} - City of the owner address
+# {$owner-address-number} - House number of the owner address
+# {$owner-address-plz} - PLZ of the owner address
+# {$owner-address-street} - Street of the owner address
+# {$owner-mail} - Mail address of the owner
+# {$owner-name} - Name of the owner
+# {$owner-phone} - Phone number of the owner
+# {$owner-salutation} - Salutation of the owner
+# {$salutation} - Salutation of the renter
+# {$sum} - The price to pay
+# {$startdate} - Start date of bill
+#
+# Templates can be defined for specific renters by creating a template file with
+# the name "name of the renter.pay.template" or
+# "name of the renter.refund.template".
+# It is also possible to define templates depending on the salutation of the
+# renter. Therefore name a template "salutation.pay.template" or
+# "salutation.refund.template".
+#
+# To change the style of the cost table define a CSS style with the class name
+# "costtable-style".
+# The sum row in the cost table can be modified using a CSS style with class
+# name "costtable-sum-style".
+# The temporary sum row can be changed using the "costtable-tempsum-style" CSS
+# style.
+# The already paid row can be changed using the "costtable-paid-style" CSS
+# style.
+# The right column can be changed using the "costtable-price-style" CSS style.
+#
+
+<style type="text/css">
+	table.costtable-style {
+		font-family: verdana,arial,sans-serif;
+		color:#333333;
+		border-width: 1px;
+		border-color: #3A3A3A;
+		border-collapse: collapse;
+		width: 90%;
+		margin-left: 35px;
+	}
+	table.costtable-style th {
+		border-width: 1px;
+		padding: 6px;
+		border-style: solid;
+		border-color: #3A3A3A;
+		background-color: #B3B3B3;
+	}
+	table.costtable-style td {
+		border-width: 1px;
+		padding: 6px;
+		border-style: solid;
+		border-color: #3A3A3A;
+		background-color: #ffffff;
+	}
+	td.costtable-price-style {
+		text-align: right;
+	}
+	tr.costtable-sum-style td {
+		background-color: #B3B3B3;
+	}
+
+	table.no-spacing {
+		border-spacing:0;
+		border-collapse: collapse;
+	}
+</style>
+
+<table width="100%" class="no-spacing" cellspacing="0px">
+	<tr>
+		<td width="88%">{$owner-name}</td>
+		<td>{$date}</td>
+	</tr>
+	<tr>
+		<td>{$owner-address-street} {$owner-address-number}<br>{$owner-address-plz} {$owner-address-city}<br>{$owner-phone}<br>{$owner-mail}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>{$name}<br>{$address-street} {$address-number}<br>{$address-plz} {$address-city}</td>
+		<td></td>
+	</tr>
+</table>
+
+<br>
+<br>
+<br>
+<br>
+
+{$salutation} {$name}<br>
+
+<h4>Nebenkostenabrechnung vom {$startdate} zum {$enddate}</h4>
+{$message1}
+<br>
+{$costtable}
+<br>
+<br>
+Der einmalige Betrag von {$sum} € wird in den nächsten Tagen auf Ihr Konto überwiesen.<br>
+{$message2}
+<br>
+<br>
+Kontoverbindung:<br>
+<table>
+	<tr>
+		<td>IBAN: </td>
+		<td>{$owner-account-iban}</td>
+	</tr>
+	<tr>
+		<td>BIC: </td>
+		<td>{$owner-account-bic}</td>
+	</tr>
+</table>
+<br>
+<br>
+Mit freundlichen Grüßen
+
+<newpage>
+
+Die Wasserkosten wurden wie folgt berechnet:
+<br><br>
+{$details}

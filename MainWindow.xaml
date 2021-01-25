@@ -1,0 +1,99 @@
+﻿<Window x:Name="MainForm" x:Class="MietRechner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MietRechner"
+        mc:Ignorable="d"
+        Icon="MietRechner.ico"
+        Title="Mieten Rechner" Height="350" Width="525" MinWidth="700" MinHeight="500" Loaded="MainForm_Loaded" Closing="MainForm_Closing">
+
+    <Window.CommandBindings>
+        <CommandBinding Command="New" Executed="NewCommandBinding_Executed"></CommandBinding>
+        <CommandBinding Command="Open" Executed="OpenCommandBinding_Executed"></CommandBinding>
+        <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed"></CommandBinding>
+        <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed"></CommandBinding>
+        <CommandBinding Command="Print" Executed="PrintCommandBinding_Executed"></CommandBinding>
+    </Window.CommandBindings>
+
+    <DockPanel LastChildFill="True">
+        <Menu x:Name="menu" DockPanel.Dock="Top" VerticalAlignment="Top" Background="White" BorderThickness="0,0,0,1" BorderBrush="#FF007ACC">
+            <MenuItem x:Name="MainMenu" Header="Datei">
+                <MenuItem x:Name="NewMenuItem" Command="New"/>
+                <MenuItem x:Name="OpenMenuItem" Command="Open"/>
+                <MenuItem x:Name="OpenRecentMenuItem" Header="Zuletzt geöffnete Dateien"/>
+                <MenuItem x:Name="SaveMenuItem" Command="Save"/>
+                <MenuItem x:Name="SaveAsMenuItem" Command="SaveAs"/>
+                <Separator/>
+                <MenuItem x:Name="PrintMenuItem" Command="Print"/>
+                <Separator/>
+                <MenuItem x:Name="CloseMenuItem" Header="Schließen" Click="CloseMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="?">
+                <MenuItem x:Name="AboutMenuItem" Header="Über" Click="AboutMenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+        <TabControl x:Name="OuterTabs" Background="White" BorderBrush="White" Padding="0" SelectedIndex="1" DockPanel.Dock="Top" BorderThickness="0" Margin="0,-2,0,0">
+            <TabItem Header="TabItem" Visibility="Collapsed" Margin="0" BorderBrush="White" Padding="0">
+                <DockPanel LastChildFill="True" DockPanel.Dock="Top">
+                    <StackPanel Width="64" Margin="0" Background="#FF007ACC">
+                        <DockPanel x:Name="OwnerPanel" LastChildFill="True" MouseEnter="LeftPanel_MouseEnter" MouseLeave="LeftPanel_MouseLeave" MouseLeftButtonUp="OwnerPanel_MouseLeftButtonUp">
+                            <Image x:Name="OwnerImage" Source="Images/Owner.png" DockPanel.Dock="Top"/>
+                            <Label x:Name="OwnerLabel" Content="Eigentümer" Foreground="White" Padding="2,0,2,5" HorizontalContentAlignment="Center" FontSize="11"/>
+                        </DockPanel>
+                        <DockPanel x:Name="HousePanel" LastChildFill="True" MouseEnter="LeftPanel_MouseEnter" MouseLeave="LeftPanel_MouseLeave" MouseLeftButtonUp="HousePanel_MouseLeftButtonUp">
+                            <Image x:Name="HouseImage" Source="Images/House.png" DockPanel.Dock="Top"/>
+                            <Label x:Name="HouseLabel" Content="Haus" Foreground="White" Padding="2,0,2,5" HorizontalContentAlignment="Center" FontSize="11"/>
+                        </DockPanel>
+                        <DockPanel x:Name="RenterPanel" LastChildFill="True" MouseLeftButtonUp="RenterPanel_MouseLeftButtonUp" MouseEnter="LeftPanel_MouseEnter" MouseLeave="LeftPanel_MouseLeave">
+                            <Image x:Name="RenterImage" Source="Images/User.png" DockPanel.Dock="Top"/>
+                            <Label x:Name="RenterLabel" Content="Mieter" Foreground="White" Padding="2,0,2,5" HorizontalContentAlignment="Center" FontSize="11"/>
+                        </DockPanel>
+                        <DockPanel x:Name="CostsPanel" LastChildFill="True" MouseEnter="LeftPanel_MouseEnter" MouseLeave="LeftPanel_MouseLeave" MouseLeftButtonUp="CostsPanel_MouseLeftButtonUp">
+                            <Image x:Name="CostsImage" Source="Images/Costs.png" DockPanel.Dock="Top"/>
+                            <Label x:Name="CostsLabel" Content="Kosten" Foreground="White" Padding="2,0,2,5" HorizontalContentAlignment="Center" FontSize="11"/>
+                        </DockPanel>
+                        <DockPanel x:Name="MathPanel" LastChildFill="True" MouseEnter="LeftPanel_MouseEnter" MouseLeave="LeftPanel_MouseLeave" MouseLeftButtonUp="MathPanel_MouseLeftButtonUp">
+                            <Image x:Name="MathImage" Source="Images/Math.png" DockPanel.Dock="Top"/>
+                            <Label x:Name="MathLabel" Content="Details" Foreground="White" Padding="2,0,2,5" HorizontalContentAlignment="Center" FontSize="11"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" MinWidth="200"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*" MinWidth="200"/>
+                        </Grid.ColumnDefinitions>
+                        <TabControl x:Name="Tabs" Grid.Column="0" BorderThickness="0" BorderBrush="White">
+                            <TabItem Header="TabItem" Visibility="Collapsed">
+                                <Frame NavigationUIVisibility="Hidden" Source="OwnerPage.xaml"/>
+                            </TabItem>
+                            <TabItem Header="TabItem" Visibility="Collapsed">
+                                <Frame NavigationUIVisibility="Hidden" Source="HousePage.xaml"/>
+                            </TabItem>
+                            <TabItem Header="TabItem" Visibility="Collapsed">
+                                <Frame NavigationUIVisibility="Hidden" Source="RenterPage.xaml"/>
+                            </TabItem>
+                            <TabItem Header="TabItem" Visibility="Collapsed">
+                                <Frame NavigationUIVisibility="Hidden" Source="CostsPage.xaml"/>
+                            </TabItem>
+                            <TabItem Header="TabItem" Visibility="Collapsed">
+                                <Frame NavigationUIVisibility="Hidden" Source="MathPage.xaml"/>
+                            </TabItem>
+                        </TabControl>
+                        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="White"/>
+                        <DockPanel Grid.Column="2" LastChildFill="True">
+                            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FF007ACC" Margin="0"/>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <StackPanel x:Name="WarningErrorPanel"/>
+                            </ScrollViewer>
+                        </DockPanel>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="TabItem" Visibility="Collapsed" Margin="0" Padding="0">
+                <Grid/>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

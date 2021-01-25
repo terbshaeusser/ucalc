@@ -1,0 +1,110 @@
+# Lines starting with # are ignored by the interpreter.
+#
+# Text formatting options are written in html.
+# Write the following special html tag <newpage> to print the following text on
+# a new page.
+#
+# Commands are written between {$ }. The following commands are possible:
+# {$account-bic} - BIC of the renter
+# {$account-iban} - IBAN of the renter
+# {$account-bank} - Bank name of the renter
+# {$address-city} - City of the house address
+# {$address-number} - House number of the house address
+# {$address-plz} - PLZ of the house address
+# {$address-street} - Street of the house address
+# {$costtable} - Table with costs
+# {$date} - Current date
+# {$enddate} - End date of bill
+# {$message1} - First custom message for the renter
+# {$message2} - Second custom message for the renter
+# {$name} - Name of the renter
+# {$owner-account-bic} - BIC of the owner
+# {$owner-account-iban} - IBAN of the owner
+# {$owner-account-bank} - Bank name of the owner
+# {$owner-address-city} - City of the owner address
+# {$owner-address-number} - House number of the owner address
+# {$owner-address-plz} - PLZ of the owner address
+# {$owner-address-street} - Street of the owner address
+# {$owner-name} - Name of the owner
+# {$owner-salutation} - Salutation of the owner
+# {$salutation} - Salutation of the renter
+# {$sum} - The price to pay
+# {$startdate} - Start date of bill
+#
+# Templates can be defined for specific renters by creating a template file with
+# the name "name of the renter.pay.template" or
+# "name of the renter.refund.template".
+# It is also possible to define templates depending on the salutation of the
+# renter. Therefore name a template "salutation.pay.template" or
+# "salutation.refund.template".
+#
+# To change the style of the cost table define a CSS style with the class name
+# "costtable-style".
+# The sum row in the cost table can be modified using a CSS style with class
+# name "costtable-sum-style".
+# The already paid row can be changed using the "costtable-paid-style" CSS
+# style.
+# The right column can be changed using the "costtable-price-style" CSS style.
+#
+
+<style type="text/css">
+	table.costtable-style {
+		font-family: verdana,arial,sans-serif;
+		color:#333333;
+		border-width: 1px;
+		border-color: #3A3A3A;
+		border-collapse: collapse;
+		width: 90%;
+		margin-left: 35px;
+	}
+	table.costtable-style th {
+		border-width: 1px;
+		padding: 6px;
+		border-style: solid;
+		border-color: #3A3A3A;
+		background-color: #B3B3B3;
+	}
+	table.costtable-style td {
+		border-width: 1px;
+		padding: 6px;
+		border-style: solid;
+		border-color: #3A3A3A;
+		background-color: #ffffff;
+	}
+	td.costtable-price-style {
+		text-align: right;
+	}
+	tr.costtable-sum-style td {
+		background-color: #B3B3B3;
+	}
+</style>
+
+{$salutation} {$name}<br>
+{$address-street} {$address-number}<br>
+{$address-plz} {$address-city}
+
+<p align="right">
+	{$owner-name}<br>
+	{$owner-address-street} {$owner-address-number}<br>
+	{$owner-address-plz} {$owner-address-city}
+</p>
+
+<h3>Abrechnung vom {$startdate} zum {$enddate}</h3>
+Sehr geehrter {$salutation} {$name},<br><br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+Abrechnung bla bla<br>
+<br>
+{$costtable}
+<br>
+Bitte überweisen Sie den Betrag von {$sum} € auf das Konto.

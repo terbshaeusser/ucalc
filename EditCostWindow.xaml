@@ -1,0 +1,88 @@
+﻿<Window x:Class="MietRechner.EditCostWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MietRechner"
+        mc:Ignorable="d"
+        Icon="MietRechner.ico"
+        Title="EditCostWindow" Height="460" Width="500" Loaded="Window_Loaded">
+    
+    <DockPanel LastChildFill="True">
+        <Grid Height="42" DockPanel.Dock="Bottom">
+            <Separator Margin="0, 0, 0, 0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF007ACC"/>
+            <Button x:Name="ApplyButton" Content="Übernehmen" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100" Height="22" Click="ApplyButton_Click"/>
+        </Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="Panel" DockPanel.Dock="Top">
+                <Grid Margin="10,0,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Separator Grid.Column="0" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                    <Label Grid.Column="1" Content="Allgemeine Informationen" VerticalAlignment="Center" Foreground="#FF007ACC"/>
+                    <Separator Grid.Column="2" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                </Grid>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <Label x:Name="NameLabel" Content="Name:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <TextBox x:Name="NameTextBox" Text="" VerticalAlignment="Center"/>
+                </DockPanel>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <Label x:Name="DisplayLabel" Content="Detailiert in Ausdruck berechnen:" VerticalAlignment="Center" Width="200" Foreground="#FF007ACC"/>
+                    <CheckBox x:Name="DisplayCheckBox" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                </DockPanel>
+                <Grid Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Separator Grid.Column="0" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                    <Label Grid.Column="1" Content="Betroffene" VerticalAlignment="Center" Foreground="#FF007ACC"/>
+                    <Separator Grid.Column="2" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                </Grid>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <Label Content="Auswahl:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <ComboBox x:Name="AffectedCombobox" Text="" VerticalAlignment="Center" SelectedIndex="0" SelectionChanged="AffectedCombobox_SelectionChanged">
+                        <ComboBoxItem Content="Alle Mieter"/>
+                        <ComboBoxItem Content="Einzelne Mieter"/>
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel Margin="10,6,10,0" LastChildFill="True">
+                    <Label Content="" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <ListBox x:Name="AffectedListbox" Height="120" ItemsSource="{Binding Renters}" IsEnabled="False" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Path=Item.Name}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+                <DockPanel Margin="10,6,10,0" LastChildFill="True">
+                    <Label Content="Art der Aufteilung:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <ComboBox x:Name="DivisionKindCombobox" VerticalAlignment="Center" SelectedIndex="0">
+                        <ComboBoxItem Content="Pro Person"/>
+                        <ComboBoxItem Content="Pro Wohnung"/>
+                        <ComboBoxItem Content="Pro belegte Wohnung"/>
+                    </ComboBox>
+                </DockPanel>
+                <Grid Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Separator Grid.Column="0" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                    <Label Grid.Column="1" Content="Kosten" VerticalAlignment="Center" Foreground="#FF007ACC"/>
+                    <Separator Grid.Column="2" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                </Grid>
+                <DockPanel x:Name="CountPanel" Margin="10,0,10,0" LastChildFill="True">
+                    <Label x:Name="CountLabel" Content="Anzahl der &#10;Zeiträume:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <TextBox x:Name="CountTextbox" Text="0" VerticalAlignment="Center" TextChanged="CountTextbox_TextChanged" MaxLength="1"/>
+                </DockPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

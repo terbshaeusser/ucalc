@@ -1,0 +1,122 @@
+﻿<Window x:Class="MietRechner.EditRenterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MietRechner"
+        mc:Ignorable="d"
+        Icon="MietRechner.ico"
+        Title="EditRenterWindow" Height="460" Width="500" Loaded="Window_Loaded">
+    
+    <DockPanel LastChildFill="True">
+        <Grid Height="42" DockPanel.Dock="Bottom">
+            <Separator Margin="0, 0, 0, 0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF007ACC"/>
+            <Button x:Name="ApplyButton" Content="Übernehmen" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100" Height="22" Click="ApplyButton_Click"/>
+        </Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel DockPanel.Dock="Top">
+                <Grid Margin="10,0,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Separator Grid.Column="0" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                    <Label Grid.Column="1" Content="Allgemeine Informationen" VerticalAlignment="Center" Foreground="#FF007ACC"/>
+                    <Separator Grid.Column="2" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                </Grid>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <Label Content="Anrede:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <ComboBox x:Name="SalutationCombobox" VerticalAlignment="Center">
+                        <ComboBoxItem Content="Herr" IsSelected="True"/>
+                        <ComboBoxItem Content="Herr Dr."/>
+                        <ComboBoxItem Content="Frau"/>
+                        <ComboBoxItem Content="Frau Dr."/>
+                        <ComboBoxItem Content="Herr und Frau"/>
+                        <ComboBoxItem Content="Familie"/>
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <Label x:Name="NameLabel" Content="Name:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <TextBox x:Name="NameTextBox" Text="" VerticalAlignment="Center"/>
+                </DockPanel>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <Label x:Name="PersonLabel" Content="Personenanzahl:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <TextBox x:Name="PersonTextBox" Text="" VerticalAlignment="Center"/>
+                </DockPanel>
+                <Grid Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Separator Grid.Column="0" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                    <Label Grid.Column="1" Content="Bankdaten" VerticalAlignment="Center" Foreground="#FF007ACC"/>
+                    <Separator Grid.Column="2" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                </Grid>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <Label x:Name="IBANLabel" Content="IBAN:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <TextBox x:Name="IBANTextBox" Text="" VerticalAlignment="Center"/>
+                </DockPanel>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <Label x:Name="BICLabel" Content="BIC:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <TextBox x:Name="BICTextBox" Text="" VerticalAlignment="Center"/>
+                </DockPanel>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <Label x:Name="BankNameLabel" Content="Name der Bank:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <TextBox x:Name="BankNameTextBox" Text="" VerticalAlignment="Center"/>
+                </DockPanel>
+                <Grid Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Separator Grid.Column="0" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                    <Label Grid.Column="1" Content="Ein- &amp; Auszug" VerticalAlignment="Center" Foreground="#FF007ACC"/>
+                    <Separator Grid.Column="2" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                </Grid>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <CheckBox x:Name="EntryCheckbox" Content="Einzug am:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC" Checked="EntryCheckbox_Checked" Unchecked="EntryCheckbox_Unchecked"/>
+                    <DatePicker x:Name="EntryDatePicker" Foreground="#FF007ACC" IsEnabled="False"/>
+                </DockPanel>
+                <DockPanel Margin="10,8,10,0" LastChildFill="True">
+                    <CheckBox x:Name="DepatureCheckbox" Content="Auszug am:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC" Unchecked="DepatureCheckbox_Unchecked" Checked="DepatureCheckbox_Checked"/>
+                    <DatePicker x:Name="DepatureDatePicker" Foreground="#FF007ACC" IsEnabled="False"/>
+                </DockPanel>
+                <Grid Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Separator Grid.Column="0" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                    <Label Grid.Column="1" Content="Zahlungen" VerticalAlignment="Center" Foreground="#FF007ACC"/>
+                    <Separator Grid.Column="2" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                </Grid>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <Label x:Name="PaidRentLabel" Content="Bereits bezahlt:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <TextBox x:Name="PaidRentTextBox" Text="" VerticalAlignment="Center"/>
+                </DockPanel>
+                <Grid Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Separator Grid.Column="0" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                    <Label Grid.Column="1" Content="Nachrichten" VerticalAlignment="Center" Foreground="#FF007ACC"/>
+                    <Separator Grid.Column="2" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+                </Grid>
+                <DockPanel Margin="10,0,10,0" LastChildFill="True">
+                    <Label Content="Nachricht 1:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <TextBox x:Name="Message1TextBox" Text="" VerticalAlignment="Center" AcceptsReturn="True" TextWrapping="Wrap"/>
+                </DockPanel>
+                <DockPanel Margin="10,0,10,10" LastChildFill="True">
+                    <Label Content="Nachricht 2:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+                    <TextBox x:Name="Message2TextBox" Text="" VerticalAlignment="Center" AcceptsReturn="True" TextWrapping="Wrap"/>
+                </DockPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

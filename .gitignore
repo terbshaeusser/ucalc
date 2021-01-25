@@ -1,8 +1,5 @@
+.vs
 bin
 obj
-.idea
-.vs
-*.user
-*.exe
-Installer/setup
-ucalc/Properties
+packages
+*.csproj.user

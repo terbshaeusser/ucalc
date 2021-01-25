@@ -1,0 +1,22 @@
+﻿<Page x:Class="MietRechner.RenterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MietRechner"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="RenterPage">
+    <DockPanel Margin="10,10,5,10" LastChildFill="True">
+        <DockPanel x:Name="AddPanel" DockPanel.Dock="Top" Height="52" LastChildFill="True" MouseEnter="AddPanel_MouseEnter" MouseLeave="AddPanel_MouseLeave" MouseLeftButtonUp="AddPanel_MouseLeftButtonUp">
+            <Image x:Name="AddImage" Width="32" Margin="10" Source="Images/Add.png"/>
+            <Label x:Name="AddLabel" Content="Mieter hinzufügen" VerticalAlignment="Center" Foreground="#FF007ACC" Padding="0,5,5,5"/>
+        </DockPanel>
+        <Separator DockPanel.Dock="Top" BorderThickness="2" BorderBrush="#FF007ACC"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="RentersPanel" DockPanel.Dock="Bottom">
+
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Page>

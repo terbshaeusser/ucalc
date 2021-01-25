@@ -1,0 +1,94 @@
+﻿<Page x:Class="MietRechner.OwnerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MietRechner"
+      mc:Ignorable="d" 
+      d:DesignHeight="411" d:DesignWidth="300"
+      Title="OwnerPage" Loaded="Page_Loaded">
+
+    <StackPanel>
+        <Grid Margin="10,0,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Separator Grid.Column="0" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+            <Label Grid.Column="1" Content="Allgemeine Informationen" VerticalAlignment="Center" Foreground="#FF007ACC"/>
+            <Separator Grid.Column="2" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+        </Grid>
+        <DockPanel Margin="10,0,5,0" LastChildFill="True">
+            <Label Content="Anrede:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+            <ComboBox x:Name="SalutationCombobox" VerticalAlignment="Center" SelectionChanged="SalutationCombobox_SelectionChanged">
+                <ComboBoxItem Content="Herr" IsSelected="True"/>
+                <ComboBoxItem Content="Herr Dr."/>
+                <ComboBoxItem Content="Frau"/>
+                <ComboBoxItem Content="Frau Dr."/>
+                <ComboBoxItem Content="Herr und Frau"/>
+                <ComboBoxItem Content="Familie"/>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="10,0,5,0" LastChildFill="True">
+            <Label Content="Name:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+            <TextBox x:Name="NameTextBox" Text="" VerticalAlignment="Center" TextChanged="NameTextBox_TextChanged"/>
+        </DockPanel>
+        <DockPanel Margin="10,0,5,0" LastChildFill="True">
+            <Label Content="Telefonnummer:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+            <TextBox x:Name="PhoneTextBox" Text="" VerticalAlignment="Center" TextChanged="PhoneTextBox_TextChanged"/>
+        </DockPanel>
+        <DockPanel Margin="10,0,5,0" LastChildFill="True">
+            <Label Content="E-Mail Adresse:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+            <TextBox x:Name="MailTextBox" Text="" VerticalAlignment="Center" TextChanged="MailTextBox_TextChanged"/>
+        </DockPanel>
+        <Grid Margin="10,10,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Separator Grid.Column="0" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+            <Label Grid.Column="1" Content="Adresse des Eigentümers" VerticalAlignment="Center" Foreground="#FF007ACC"/>
+            <Separator Grid.Column="2" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+        </Grid>        
+        <DockPanel Margin="10,0,5,0" LastChildFill="True">
+            <Label Content="Straße:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+            <TextBox x:Name="StreetTextBox" Text="" VerticalAlignment="Center" TextChanged="StreetTextBox_TextChanged"/>
+        </DockPanel>
+        <DockPanel Margin="10,0,5,0" LastChildFill="True">
+            <Label Content="Hausnummer:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+            <TextBox x:Name="HouseNumberTextBox" Text="" VerticalAlignment="Center" TextChanged="HouseNumberTextBox_TextChanged"/>
+        </DockPanel>
+        <DockPanel Margin="10,0,5,0" LastChildFill="True">
+            <Label Content="Stadt:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+            <TextBox x:Name="CityTextBox" Text="" VerticalAlignment="Center" TextChanged="CityTextBox_TextChanged"/>
+        </DockPanel>
+        <DockPanel Margin="10,0,5,0" LastChildFill="True">
+            <Label Content="PLZ:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+            <TextBox x:Name="PLZTextBox" Text="" VerticalAlignment="Center" TextChanged="PLZTextBox_TextChanged"/>
+        </DockPanel>
+        <Grid Margin="10,10,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Separator Grid.Column="0" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+            <Label Grid.Column="1" Content="Bankdaten des Eigentümers" VerticalAlignment="Center" Foreground="#FF007ACC"/>
+            <Separator Grid.Column="2" BorderBrush="#FF007ACC" VerticalAlignment="Center" Background="#FF007ACC"/>
+        </Grid>
+        <DockPanel Margin="10,0,5,0" LastChildFill="True">
+            <Label Content="IBAN:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+            <TextBox x:Name="IBANTextBox" Text="" VerticalAlignment="Center" TextChanged="IBANTextBox_TextChanged"/>
+        </DockPanel>
+        <DockPanel Margin="10,0,5,0" LastChildFill="True">
+            <Label Content="BIC:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+            <TextBox x:Name="BICTextBox" Text="" VerticalAlignment="Center" TextChanged="BICTextBox_TextChanged"/>
+        </DockPanel>
+        <DockPanel Margin="10,0,5,0" LastChildFill="True">
+            <Label Content="Name der Bank:" VerticalAlignment="Center" Width="110" Foreground="#FF007ACC"/>
+            <TextBox x:Name="BankNameTextBox" Text="" VerticalAlignment="Center" TextChanged="BankNameTextBox_TextChanged"/>
+        </DockPanel>
+    </StackPanel>
+</Page>
