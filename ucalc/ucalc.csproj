@@ -1,0 +1,115 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <ApplicationIcon>logo.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Page Update="BillingWindow.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\SideBar.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\LandlordPage.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\HousePage.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\CostsPage.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\TenantsPage.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Pages\DetailsPage.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Controls\ErrorCounter.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Controls\ErrorIcon.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="Controls\SectionHeader.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="FlatWindow.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="TenantWindow.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="CostWindow.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="CostEntryDetailsWindow.xaml">
+            <Generator></Generator>
+        </Page>
+        <Page Update="PrintWindow.xaml">
+            <Generator></Generator>
+        </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="BillingWindow.xaml.cs">
+            <DependentUpon>BillingWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\SideBar.xaml.cs">
+            <DependentUpon>SideBar.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\LandlordPage.xaml.cs">
+            <DependentUpon>LandlordPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\HousePage.xaml.cs">
+            <DependentUpon>HousePage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\CostsPage.xaml.cs">
+            <DependentUpon>CostsPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\TenantsPage.xaml.cs">
+            <DependentUpon>TenantsPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\DetailsPage.xaml.cs">
+            <DependentUpon>DetailsPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Controls\ErrorCounter.xaml.cs">
+            <DependentUpon>ErrorCounter.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Controls\ErrorIcon.xaml.cs">
+            <DependentUpon>ErrorIcon.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Controls\SectionHeader.xaml.cs">
+            <DependentUpon>SectionHeader.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="FlatWindow.xaml.cs">
+            <DependentUpon>FlatWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="TenantWindow.xaml.cs">
+            <DependentUpon>TenantWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="CostWindow.xaml.cs">
+            <DependentUpon>CostWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="CostEntryDetailsWindow.xaml.cs">
+            <DependentUpon>CostEntryDetailsWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="PrintWindow.xaml.cs">
+            <DependentUpon>PrintWindow.xaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="logo.ico"/>
+        <Resource Include="logo.ico"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3"/>
+    </ItemGroup>
+
+</Project>

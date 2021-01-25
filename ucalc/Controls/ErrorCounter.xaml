@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="UCalc.Controls.ErrorCounter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:UCalc.Controls"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <local:ErrorsToVisibilityConverter x:Key="ErrorsToVisibilityConverter" />
+        <local:ErrorsToCountConverter x:Key="ErrorsToCountConverter" />
+    </UserControl.Resources>
+
+    <Border CornerRadius="3"
+            BorderBrush="Red"
+            Background="Red"
+            Visibility="{Binding Path=Property.Errors, RelativeSource={RelativeSource AncestorType=local:ErrorCounter}, Converter={StaticResource ErrorsToVisibilityConverter}}">
+
+        <Label
+            Content="{Binding Path=Property.Errors, RelativeSource={RelativeSource AncestorType=local:ErrorCounter}, Converter={StaticResource ErrorsToCountConverter}}"
+            Foreground="White" />
+
+    </Border>
+
+</UserControl>
