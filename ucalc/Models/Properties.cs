@@ -106,11 +106,12 @@ namespace UCalc.Models
                 }
 
                 _value = value;
-                OnPropertyChanged();
 
                 using var validator = Model.BeginValidation();
                 Modified = true;
                 validator.Validate(this);
+
+                OnPropertyChanged();
             }
         }
 

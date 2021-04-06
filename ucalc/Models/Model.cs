@@ -161,12 +161,19 @@ namespace UCalc.Models
         private readonly Validator _validator;
         public BillingProperty Root { get; }
 
-        public Model(Billing billing)
+        public Model(Billing billing, bool modified)
         {
             _validator = new Validator(this);
 
             using var validator = BeginValidation(true);
+
             Root = new BillingProperty(billing.StartDate, billing.EndDate, this, null, billing);
+            if (modified)
+            {
+                var oldName = Root.Landlord.Name.Value;
+                Root.Landlord.Name.Value = $"{oldName}_";
+                Root.Landlord.Name.Value = oldName;
+            }
         }
 
         public Validator BeginValidation(bool postPone = false)

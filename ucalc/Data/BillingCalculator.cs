@@ -663,9 +663,15 @@ namespace UCalc.Data
                     new Tuple<decimal, decimal, decimal>(0, 0, 0),
                     (sum, tenantResult) =>
                     {
-                        var costResult = tenantResult.Costs[cost];
-                        return new Tuple<decimal, decimal, decimal>(sum.Item1 + costResult.TotalAmount,
-                            sum.Item2 + costResult.PastAmount, sum.Item3 + costResult.FutureAmount);
+                        if (tenantResult.Costs.TryGetValue(cost, out var costResult))
+                        {
+                            return new Tuple<decimal, decimal, decimal>(sum.Item1 + costResult.TotalAmount,
+                                sum.Item2 + costResult.PastAmount, sum.Item3 + costResult.FutureAmount);
+                        }
+                        else
+                        {
+                            return sum;
+                        }
                     });
 
                 str.Append("Auf Mieter umgelegt:\n");

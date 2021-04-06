@@ -47,7 +47,7 @@ namespace UCalc
         public BillingWindow(string filePath, Billing billing)
         {
             FilePath = filePath;
-            Model = new Model(billing);
+            Model = new Model(billing, filePath == null);
             SaveCommand = new DelegateCommand(parameter => { Save(); });
             SaveAsCommand = new DelegateCommand(parameter => { Save(true); });
             PrintCommand = new DelegateCommand(parameter => { Print(); });
@@ -56,6 +56,8 @@ namespace UCalc
 
             Title =
                 $"MietRechner - Abrechnung von {billing.StartDate.ToString(Constants.DateFormat)} - {billing.EndDate.Date.ToString(Constants.DateFormat)}";
+
+            App.Autosaver.OpenModel = Model;
         }
 
         private void OnClosing(object sender, CancelEventArgs e)
@@ -90,6 +92,8 @@ namespace UCalc
 
         private void OnClosed(object sender, EventArgs e)
         {
+            App.Autosaver.OpenModel = null;
+
             Application.Current.MainWindow?.Show();
         }
 

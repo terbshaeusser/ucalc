@@ -46,6 +46,11 @@ namespace UCalc
             Details.UnitCount.PropertyChanged += DetailsPropertyChanged;
             Details.DiscountsInUnits.CollectionChanged += DetailsDiscountChanged;
 
+            foreach (var discountInUnits in Details.DiscountsInUnits)
+            {
+                discountInUnits.PropertyChanged += DetailsPropertyChanged;
+            }
+
             DetailsPropertyChanged(null, null);
 
             if (Details.TotalAmount.ConvertedValue != 0 || Details.UnitCount.ConvertedValue != 0 ||
@@ -91,6 +96,8 @@ namespace UCalc
                 discount.PropertyChanged -= DetailsPropertyChanged;
                 discount.PropertyChanged += DetailsPropertyChanged;
             }
+
+            DetailsPropertyChanged(sender, null);
         }
 
         private void OnCEClick(object sender, RoutedEventArgs e)

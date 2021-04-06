@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -10,9 +11,37 @@ namespace UCalc
 {
     public partial class MainWindow
     {
+        private bool _showRecover;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            _showRecover = App.Autosaver.CanRecover;
+        }
+
+        protected override void OnContentRendered(EventArgs e)
+        {
+            base.OnContentRendered(e);
+
+            if (_showRecover)
+            {
+                _showRecover = false;
+
+                switch (MessageBox.Show(
+                    "Die Anwendung wurde das letzte Mal nicht richtig beendet. Es existiert allerdings eine Sicherheitskopie. Möchten Sie diese laden?",
+                    "Sicherheitskopie laden?",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question))
+                {
+                    case MessageBoxResult.Yes:
+                        OpenBilling(App.Autosaver.AutosavePath, true);
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
 
         private void OnNewClick(object sender, RoutedEventArgs e)
@@ -67,14 +96,17 @@ namespace UCalc
             OpenBilling(recentlyOpenedItem.Path);
         }
 
-        private void OpenBilling(string path)
+        private void OpenBilling(string path, bool isRecovery = false)
         {
             try
             {
                 var billing = BillingLoader.Load(path);
-                App.RecentlyOpenedList.Add(new RecentlyOpenedItem(path));
+                if (!isRecovery)
+                {
+                    App.RecentlyOpenedList.Add(new RecentlyOpenedItem(path));
+                }
 
-                new BillingWindow(path, billing).Show();
+                new BillingWindow(isRecovery ? null : path, billing).Show();
                 Hide();
             }
             catch (IOException e)

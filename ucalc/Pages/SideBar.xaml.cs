@@ -50,7 +50,7 @@ namespace UCalc.Pages
 
         private void OnAboutClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("MietRechner Version 2.0\n\nCopyright © 2020 by Tobias Erbshäußer", "Über MietRechner",
+            MessageBox.Show("MietRechner Version 2.1\n\nCopyright © 2020-2021 by Tobias Erbshäußer", "Über MietRechner",
                 MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
