@@ -47,9 +47,9 @@ namespace UCalc
             var dinA4MarginLeftRight = (double) converter.ConvertFromInvariantString("3.18cm");
             var dinA4MarginTopBottom = (double) converter.ConvertFromInvariantString("2.54cm");
 
-            PrintDefaultFontSize = (double) converter.ConvertFromInvariantString("14pt");
-            PrintSubjectFontSize = (double) converter.ConvertFromInvariantString("16pt");
-            PrintNewlineFontSize = (double) converter.ConvertFromInvariantString("14pt");
+            PrintDefaultFontSize = (double) converter.ConvertFromInvariantString("11pt");
+            PrintSubjectFontSize = (double) converter.ConvertFromInvariantString("12pt");
+            PrintNewlineFontSize = (double) converter.ConvertFromInvariantString("11pt");
             // ReSharper restore PossibleNullReferenceException
 
             DinA4Padding = new Thickness(dinA4MarginLeftRight, dinA4MarginTopBottom, dinA4MarginLeftRight,

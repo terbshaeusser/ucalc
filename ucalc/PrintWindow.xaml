@@ -17,15 +17,6 @@
         Icon="logo.ico">
 
     <DockPanel>
-        <FlowDocumentScrollViewer x:Name="ScrollViewer"
-                                  Visibility="Collapsed">
-            <FlowDocument x:Name="Document"
-                          PageWidth="{x:Static local:Constants.DinA4Width}"
-                          PageHeight="{x:Static local:Constants.DinA4Height}"
-                          PagePadding="{x:Static local:Constants.DinA4Padding}"
-                          ColumnWidth="{x:Static local:Constants.DinA4ContentWidth}" />
-        </FlowDocumentScrollViewer>
-
         <DocumentViewer x:Name="Viewer">
             <DocumentViewer.Resources>
                 <Style TargetType="{x:Type DocumentViewer}">
