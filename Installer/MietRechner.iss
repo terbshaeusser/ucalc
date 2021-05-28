@@ -1,6 +1,6 @@
 [Setup]
 AppName=MietRechner
-AppVersion=2.1
+AppVersion=2.2
 WizardStyle=modern
 DefaultDirName={autopf}\MietRechner
 DefaultGroupName=MietRechner

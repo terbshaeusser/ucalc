@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
+using UCalc.Controls;
 using UCalc.Data;
 using UCalc.Models;
 
@@ -70,6 +72,12 @@ namespace UCalc.Pages
             var result = BillingCalculator.CalculateForTenant(_billing, item.Tenant);
 
             CalculationTextBox.Text = result.DetailsForLandlord;
+        }
+
+        private void OnPrintTextClick(object sender, RoutedEventArgs e)
+        {
+            using var printable = new PrintableTextBox(CalculationTextBox);
+            printable.Print(TenantComboBox.Text);
         }
     }
 }

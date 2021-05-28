@@ -54,16 +54,16 @@ namespace UCalc
 
     public partial class PrintWindow
     {
-        public Billing Billing { get; }
+        private readonly Billing _billing;
         public IReadOnlyList<TenantMenuItem> TenantMenuItems { get; }
-        private PrintableDocument _document;
+        private PrintableBilling _document;
 
 
         public PrintWindow(Model model)
         {
-            Billing = model.Dump();
+            _billing = model.Dump();
             TenantMenuItems = new[] {new TenantMenuItem(null, false), new TenantMenuItem(null, true)}.Concat(
-                Billing.Tenants.Select(tenant => new TenantMenuItem(tenant, false))).ToList();
+                _billing.Tenants.Select(tenant => new TenantMenuItem(tenant, false))).ToList();
 
             foreach (var item in TenantMenuItems)
             {
@@ -86,8 +86,8 @@ namespace UCalc
         {
             _document?.Dispose();
 
-            _document = new PrintableDocument(
-                Billing,
+            _document = new PrintableBilling(
+                _billing,
                 TenantMenuItems.Where(item => item.Selected).Select(item => item.Tenant)
             );
             _document.PreviewIn(Viewer);
@@ -96,14 +96,8 @@ namespace UCalc
         private void OnPrintClick(object sender, RoutedEventArgs e)
         {
             _document.Print(
-                $"MietRechner Abrechnung {Billing.StartDate.ToString(Constants.DateFormat)} - {Billing.EndDate.ToString(Constants.DateFormat)}"
+                $"MietRechner Abrechnung {_billing.StartDate.ToString(Constants.DateFormat)} - {_billing.EndDate.ToString(Constants.DateFormat)}"
             );
-
-            /*PrintDialog printDialog = new PrintDialog();
-            if (printDialog.ShowDialog() == true)
-            {
-                printDialog.PrintQueue.AddJob("test", "C:\\test.xps", false);
-            }*/
         }
 
         private void OnSelectedTenantChanged(object sender, PropertyChangedEventArgs e)

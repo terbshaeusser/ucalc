@@ -603,6 +603,23 @@ namespace UCalc.Data
             var details = new StringBuilder();
             var detailsLandlord = new StringBuilder();
 
+            var startDate = billing.StartDate;
+            if (tenant.EntryDate.HasValue && startDate < tenant.EntryDate.Value)
+            {
+                startDate = tenant.EntryDate.Value;
+            }
+
+            var endDate = billing.EndDate;
+            if (tenant.DepartureDate.HasValue && endDate < tenant.DepartureDate.Value)
+            {
+                endDate = tenant.DepartureDate.Value;
+            }
+
+            detailsLandlord.Append(
+                $"Berechnungsdetails für {tenant.Name} vom {startDate.ToString(Constants.DateFormat)} zum {endDate.ToString(Constants.DateFormat)}\n"
+            );
+            detailsLandlord.Append($"Stand {DateTime.Now.ToString(Constants.DateFormat)}\n\n");
+
             decimal totalAmount = 0;
 
             foreach (var cost in billing.Costs)
@@ -647,6 +664,10 @@ namespace UCalc.Data
             var tenantResults = billing.Tenants.Select(tenant => CalculateForTenant(billing, tenant)).ToList();
 
             decimal landlordAmount = 0;
+            str.Append(
+                $"Kostenübersicht vom {billing.StartDate.ToString(Constants.DateFormat)} zum {billing.EndDate.ToString(Constants.DateFormat)}\n"
+            );
+            str.Append($"Stand {DateTime.Now.ToString(Constants.DateFormat)}\n\n");
 
             foreach (var cost in billing.Costs)
             {
